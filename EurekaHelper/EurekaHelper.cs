@@ -233,7 +233,6 @@ namespace EurekaHelper
 
             foreach(var tracker in filteredList)
                 PrintMessage(Utils.CombineUrl(Constants.EurekaTrackerLink, tracker["id"].ToString()));
-
         }
 
         private void DrawUI() => WindowSystem.Draw();
