@@ -44,7 +44,7 @@ namespace EurekaHelper
                 732 or 1 => EurekaAnemos.GetTracker(),
                 763 or 2 => EurekaPagos.GetTracker(),
                 795 or 3 => EurekaPyros.GetTracker(),
-                827 or _ => EurekaHydatos.GetTracker(),
+                827 or 4 or _ => EurekaHydatos.GetTracker(),
             };
         }
 

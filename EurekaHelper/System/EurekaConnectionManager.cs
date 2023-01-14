@@ -56,8 +56,6 @@ namespace EurekaHelper.System
                 await connection.ClientWebSocket.ConnectAsync(new Uri(TrackerUrl), connection.CancellationTokenSource.Token);
                 _ = connection.Receive();
                 PluginLog.Information("Successfully connected to websocket");
-
-                connection.Invalid = false;
             }
             catch (Exception ex)
             {
@@ -159,13 +157,7 @@ namespace EurekaHelper.System
                         }
 
                         int zoneId = (int)message.Payload["data"]["relationships"]["zone"]["data"]["id"];
-                        Tracker = zoneId switch
-                        {
-                            1 => EurekaAnemos.GetTracker(),
-                            2 => EurekaPagos.GetTracker(),
-                            3 => EurekaPyros.GetTracker(),
-                            4 or _ => EurekaHydatos.GetTracker(),
-                        };
+                        Tracker = Utils.GetEurekaTracker((ushort)zoneId);
 
                         TrackerId = (string)message.Payload["data"]["id"];
                         TrackerPassword = message.Payload["data"]["attributes"]["password"] != null ? (string)message.Payload["data"]["attributes"]["password"] : String.Empty;
@@ -185,6 +177,7 @@ namespace EurekaHelper.System
                             Tracker.SetPopTimes(keyValuePairs);
                         }
 
+                        Invalid = false;
                         Connected = true;
 
                         break;

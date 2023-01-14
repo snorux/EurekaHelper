@@ -15,7 +15,7 @@ namespace EurekaHelper
 {
     public class PluginWindow : Window, IDisposable
     {
-        public PluginWindow(EurekaHelper plugin) : base("Eureka Helper Configuration Window")
+        public PluginWindow() : base("Eureka Helper")
         {
             SizeConstraints = new WindowSizeConstraints { MinimumSize = new Vector2(566, 520), MaximumSize = new Vector2(float.MaxValue, float.MaxValue) };
         }
@@ -53,7 +53,6 @@ namespace EurekaHelper
 
         public async void DrawTrackerTab()
         {
-            //ImGui.Spacing();
             ImGui.AlignTextToFramePadding();
             ImGui.Text("Tracker Settings:"); ImGui.SameLine();
 
@@ -105,7 +104,7 @@ namespace EurekaHelper
             {
                 ImGui.PushFont(UiBuilder.IconFont);
                 if (ImGui.Button(FontAwesomeIcon.Link.ToIconString()))
-                    Utils.CopyToClipboard($"{Constants.EurekaTrackerLink}{Connection.GetTrackerId()}");
+                    Utils.CopyToClipboard($"{Utils.CombineUrl(Constants.EurekaTrackerLink, Connection.GetTrackerId())}");
                 ImGui.PopFont();
                 Utils.SetTooltip("Copy tracker link to clipboard");
 
@@ -490,7 +489,6 @@ namespace EurekaHelper
                 if (fate.IsPopped())
                 {
                     respawnRequirements.Add(("Respawn", $"{(int)fate.GetRespawnTimeleft().TotalMinutes}m {fate.GetRespawnTimeleft().Seconds}s"));
-                    //Utils.RightAlignTextInColumn($"{(int)fate.GetRespawnTimeleft().TotalMinutes}m {fate.GetRespawnTimeleft().Seconds}s", RedColorText);
                 }
 
                 if (fate.SpawnByRequiredWeather != EurekaWeather.None && fate.SpawnByRequiredWeather != Connection.GetTracker().GetCurrentWeatherInfo().Weather)

@@ -34,7 +34,7 @@ namespace EurekaHelper
 
             FatesManager = new();
 
-            WindowSystem.AddWindow(new PluginWindow(this));
+            WindowSystem.AddWindow(new PluginWindow());
 
             DalamudApi.PluginInterface.UiBuilder.Draw += DrawUI;
             DalamudApi.PluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
@@ -238,7 +238,7 @@ namespace EurekaHelper
 
         private void DrawUI() => WindowSystem.Draw();
 
-        private void DrawConfigUI() => WindowSystem.GetWindow("Eureka Helper Configuration Window").IsOpen= true;
+        private void DrawConfigUI() => WindowSystem.GetWindow("Eureka Helper").IsOpen= true;
 
         public static void PrintMessage(SeString message)
         {
