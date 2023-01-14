@@ -82,31 +82,43 @@ namespace EurekaHelper.System
             var sb = new SeStringBuilder()
                 .AddText($"{fate.BossName}: ")
                 .Append(Utils.MapLink(fate.TerritoryId, fate.MapId, fate.FatePosition));
-            EurekaHelper.PrintMessage(sb.BuiltString);
 
             if (!fate.IsBunnyFate)
             {
-                Utils.CopyToClipboard($"/shout {fate.BossName} POP. <flag>");
-                SoundManager.PlaySoundEffect(SoundManager.SoundEffect.SoundEffect36);
-                if (PluginWindow.GetConnection().IsConnected() && PluginWindow.GetConnection().CanModify())
+                EurekaHelper.PrintMessage(sb.BuiltString);
+
+                if (EurekaHelper.Config.CopyNMToClipboard)
+                    Utils.CopyToClipboard($"/shout {fate.BossName} POP. <flag>");
+
+                if (EurekaHelper.Config.PlayPopSound)
+                    SoundManager.PlaySoundEffect(EurekaHelper.Config.NMSoundEffect);
+
+                if (EurekaHelper.Config.AutoPopFate)
                 {
-                    var trackerFate = PluginWindow.GetConnection().GetTracker().GetFates().Find(x => x.IncludeInTracker && x.FateId == fate.FateId);
-
-                    if (trackerFate is null)
-                        return;
-
-                    if (!trackerFate.IsPopped())
+                    if (PluginWindow.GetConnection().IsConnected() && PluginWindow.GetConnection().CanModify())
                     {
-                        _ = Task.Run(async () =>
+                        var trackerFate = PluginWindow.GetConnection().GetTracker().GetFates().Find(x => x.IncludeInTracker && x.FateId == fate.FateId);
+
+                        if (trackerFate is null)
+                            return;
+
+                        if (!trackerFate.IsPopped())
                         {
-                            await PluginWindow.GetConnection().SetPopTime((ushort)fate.TrackerId, DateTimeOffset.Now.ToUnixTimeMilliseconds());
-                        });
+                            _ = Task.Run(async () =>
+                            {
+                                await PluginWindow.GetConnection().SetPopTime((ushort)fate.TrackerId, DateTimeOffset.Now.ToUnixTimeMilliseconds());
+                            });
+                        }
                     }
                 }
             }
             else
             {
-                SoundManager.PlaySoundEffect(SoundManager.SoundEffect.SoundEffect41);
+                if (EurekaHelper.Config.DisplayBunnyFates)
+                {
+                    EurekaHelper.PrintMessage(sb.BuiltString);
+                    SoundManager.PlaySoundEffect(EurekaHelper.Config.BunnySoundEffect);
+                }
             }
         }
 
