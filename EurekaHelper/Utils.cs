@@ -14,10 +14,21 @@ using System.Numerics;
 
 namespace EurekaHelper
 {
+    internal static class Constants
+    {
+        public static readonly string EurekaTrackerLink = "https://ffxiv-eureka.com/";
+
+        // 732 - Anemos
+        // 763 - Pagos
+        // 795 - Pyros
+        // 827 - Hydatos
+        public static readonly ushort[] EurekaZones = { 732, 763, 795, 827 };
+
+        public static readonly ushort[] BunnyFates = { 1367, 1368, 1407, 1408, 1425 };
+    }
+
     internal class Utils
     {
-        public const string EurekaTrackerLink = "https://ffxiv-eureka.com/";
-
         public static bool IsPlayerInEurekaZone(ushort territoryId) => Constants.EurekaZones.Contains(territoryId);
 
         public static bool IsBunnyFate(ushort fateId) => Constants.BunnyFates.Contains(fateId);
@@ -39,26 +50,6 @@ namespace EurekaHelper
 
         public static void CopyToClipboard(string message) => ImGui.SetClipboardText(message);
 
-        public static SeString MapLink(uint territoryId, uint mapId, float xCoord, float yCoord)
-        {
-            var mapPayload = new MapLinkPayload(territoryId, mapId, xCoord, yCoord);
-            var name = $"{mapPayload.PlaceName} ({xCoord.ToString("00.0", CultureInfo.InvariantCulture)}, {yCoord.ToString("00.0", CultureInfo.InvariantCulture)})";
-            return new SeStringBuilder()
-                .AddUiForeground(0x0225)
-                .AddUiGlow(0x0226)
-                .Add(mapPayload)
-                .AddUiForeground(500)
-                .AddUiGlow(501)
-                .AddText($"{(char)SeIconChar.LinkMarker}")
-                .AddUiGlowOff()
-                .AddUiForegroundOff()
-                .AddText(name)
-                .Add(RawPayload.LinkTerminator)
-                .AddUiGlowOff()
-                .AddUiForegroundOff()
-                .BuiltString;
-        }
-
         public static SeString MapLink(uint territoryId, uint mapId, Vector2 position)
         {
             var mapPayload = new MapLinkPayload(territoryId, mapId, position.X, position.Y);
@@ -77,14 +68,6 @@ namespace EurekaHelper
                 .AddUiGlowOff()
                 .AddUiForegroundOff()
                 .BuiltString;
-        }
-
-        public static DateTime ToEorzeaTime(DateTime date)
-        {
-            const double MULTIPLER = 144D / 7D;
-            long epochTicks = date.ToUniversalTime().Ticks - (new DateTime(1970, 1, 1).Ticks);
-            long eorzeaTicks = (long)Math.Round(epochTicks * MULTIPLER);
-            return new DateTime(eorzeaTicks);
         }
 
         public static void TextURL(string name, string url, uint color)
@@ -149,5 +132,7 @@ namespace EurekaHelper
         }
 
         public static string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unable to get version";
+
+        public static string GetGitSha() => Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "Unable to get Git Hash";
     }
 }

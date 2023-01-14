@@ -236,39 +236,6 @@ namespace EurekaHelper
 
         }
 
-        [Command("/etest")]
-        [DoNotShowInHelp]
-        private void TestCommand(string command, string argument)
-        {
-            PluginLog.LogInformation($"DatacenterId: {DalamudApi.ClientState.LocalPlayer?.CurrentWorld.GameData?.DataCenter.Row}");
-            if (!string.IsNullOrWhiteSpace(argument))
-                SoundManager.PlaySoundEffect(Convert.ToUInt32(argument));
-            byte test = 58;
-            var sb = new SeStringBuilder()
-                            .AddText(" is at ")
-                            .AddUiForeground(58)
-                            .AddText($"{test}%")
-                            .AddUiForegroundOff();
-            PrintMessage(sb.BuiltString);
-
-            var mapPayLoad = new MapLinkPayload(795, 484, 27.0f, 26.0f);
-            var name = $"Test ({27.0f.ToString("00.0", CultureInfo.InvariantCulture)}, {26.0f.ToString("00.0", CultureInfo.InvariantCulture)})";
-            SeStringBuilder seString = new SeStringBuilder()
-                .AddUiForeground(0x0225)
-                .AddUiGlow(0x0226)
-                .Add(mapPayLoad)
-                .AddUiForeground(500)
-                .AddUiGlow(501)
-                .AddText($"{(char)SeIconChar.LinkMarker}")
-                .AddUiGlowOff()
-                .AddUiForegroundOff()
-                .AddText(name)
-                .Add(RawPayload.LinkTerminator)
-                .AddUiGlowOff()
-                .AddUiForegroundOff();
-            PrintMessage(seString.BuiltString);
-        }
-
         private void DrawUI() => WindowSystem.Draw();
 
         private void DrawConfigUI() => WindowSystem.GetWindow("Eureka Helper Configuration Window").IsOpen= true;

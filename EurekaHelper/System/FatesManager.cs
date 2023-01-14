@@ -13,7 +13,6 @@ namespace EurekaHelper.System
     {
         private List<Fate> lastFates = new();
         private IEurekaTracker EurekaTracker;
-        private static bool TestShowProgress = true;
 
         public FatesManager()
         {
@@ -23,7 +22,6 @@ namespace EurekaHelper.System
             {
                 DalamudApi.Framework.Update += OnUpdate;
                 EurekaTracker = Utils.GetEurekaTracker(DalamudApi.ClientState.TerritoryType);
-                //TerritoryFates = Eureka.GetTerritoryFates(DalamudApi.ClientState.TerritoryType);
             }
         }
 
@@ -45,7 +43,6 @@ namespace EurekaHelper.System
             if (EurekaHelper.Config.DisplayFateProgress)
             {
                 List<Fate> instanceFates = DalamudApi.FateTable.Where(x => !Utils.IsBunnyFate(x.FateId)).ToList();
-                //List<Fate> instanceFates = DalamudApi.FateTable.Where(x => !Eureka.BunnyFates.Contains(x.FateId)).ToList();
                 foreach (var fate in instanceFates)
                 {
                     EurekaFate eurekaFate = EurekaTracker.GetFates().SingleOrDefault(i => fate.FateId == i.FateId);

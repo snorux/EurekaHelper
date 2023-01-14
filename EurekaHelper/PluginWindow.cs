@@ -105,7 +105,7 @@ namespace EurekaHelper
             {
                 ImGui.PushFont(UiBuilder.IconFont);
                 if (ImGui.Button(FontAwesomeIcon.Link.ToIconString()))
-                    ImGui.SetClipboardText($"{Utils.EurekaTrackerLink}{Connection.GetTrackerId()}");
+                    Utils.CopyToClipboard($"{Constants.EurekaTrackerLink}{Connection.GetTrackerId()}");
                 ImGui.PopFont();
                 Utils.SetTooltip("Copy tracker link to clipboard");
 
@@ -115,7 +115,7 @@ namespace EurekaHelper
 
                     ImGui.PushFont(UiBuilder.IconFont);
                     if (ImGui.Button(FontAwesomeIcon.Key.ToIconString()))
-                        ImGui.SetClipboardText($"Password: {Connection.GetTrackerPassword()}");
+                        Utils.CopyToClipboard($"Password: {Connection.GetTrackerPassword()}");
                     ImGui.PopFont();
                     Utils.SetTooltip("Copy tracker password to clipboard");
 
@@ -152,7 +152,7 @@ namespace EurekaHelper
                 {
                     Process.Start(new ProcessStartInfo
                     {
-                        FileName = $"{Utils.EurekaTrackerLink}{Connection.GetTrackerId()}",
+                        FileName = $"{Constants.EurekaTrackerLink}{Connection.GetTrackerId()}",
                         UseShellExecute = true
                     });
                 }
@@ -479,7 +479,7 @@ namespace EurekaHelper
                 }
 
                 // Respawn In:
-                // Rules are as follow:
+                // Are as follow:
                 // 1. Check if is popped, display time remaining
                 // 2. Else, check if spawn mob requires weather
                 // 3. Else, check if spawn mob requires night
@@ -667,16 +667,16 @@ namespace EurekaHelper
 
             ImGui.TextColored(new Vector4(0.0f, 1.0f, 1.0f, 1.0f), "Information:");
             ImGui.Indent();
-            ImGui.Text("GitHub:"); ImGui.SameLine(); Utils.TextURL("https://github.com/snooooowy", "https://github.com/snooooowy", ImGui.GetColorU32(ImGuiCol.Text));
-            ImGui.Text("Last commit:"); ImGui.SameLine(); ImGui.Text("Test");
+            ImGui.Text("GitHub:"); ImGui.SameLine(); Utils.TextURL("GitHub", "https://github.com/snooooowy/EurekaHelper", ImGui.GetColorU32(ImGuiCol.Text));
+            ImGui.Text("Last commit:"); ImGui.SameLine(); ImGui.Text(Utils.GetGitSha());
             ImGui.Text("Version:"); ImGui.SameLine(); ImGui.Text(Utils.GetVersion());
             ImGui.Unindent();
             ImGui.Dummy(new Vector2(0.0f, 10.0f));
 
             ImGui.TextColored(new Vector4(1.0f, 0.7f, 0.06f, 1.0f), "Contact:");
             ImGui.Indent();
-            ImGui.Text("Discord:"); ImGui.SameLine(); ImGui.Text("Discord#0757");
-            ImGui.Text("GitHub Issue:"); ImGui.SameLine(); Utils.TextURL("https://github/com/snooooowy", "https://github.com/snooooowy", ImGui.GetColorU32(ImGuiCol.Text));
+            ImGui.Text("Discord:"); ImGui.SameLine(); ImGui.Text("Snowy#9716");
+            ImGui.Text("GitHub Issue:"); ImGui.SameLine(); Utils.TextURL("GitHub", "https://github.com/snooooowy/EurekaHelper/issues", ImGui.GetColorU32(ImGuiCol.Text));
             ImGui.Unindent();
             ImGui.Dummy(new Vector2(0.0f, 10.0f));
 

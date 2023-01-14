@@ -7,7 +7,7 @@
 	</PropertyGroup>
 	
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0-windows</TargetFramework>
 		<Platforms>x64</Platforms>
 		<NoWarn>CA1416</NoWarn>
     </PropertyGroup>
@@ -21,8 +21,18 @@
 		<DalamudLibPath>$(DALAMUD_HOME)</DalamudLibPath>
 	</PropertyGroup>
 
+	<Target Name="AddGitSha" BeforeTargets="GetAssemblyVersion" Returns="InformationalVersion">
+		<Exec ConsoleToMsBuild="true" Command="git rev-parse HEAD">
+			<Output TaskParameter="ConsoleOutput" PropertyName="GitSha" />
+		</Exec>
+
+		<PropertyGroup>
+			<InformationalVersion>$(GitSha)</InformationalVersion>
+		</PropertyGroup>
+	</Target>
+
 	<ItemGroup>
-		<PackageReference Include="DalamudPackager" Version="2.1.8" />
+		<PackageReference Include="DalamudPackager" Version="2.1.10" />
 		<Reference Include="FFXIVClientStructs">
 			<HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
 			<Private>false</Private>
