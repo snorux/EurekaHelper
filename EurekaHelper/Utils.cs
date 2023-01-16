@@ -89,7 +89,12 @@ namespace EurekaHelper
                 }
 
                 DrawUnderline(ImGui.GetColorU32(ImGuiCol.ButtonHovered));
-                ImGui.SetTooltip($"Open in browser: {url}");
+                ImGui.BeginTooltip();
+                ImGui.PushFont(UiBuilder.IconFont);
+                ImGui.Text(FontAwesomeIcon.Link.ToIconString()); ImGui.SameLine(0.0f, ImGui.GetStyle().ItemInnerSpacing.X);
+                ImGui.PopFont();
+                ImGui.Text(url);
+                ImGui.EndTooltip();
             }
             else
             {
@@ -133,6 +138,6 @@ namespace EurekaHelper
 
         public static string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unable to get version";
 
-        public static string GetGitSha() => Assembly.GetEntryAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "Unable to get Git Hash";
+        public static string GetGitSha() => Assembly.GetExecutingAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "Unable to get Git Hash";
     }
 }

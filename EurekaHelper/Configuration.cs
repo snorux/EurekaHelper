@@ -15,11 +15,13 @@ namespace EurekaHelper
 
         public bool DisplayBunnyFates = false;
 
-        public bool PlayPopSound = false;
+        public bool DisplayFatePop = true;
 
-        public bool CopyNMToClipboard = false;
+        public bool PlayPopSound = true;
 
-        public bool AutoPopFate = false;
+        public bool CopyNMToClipboard = true;
+
+        public bool AutoPopFate = true;
 
         public SoundManager.SoundEffect NMSoundEffect { get; set; } = SoundManager.SoundEffect.SoundEffect36;
         public SoundManager.SoundEffect BunnySoundEffect { get; set; } = SoundManager.SoundEffect.SoundEffect41;

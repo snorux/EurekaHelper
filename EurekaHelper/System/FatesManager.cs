@@ -85,7 +85,8 @@ namespace EurekaHelper.System
 
             if (!fate.IsBunnyFate)
             {
-                EurekaHelper.PrintMessage(sb.BuiltString);
+                if (EurekaHelper.Config.DisplayFatePop)
+                    EurekaHelper.PrintMessage(sb.BuiltString);
 
                 if (EurekaHelper.Config.CopyNMToClipboard)
                     Utils.CopyToClipboard($"/shout {fate.BossName} POP. <flag>");

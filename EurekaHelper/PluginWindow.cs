@@ -603,6 +603,10 @@ namespace EurekaHelper
 
             var save = false;
 
+            save |= ImGui.Checkbox("Display NM Pop", ref EurekaHelper.Config.DisplayFatePop);
+            Utils.SetTooltip("Displays the NM that popped in chat");
+            ImGui.NextColumn();
+
             save |= ImGui.Checkbox("Enable NM pop sound", ref EurekaHelper.Config.PlayPopSound);
             Utils.SetTooltip("A sound que will be played whenever an NM pops.");
             ImGui.NextColumn();
@@ -617,6 +621,10 @@ namespace EurekaHelper
 
             save |= ImGui.Checkbox("Copy NM to clipboard", ref EurekaHelper.Config.CopyNMToClipboard);
             Utils.SetTooltip("Copies the most recent NM pop to clipboard");
+            ImGui.NextColumn();
+
+            save |= ImGui.Checkbox("Auto pop fate", ref EurekaHelper.Config.AutoPopFate);
+            Utils.SetTooltip("Attempts to auto pop fate when connected to a tracker (if you have the password)");
             ImGui.NextColumn();
 
             ImGui.SetNextItemWidth(140f);
@@ -641,10 +649,6 @@ namespace EurekaHelper
                 save = true;
             }
             Utils.SetTooltip("Sound Effect to be played when bunny spawns. Add 36 to the macro sound you want. Example: <se.5> is 5 + 36 = 41");
-            ImGui.NextColumn();
-
-            save |= ImGui.Checkbox("Auto pop fate", ref EurekaHelper.Config.AutoPopFate);
-            Utils.SetTooltip("Attempts to auto pop fate when connected to a tracker (if you have the password)");
 
             ImGui.Columns(1);
 
