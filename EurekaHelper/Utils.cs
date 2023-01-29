@@ -11,6 +11,7 @@ using Dalamud.Interface;
 using System.Diagnostics;
 using System.Reflection;
 using System.Numerics;
+using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 
 namespace EurekaHelper
 {
@@ -134,6 +135,32 @@ namespace EurekaHelper
                 ImGui.Text(text);
             else
                 ImGui.TextColored((Vector4)color, text);
+        }
+
+        private static (int X, int Y) MapToWorldCoordinates(Vector2 pos, int scale)
+        {
+            var num = scale / 100f;
+            var x = (float)(((pos.X - 1.0) * num / 41.0 * 2048.0) - 1024.0) / num * 1000f;
+            var y = (float)(((pos.Y - 1.0) * num / 41.0 * 2048.0) - 1024.0) / num * 1000f;
+            x = (int)(MathF.Round(x, 3, MidpointRounding.AwayFromZero) * 1000) * 0.001f / 1000f;
+            y = (int)(MathF.Round(y, 3, MidpointRounding.AwayFromZero) * 1000) * 0.001f / 1000f;
+            return ((int)x, (int)y);
+        }
+
+        public static unsafe void SetFlagMarker(EurekaFate fateInfo, bool openMap = false)
+        {
+            var instance = AgentMap.Instance();
+
+            if (instance != null)
+            {
+                var mapPayload = new MapLinkPayload(fateInfo.TerritoryId, fateInfo.MapId, fateInfo.FatePosition.X, fateInfo.FatePosition.Y);
+                instance->IsFlagMarkerSet = 0;
+                var (X, Y) = MapToWorldCoordinates(new Vector2(mapPayload.XCoord, mapPayload.YCoord), mapPayload.TerritoryType.Map.Value?.SizeFactor ?? 100 / 100);
+                instance->SetFlagMapMarker(mapPayload.Map.TerritoryType.Row, mapPayload.Map.RowId, X, Y);
+
+                if (openMap)
+                    instance->OpenMap(mapPayload.Map.RowId, mapPayload.Map.TerritoryType.Row);
+            }
         }
 
         public static string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unable to get version";

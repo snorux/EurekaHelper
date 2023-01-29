@@ -231,13 +231,13 @@ namespace EurekaHelper
                             .AddText("public trackers:");
             PrintMessage(sb.BuiltString);
 
-            foreach(var tracker in filteredList)
+            foreach (var tracker in filteredList)
                 PrintMessage(Utils.CombineUrl(Constants.EurekaTrackerLink, tracker["id"].ToString()));
         }
 
         private void DrawUI() => WindowSystem.Draw();
 
-        private void DrawConfigUI() => WindowSystem.GetWindow("Eureka Helper").IsOpen= true;
+        private void DrawConfigUI() => WindowSystem.GetWindow("Eureka Helper").IsOpen = true;
 
         public static void PrintMessage(SeString message)
         {
@@ -260,5 +260,15 @@ namespace EurekaHelper
             DalamudApi.Dispose();
             FatesManager.Dispose();
         }
+
+#if DEBUG
+        [Command("/etest")]
+        [HelpMessage("Test command")]
+        private async void ETest(string command, string argument)
+        {
+            var fate = EurekaPyros.GetTracker().GetFates().Find(x => x.FateId == 1407);
+            Utils.SetFlagMarker(fate, true);
+        }
+#endif
     }
 }
