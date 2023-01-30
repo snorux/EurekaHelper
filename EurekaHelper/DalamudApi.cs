@@ -24,6 +24,7 @@ using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Logging;
 using Dalamud.Plugin;
+using XivCommon;
 
 // From: https://github.com/UnknownX7
 
@@ -119,6 +120,8 @@ namespace Dalamud
         //[RequiredVersion("1.0")]
         public static ToastGui ToastGui { get; private set; }
 
+        public static XivCommonBase XivCommonBase { get; private set; }
+
         private static PluginCommandManager<IDalamudPlugin> pluginCommandManager;
 
         public DalamudApi() { }
@@ -134,6 +137,7 @@ namespace Dalamud
             }
 
             pluginCommandManager ??= new(plugin);
+            XivCommonBase = new XivCommonBase();
         }
 
         public static DalamudApi operator +(DalamudApi container, object o)
@@ -208,6 +212,7 @@ namespace Dalamud
         public void Dispose()
         {
             RemoveCommandHandlers();
+            DalamudApi.XivCommonBase.Dispose();
             GC.SuppressFinalize(this);
         }
     }

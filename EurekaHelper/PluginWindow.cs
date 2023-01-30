@@ -628,27 +628,40 @@ namespace EurekaHelper
             ImGui.NextColumn();
 
             ImGui.SetNextItemWidth(140f);
-            var seNames = Enum.GetNames<SoundManager.SoundEffect>();
-            var seValues = Enum.GetValues<SoundManager.SoundEffect>();
-            var nmCurrent = Array.IndexOf(seValues, EurekaHelper.Config.NMSoundEffect);
-            if (ImGui.Combo("NM Sound Effect", ref nmCurrent, seNames, seNames.Length))
+            var enumNames = Enum.GetNames<SoundManager.SoundEffect>();
+            var enumValues = Enum.GetValues<SoundManager.SoundEffect>();
+            var enumCurrent = Array.IndexOf(enumValues, EurekaHelper.Config.NMSoundEffect);
+            if (ImGui.Combo("NM Sound Effect", ref enumCurrent, enumNames, enumNames.Length))
             {
-                EurekaHelper.Config.NMSoundEffect = seValues[nmCurrent];
-                SoundManager.PlaySoundEffect(seValues[nmCurrent]);
+                EurekaHelper.Config.NMSoundEffect = enumValues[enumCurrent];
+                SoundManager.PlaySoundEffect(enumValues[enumCurrent]);
                 save = true;
             }
             Utils.SetTooltip("Sound Effect to be played when an NM pops. Add 36 to the macro sound you want. Example: <se.5> is 5 + 36 = 41");
             ImGui.NextColumn();
 
             ImGui.SetNextItemWidth(140f);
-            var bunnyCurrent = Array.IndexOf(seValues, EurekaHelper.Config.BunnySoundEffect);
-            if (ImGui.Combo("Bunny Sound Effect", ref bunnyCurrent, seNames, seNames.Length))
+            enumCurrent = Array.IndexOf(enumValues, EurekaHelper.Config.BunnySoundEffect);
+            if (ImGui.Combo("Bunny Sound Effect", ref enumCurrent, enumNames, enumNames.Length))
             {
-                EurekaHelper.Config.BunnySoundEffect = seValues[bunnyCurrent];
-                SoundManager.PlaySoundEffect(seValues[bunnyCurrent]);
+                EurekaHelper.Config.BunnySoundEffect = enumValues[enumCurrent];
+                SoundManager.PlaySoundEffect(enumValues[enumCurrent]);
                 save = true;
             }
             Utils.SetTooltip("Sound Effect to be played when bunny spawns. Add 36 to the macro sound you want. Example: <se.5> is 5 + 36 = 41");
+            ImGui.NextColumn();
+
+            ImGui.SetNextItemWidth(140f);
+            enumNames = Enum.GetNames<PayloadOptions>();
+            var poValues = Enum.GetValues<PayloadOptions>();
+            enumCurrent = Array.IndexOf(poValues, EurekaHelper.Config.PayloadOptions);
+            if (ImGui.Combo("Payload Options", ref enumCurrent, enumNames, enumNames.Length))
+            {
+                EurekaHelper.Config.PayloadOptions = poValues[enumCurrent];
+                save = true;
+            }
+            Utils.SetTooltip("Sets what the clickable payload does.\n" +
+                "For example: Setting it to \'ShoutToChat\' will shout the pop when you click the button in chat.");
 
             ImGui.Columns(1);
 

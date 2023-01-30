@@ -163,6 +163,12 @@ namespace EurekaHelper
             }
         }
 
+        public static void SendMessage(string message)
+        {
+            var sanitized = DalamudApi.XivCommonBase.Functions.Chat.SanitiseText(message);
+            DalamudApi.XivCommonBase.Functions.Chat.SendMessage(sanitized);
+        }
+
         public static string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unable to get version";
 
         public static string GetGitSha() => Assembly.GetExecutingAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "Unable to get Git Hash";

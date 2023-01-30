@@ -9,7 +9,6 @@ using EurekaHelper.XIV;
 using EurekaHelper.XIV.Zones;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 
@@ -267,7 +266,23 @@ namespace EurekaHelper
         private async void ETest(string command, string argument)
         {
             var fate = EurekaPyros.GetTracker().GetFates().Find(x => x.FateId == 1407);
-            Utils.SetFlagMarker(fate, true);
+
+            DalamudApi.PluginInterface.RemoveChatLinkHandler(fate.FateId);
+            DalamudLinkPayload payload = DalamudApi.PluginInterface.AddChatLinkHandler(fate.FateId, (i, m) =>
+            {
+                Utils.SendMessage("test");
+            });
+
+            var sb = new SeStringBuilder()
+                .AddText($"{fate.BossName}: ")
+                .Append(Utils.MapLink(fate.TerritoryId, fate.MapId, fate.FatePosition))
+                .AddText(" ")
+                .AddUiForeground(32)
+                .Add(payload)
+                .AddText($"[Click to Shout]")
+                .Add(RawPayload.LinkTerminator)
+                .AddUiForegroundOff();
+            PrintMessage(sb.BuiltString);
         }
 #endif
     }
