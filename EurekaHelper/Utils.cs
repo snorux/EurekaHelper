@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Numerics;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
+using System.Collections.Generic;
 
 namespace EurekaHelper
 {
@@ -26,6 +27,20 @@ namespace EurekaHelper
         public static readonly ushort[] EurekaZones = { 732, 763, 795, 827 };
 
         public static readonly ushort[] BunnyFates = { 1367, 1368, 1407, 1408, 1425 };
+
+        // Only allow these datacenters, the rest are not supported and ffxiv-eureka.com doesn't support the new datacenters
+        public static readonly Dictionary<int, string> DatacenterIdToEurekaDataCenterId = new()
+        {
+            { 1, "Elemental" },
+            { 2, "Gaia" },
+            { 3, "Mana" },
+            { 4, "Aether" },
+            { 5, "Primal" },
+            { 6, "Chaos" },
+            { 11, "Light" },
+            { 10, "Crystal" },
+            { 12, "Materia" },
+        };
     }
 
     internal class Utils
@@ -137,16 +152,6 @@ namespace EurekaHelper
                 ImGui.TextColored((Vector4)color, text);
         }
 
-        private static (int X, int Y) MapToWorldCoordinates(Vector2 pos, int scale)
-        {
-            var num = scale / 100f;
-            var x = (float)(((pos.X - 1.0) * num / 41.0 * 2048.0) - 1024.0) / num * 1000f;
-            var y = (float)(((pos.Y - 1.0) * num / 41.0 * 2048.0) - 1024.0) / num * 1000f;
-            x = (int)(MathF.Round(x, 3, MidpointRounding.AwayFromZero) * 1000) * 0.001f / 1000f;
-            y = (int)(MathF.Round(y, 3, MidpointRounding.AwayFromZero) * 1000) * 0.001f / 1000f;
-            return ((int)x, (int)y);
-        }
-
         public static unsafe void SetFlagMarker(EurekaFate fateInfo, bool openMap = false)
         {
             var instance = AgentMap.Instance();
@@ -155,8 +160,7 @@ namespace EurekaHelper
             {
                 var mapPayload = new MapLinkPayload(fateInfo.TerritoryId, fateInfo.MapId, fateInfo.FatePosition.X, fateInfo.FatePosition.Y);
                 instance->IsFlagMarkerSet = 0;
-                var (X, Y) = MapToWorldCoordinates(new Vector2(mapPayload.XCoord, mapPayload.YCoord), mapPayload.TerritoryType.Map.Value?.SizeFactor ?? 100 / 100);
-                instance->SetFlagMapMarker(mapPayload.Map.TerritoryType.Row, mapPayload.Map.RowId, X, Y);
+                instance->SetFlagMapMarker(mapPayload.Map.TerritoryType.Row, mapPayload.Map.RowId, mapPayload.RawX / 1000f, mapPayload.RawY / 1000f);
 
                 if (openMap)
                     instance->OpenMap(mapPayload.Map.RowId, mapPayload.Map.TerritoryType.Row);
@@ -168,6 +172,8 @@ namespace EurekaHelper
             var sanitized = DalamudApi.XivCommonBase.Functions.Chat.SanitiseText(message);
             DalamudApi.XivCommonBase.Functions.Chat.SendMessage(sanitized);
         }
+
+        public static int DatacenterIdToEurekaDatacenterId(string datacenterName) => Constants.DatacenterIdToEurekaDataCenterId.FirstOrDefault(x => x.Value == datacenterName).Key;
 
         public static string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unable to get version";
 

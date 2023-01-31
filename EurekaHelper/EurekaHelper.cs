@@ -1,6 +1,5 @@
 ﻿using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
-using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Interface.Windowing;
 using Dalamud.Logging;
 using Dalamud.Plugin;
@@ -207,9 +206,15 @@ namespace EurekaHelper
         {
             var connectionManager = await EurekaConnectionManager.Connect();
 
-            //await connectionManager.Send($"[\"1\",\"1\",\"datacenter:{DalamudApi.ClientState.LocalPlayer.CurrentWorld.GameData.DataCenter.Row}\",\"phx_join\",{{}}]");
-            //await connectionManager.Send(JArray.Parse(@$"[ '1', '1', 'datacenter:6', 'phx_join', {{}} ]").ToString());
-            await connectionManager.Send(JArray.Parse(@$"[ '1', '1', 'datacenter:{DalamudApi.ClientState.LocalPlayer.CurrentWorld.GameData.DataCenter.Row}', 'phx_join', {{}} ]").ToString());
+            var datacenterId = Utils.DatacenterIdToEurekaDatacenterId(DalamudApi.ClientState.LocalPlayer.CurrentWorld.GameData.DataCenter.Value.Name.RawString);
+            if (datacenterId == 0)
+            {
+                PrintMessage("This datacenter is not supported currently. Please submit an issue if you think this is incorrect.");
+                await connectionManager.Close();
+                return;
+            }
+
+            await connectionManager.Send(JArray.Parse(@$"[ '1', '1', 'datacenter:{datacenterId}', 'phx_join', {{}} ]").ToString());
             Thread.Sleep(500);
 
             var trackerList = connectionManager.GetCurrentTrackers();
@@ -258,32 +263,7 @@ namespace EurekaHelper
             WindowSystem.RemoveAllWindows();
             DalamudApi.Dispose();
             FatesManager.Dispose();
+            PluginWindow.GetConnection().Dispose();
         }
-
-#if DEBUG
-        [Command("/etest")]
-        [HelpMessage("Test command")]
-        private async void ETest(string command, string argument)
-        {
-            var fate = EurekaPyros.GetTracker().GetFates().Find(x => x.FateId == 1407);
-
-            DalamudApi.PluginInterface.RemoveChatLinkHandler(fate.FateId);
-            DalamudLinkPayload payload = DalamudApi.PluginInterface.AddChatLinkHandler(fate.FateId, (i, m) =>
-            {
-                Utils.SendMessage("test");
-            });
-
-            var sb = new SeStringBuilder()
-                .AddText($"{fate.BossName}: ")
-                .Append(Utils.MapLink(fate.TerritoryId, fate.MapId, fate.FatePosition))
-                .AddText(" ")
-                .AddUiForeground(32)
-                .Add(payload)
-                .AddText($"[Click to Shout]")
-                .Add(RawPayload.LinkTerminator)
-                .AddUiForegroundOff();
-            PrintMessage(sb.BuiltString);
-        }
-#endif
     }
 }

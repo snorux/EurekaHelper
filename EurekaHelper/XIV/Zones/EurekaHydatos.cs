@@ -35,7 +35,7 @@ namespace EurekaHelper.XIV.Zones
                 new(1419, 62, 827, 515,     "Leukwarm Reception", "Leuke", new Vector2(37.0f, 26.0f), "Tigerhawk", EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Wind, false),
                 new(1420, 63, 827, 515,     "Robber Barong", "Barong", new Vector2(32.0f, 24.0f), "Laboratory Lion", EurekaWeather.None, EurekaWeather.None, EurekaElement.Fire, EurekaElement.Earth, false),
                 new(1421, 64, 827, 515,     "Stone-cold Killer", "Ceto", new Vector2(36.0f, 13.0f), "Hydatos Delphyne", EurekaWeather.None, EurekaWeather.None, EurekaElement.Water, EurekaElement.Fire, false),
-                new(1423, 65, 827, 515,     "Crystalline Provenance", "Provenance Watcher", new Vector2(32.0f, 19.0f), "Crystal Claw", EurekaWeather.None, EurekaWeather.None, EurekaElement.Fire, EurekaElement.Fire, false),
+                new(1423, 65, 827, 515,     "Crystalline Provenance", "Provenance Watcher", new Vector2(32.7f, 19.6f), "Crystal Claw", EurekaWeather.None, EurekaWeather.None, EurekaElement.Fire, EurekaElement.Fire, false),
                 new(1424, null, 827, 515,   "I Don't Want to Believe", "Ovni", new Vector2(27.0f, 29.0f), null, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, false),
                 new(1425, null, 827, 515,   "Drink Me", "Bunny Fate 1", new Vector2(14.0f, 21.5f), null, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, false, true),
             };

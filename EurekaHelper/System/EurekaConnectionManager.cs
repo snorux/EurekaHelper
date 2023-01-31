@@ -382,9 +382,10 @@ namespace EurekaHelper.System
 
         public IEurekaTracker GetTracker() => this.Tracker;
 
-        public void Dispose()
+        public async void Dispose()
         {
-            
+            if (this.IsConnected())
+                await Close();
         }
     }
 }

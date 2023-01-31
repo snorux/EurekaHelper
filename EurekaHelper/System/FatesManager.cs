@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Dalamud.Game;
 using Dalamud.Game.ClientState.Fates;
 using Dalamud.Game.Text.SeStringHandling;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
 using EurekaHelper.XIV;
 
 namespace EurekaHelper.System
@@ -85,14 +86,48 @@ namespace EurekaHelper.System
 
             if (!fate.IsBunnyFate)
             {
-                if (EurekaHelper.Config.DisplayFatePop)
-                    EurekaHelper.PrintMessage(sb.BuiltString);
-
-                if (EurekaHelper.Config.CopyNMToClipboard)
-                    Utils.CopyToClipboard($"/shout {fate.BossName} POP. <flag>");
+                if (EurekaHelper.Config.DisplayToastPop)
+                    DalamudApi.ToastGui.ShowQuest(sb.BuiltString);
 
                 if (EurekaHelper.Config.PlayPopSound)
                     SoundManager.PlaySoundEffect(EurekaHelper.Config.NMSoundEffect);
+
+                if (EurekaHelper.Config.DisplayFatePop)
+                {
+                    DalamudApi.PluginInterface.RemoveChatLinkHandler(fate.FateId);
+                    DalamudLinkPayload payload = DalamudApi.PluginInterface.AddChatLinkHandler(fate.FateId, (i, m) =>
+                    {
+                        Utils.SetFlagMarker(fate);
+
+                        switch (EurekaHelper.Config.PayloadOptions)
+                        {
+                            case PayloadOptions.CopyToClipboard:
+                                Utils.CopyToClipboard($"/shout {fate.BossName} POP. <flag>");
+                                break;
+
+                            default:
+                            case PayloadOptions.ShoutToChat:
+                                Utils.SendMessage($"/shout {fate.BossName} POP. <flag>");
+                                break;
+                        }
+                    });
+
+                    var text = EurekaHelper.Config.PayloadOptions switch
+                    {
+                        PayloadOptions.ShoutToChat => "shout",
+                        PayloadOptions.CopyToClipboard => "copy",
+                        _ => "shout"
+                    };
+
+                    sb.AddText(" ");
+                    sb.AddUiForeground(32);
+                    sb.Add(payload);
+                    sb.AddText($"[Click to {text}]");
+                    sb.Add(RawPayload.LinkTerminator);
+                    sb.AddUiForegroundOff();
+
+                    EurekaHelper.PrintMessage(sb.BuiltString);
+                }
 
                 if (EurekaHelper.Config.AutoPopFate)
                 {

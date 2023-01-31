@@ -136,7 +136,14 @@ namespace EurekaHelper
                         ImGui.PushFont(UiBuilder.IconFont);
 
                         if (ImGui.Button(FontAwesomeIcon.LockOpen.ToIconString()))
-                            await Connection.SetTrackerVisiblity((int)DalamudApi.ClientState.LocalPlayer.CurrentWorld.GameData.DataCenter.Row);
+                        {
+                            var datacenterId = Utils.DatacenterIdToEurekaDatacenterId(DalamudApi.ClientState.LocalPlayer.CurrentWorld.GameData.DataCenter.Value?.Name.RawString ?? "null");
+
+                            if (datacenterId == 0)
+                                EurekaHelper.PrintMessage("This datacenter is not supported currently. Please submit an issue if you think this is incorrect.");
+                            else
+                                await Connection.SetTrackerVisiblity(datacenterId);
+                        }
 
                         ImGui.PopFont();
 
@@ -619,8 +626,8 @@ namespace EurekaHelper
             Utils.SetTooltip("Enable display for bunny fates");
             ImGui.NextColumn();
 
-            save |= ImGui.Checkbox("Copy NM to clipboard", ref EurekaHelper.Config.CopyNMToClipboard);
-            Utils.SetTooltip("Copies the most recent NM pop to clipboard");
+            save |= ImGui.Checkbox("Display Toast", ref EurekaHelper.Config.DisplayToastPop);
+            Utils.SetTooltip("Displays a toast whenever an NM pops");
             ImGui.NextColumn();
 
             save |= ImGui.Checkbox("Auto pop fate", ref EurekaHelper.Config.AutoPopFate);

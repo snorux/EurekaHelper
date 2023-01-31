@@ -25,7 +25,7 @@ namespace EurekaHelper
 
         public bool PlayPopSound = true;
 
-        public bool CopyNMToClipboard = true;
+        public bool DisplayToastPop = false;
 
         public bool AutoPopFate = true;
 

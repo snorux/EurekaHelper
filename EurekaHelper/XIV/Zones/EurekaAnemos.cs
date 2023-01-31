@@ -25,7 +25,7 @@ namespace EurekaHelper.XIV.Zones
             {
                 new(1332, 1, 732, 414,  "Unsafety Dance", "Sabotender Corrido", new Vector2(14.0f, 22.0f), "Flowering Sabotender", EurekaWeather.None, EurekaWeather.None, EurekaElement.Wind, EurekaElement.Wind, false),
                 new(1348, 2, 732, 414,  "The Shadow over Anemos", "The Lord of Anemos", new Vector2(30.0f, 27.0f), "Sea Bishop", EurekaWeather.None, EurekaWeather.None, EurekaElement.Water, EurekaElement.Water, false),
-                new(1333, 3, 732, 414,  "Teles House", "Teles", new Vector2(26.0f, 28.0f), "Anemos Harpeia", EurekaWeather.None, EurekaWeather.None, EurekaElement.Wind, EurekaElement.Wind, false),
+                new(1333, 3, 732, 414,  "Teles House", "Teles", new Vector2(25.9f, 27.0f), "Anemos Harpeia", EurekaWeather.None, EurekaWeather.None, EurekaElement.Wind, EurekaElement.Wind, false),
                 new(1328, 4, 732, 414,  "The Swarm Never Sets", "The Emperor of Anemos", new Vector2(17.0f, 22.0f), "Darner", EurekaWeather.None, EurekaWeather.None, EurekaElement.Wind, EurekaElement.Wind, false),
                 new(1344, 5, 732, 414,  "One Missed Callisto", "Callisto", new Vector2(26.0f, 22.0f), "Val Bear", EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Earth, false),
                 new(1347, 6, 732, 414,  "By Numbers", "Number", new Vector2(24.0f, 23.0f), "Pneumaflayer", EurekaWeather.None, EurekaWeather.None, EurekaElement.Lightning, EurekaElement.Lightning, false),
