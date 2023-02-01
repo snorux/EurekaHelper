@@ -29,7 +29,7 @@ namespace EurekaHelper
         public static readonly ushort[] BunnyFates = { 1367, 1368, 1407, 1408, 1425 };
 
         // Only allow these datacenters, the rest are not supported and ffxiv-eureka.com doesn't support the new datacenters
-        public static readonly Dictionary<int, string> DatacenterIdToEurekaDataCenterId = new()
+        public static readonly Dictionary<int, string> DatacenterToEurekaDataCenterId = new()
         {
             { 1, "Elemental" },
             { 2, "Gaia" },
@@ -173,7 +173,7 @@ namespace EurekaHelper
             DalamudApi.XivCommonBase.Functions.Chat.SendMessage(sanitized);
         }
 
-        public static int DatacenterIdToEurekaDatacenterId(string datacenterName) => Constants.DatacenterIdToEurekaDataCenterId.FirstOrDefault(x => x.Value == datacenterName).Key;
+        public static int DatacenterIdToEurekaDatacenterId(string datacenterName) => Constants.DatacenterToEurekaDataCenterId.FirstOrDefault(x => x.Value == datacenterName).Key;
 
         public static string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unable to get version";
 

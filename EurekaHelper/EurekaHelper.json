@@ -1,13 +1,14 @@
 {
 	"Author": "Snowy",
 	"Name": "Eureka Helper",
-	"Punchline": "QoL for Eureka",
+	"Punchline": "Eureka Tracker in a plugin with QoL features",
 	"Description": "A tool to assist you on your Eureka adventures. Type /eurekahelper to get started.",
 	"InternalName": "EurekaHelper",
 	"RepoUrl": "https://github.com/snooooowy/EurekaHelper",
 	"Tags": [
 		"eureka",
-		"tracker"
+		"tracker",
+		"QoL"
 	],
 	"CategoryTags": [
 		"utility"
