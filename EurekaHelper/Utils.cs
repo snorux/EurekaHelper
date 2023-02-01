@@ -173,7 +173,7 @@ namespace EurekaHelper
             DalamudApi.XivCommonBase.Functions.Chat.SendMessage(sanitized);
         }
 
-        public static int DatacenterIdToEurekaDatacenterId(string datacenterName) => Constants.DatacenterToEurekaDataCenterId.FirstOrDefault(x => x.Value == datacenterName).Key;
+        public static int DatacenterToEurekaDatacenterId(string datacenterName) => Constants.DatacenterToEurekaDataCenterId.FirstOrDefault(x => x.Value == datacenterName).Key;
 
         public static string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unable to get version";
 

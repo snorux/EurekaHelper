@@ -206,7 +206,7 @@ namespace EurekaHelper
         {
             var connectionManager = await EurekaConnectionManager.Connect();
 
-            var datacenterId = Utils.DatacenterIdToEurekaDatacenterId(DalamudApi.ClientState.LocalPlayer.CurrentWorld.GameData.DataCenter.Value.Name.RawString);
+            var datacenterId = Utils.DatacenterToEurekaDatacenterId(DalamudApi.ClientState.LocalPlayer.CurrentWorld.GameData.DataCenter.Value.Name.RawString);
             if (datacenterId == 0)
             {
                 PrintMessage("This datacenter is not supported currently. Please submit an issue if you think this is incorrect.");

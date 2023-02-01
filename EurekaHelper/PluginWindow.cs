@@ -137,7 +137,7 @@ namespace EurekaHelper
 
                         if (ImGui.Button(FontAwesomeIcon.LockOpen.ToIconString()))
                         {
-                            var datacenterId = Utils.DatacenterIdToEurekaDatacenterId(DalamudApi.ClientState.LocalPlayer.CurrentWorld.GameData.DataCenter.Value?.Name.RawString ?? "null");
+                            var datacenterId = Utils.DatacenterToEurekaDatacenterId(DalamudApi.ClientState.LocalPlayer.CurrentWorld.GameData.DataCenter.Value?.Name.RawString ?? "null");
 
                             if (datacenterId == 0)
                                 EurekaHelper.PrintMessage("This datacenter is not supported currently. Please submit an issue if you think this is incorrect.");
