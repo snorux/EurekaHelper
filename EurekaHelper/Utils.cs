@@ -28,7 +28,7 @@ namespace EurekaHelper
 
         public static readonly ushort[] BunnyFates = { 1367, 1368, 1407, 1408, 1425 };
 
-        // Only allow these datacenters, the rest are not supported and ffxiv-eureka.com doesn't support Meteor
+        // Only allow these datacenters, the rest are not supported.
         public static readonly Dictionary<int, string> DatacenterToEurekaDataCenterId = new()
         {
             { 1, "Elemental" },
@@ -40,7 +40,8 @@ namespace EurekaHelper
             { 10, "Crystal" },
             { 11, "Light" },
             { 12, "Materia" },
-            { 13, "Dynamis" }
+            { 13, "Dynamis" },
+            { 14, "Meteor" }
         };
     }
 
