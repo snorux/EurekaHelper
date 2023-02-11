@@ -39,10 +39,10 @@ namespace EurekaHelper.XIV.Zones
                 new(1358, 31, 763, 467,     "Brothers", "Mindertaur/Eldertaur", new Vector2(13.9f, 18.7f), "Lab Minotaur", EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Wind, false),
                 new(1361, 32, 763, 467,     "Apocalypse Cow", "Holy Cow", new Vector2(26.0f, 16.0f), "Elder Buffalo", EurekaWeather.None, EurekaWeather.None, EurekaElement.Water, EurekaElement.Wind, false),
                 new(1362, 33, 763, 467,     "Third Impact", "Hadhayosh", new Vector2(30.0f, 19.0f), "Lesser Void Dragon", EurekaWeather.Thunder, EurekaWeather.None, EurekaElement.Lightning, EurekaElement.Lightning, false),
-                new(1362, 34, 763, 467,     "Eye of Horus", "Horus", new Vector2(25.0f, 19.0f), "Void Vouivre", EurekaWeather.HeatWaves, EurekaWeather.None, EurekaElement.Fire, EurekaElement.Fire, false),
+                new(1359, 34, 763, 467,     "Eye of Horus", "Horus", new Vector2(25.0f, 19.0f), "Void Vouivre", EurekaWeather.HeatWaves, EurekaWeather.None, EurekaElement.Fire, EurekaElement.Fire, false),
                 new(1363, 35, 763, 467,     "Eye Scream for Ice Cream", "Arch Angra Mainyu", new Vector2(24.0f, 25.0f), "Gawper", EurekaWeather.None, EurekaWeather.None, EurekaElement.Wind, EurekaElement.Wind, false),
                 new(1365, 36, 763, 467,     "Cassie and the Copycats", "Copycat Cassie", new Vector2(22.3f, 14.3f), "Ameretat", EurekaWeather.Blizzards, EurekaWeather.None, EurekaElement.Ice, EurekaElement.Ice, false),
-                new(1362, 37, 763, 467,     "Louhi on Ice", "Louhi", new Vector2(36.0f, 19.0f), "Val Corpse", EurekaWeather.None, EurekaWeather.None, EurekaElement.Ice, EurekaElement.Ice, true),
+                new(1364, 37, 763, 467,     "Louhi on Ice", "Louhi", new Vector2(36.0f, 19.0f), "Val Corpse", EurekaWeather.None, EurekaWeather.None, EurekaElement.Ice, EurekaElement.Ice, true),
                 new(1367, null, 763, 467,   "Down the Rabbit Hole", "Bunny Fate 1", new Vector2(18.0f, 27.5f), null, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, false, true),
                 new(1368, null, 763, 467,   "Curiouser and Curiouser", "Bunny Fate 2", new Vector2(20.5f, 21.0f), null, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, false, true)
             };
