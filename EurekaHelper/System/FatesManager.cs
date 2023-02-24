@@ -102,12 +102,12 @@ namespace EurekaHelper.System
                         switch (EurekaHelper.Config.PayloadOptions)
                         {
                             case PayloadOptions.CopyToClipboard:
-                                Utils.CopyToClipboard($"/shout {fate.BossName} POP. <flag>");
+                                Utils.CopyToClipboard(Utils.RandomFormattedText(fate));
                                 break;
 
                             default:
                             case PayloadOptions.ShoutToChat:
-                                Utils.SendMessage($"/shout {fate.BossName} POP. <flag>");
+                                Utils.SendMessage(Utils.RandomFormattedText(fate));
                                 break;
                         }
                     });

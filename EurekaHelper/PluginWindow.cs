@@ -442,6 +442,8 @@ namespace EurekaHelper
                     ImGui.PopStyleVar();
                     ImGui.PopStyleColor();
                 }
+                if (ImGui.IsItemClicked())
+                    Utils.SetFlagMarker(fate, true);
 
                 // Spawned By
                 ImGui.TableNextColumn();
