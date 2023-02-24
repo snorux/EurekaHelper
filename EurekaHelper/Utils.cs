@@ -47,6 +47,8 @@ namespace EurekaHelper
 
     internal class Utils
     {
+        private static Random random = new Random();
+
         public static bool IsPlayerInEurekaZone(ushort territoryId) => Constants.EurekaZones.Contains(territoryId);
 
         public static bool IsBunnyFate(ushort fateId) => Constants.BunnyFates.Contains(fateId);
@@ -176,6 +178,18 @@ namespace EurekaHelper
         }
 
         public static int DatacenterToEurekaDatacenterId(string datacenterName) => Constants.DatacenterToEurekaDataCenterId.FirstOrDefault(x => x.Value == datacenterName).Key;
+
+        public static string RandomFormattedText(EurekaFate fate)
+        {
+            // Select a random custom message
+            int index = random.Next(EurekaHelper.Config.CustomMessages.Count);
+            string randomMessage = EurekaHelper.Config.CustomMessages[index];
+
+            return randomMessage
+                .Replace("%bossName%", fate.BossName)
+                .Replace("%fateName%", fate.FateName)
+                .Replace("%flag%", "<flag>");
+        }
 
         public static string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unable to get version";
 

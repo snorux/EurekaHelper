@@ -1,6 +1,4 @@
-﻿using Dalamud.Game.Text.SeStringHandling;
-using static FFXIVClientStructs.FFXIV.Client.Game.Character.Character;
-using System.Numerics;
+﻿using System.Numerics;
 using System;
 
 namespace EurekaHelper.XIV

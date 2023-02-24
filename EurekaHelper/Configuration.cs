@@ -1,6 +1,7 @@
 ﻿using Dalamud.Configuration;
 using EurekaHelper.System;
 using System;
+using System.Collections.Generic;
 
 namespace EurekaHelper
 {
@@ -15,7 +16,14 @@ namespace EurekaHelper
     {
         public int Version { get; set; } = 0;
 
-        public void Initialize() { }
+        public void Initialize() 
+        {
+            if (CustomMessages.Count == 0)
+            {
+                CustomMessages.Add("/shout %bossName% POP. %flag%");
+                Save();
+            }
+        }
 
         public bool DisplayFateProgress = false;
 
@@ -28,6 +36,8 @@ namespace EurekaHelper
         public bool DisplayToastPop = false;
 
         public bool AutoPopFate = true;
+
+        public List<string> CustomMessages { get; set; } = new();
 
         public SoundManager.SoundEffect NMSoundEffect { get; set; } = SoundManager.SoundEffect.SoundEffect36;
 
