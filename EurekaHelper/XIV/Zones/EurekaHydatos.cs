@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using static FFXIVClientStructs.FFXIV.Client.Game.Character.Character;
 using System.Numerics;
 using System.Linq;
 

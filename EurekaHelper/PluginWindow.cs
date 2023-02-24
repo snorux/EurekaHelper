@@ -603,7 +603,7 @@ namespace EurekaHelper
                 ImGui.PopStyleVar();
             }
         }
-
+        static string CustomMessages = string.Join("\n", EurekaHelper.Config.CustomMessages);
         public static void DrawSettingsTab()
         {
             ImGui.Columns(2, null, true);
@@ -670,7 +670,34 @@ namespace EurekaHelper
             Utils.SetTooltip("Sets what the clickable payload does.\n" +
                 "For example: Setting it to \'ShoutToChat\' will shout the pop when you click the button in chat.");
 
+            ImGui.NextColumn();
             ImGui.Columns(1);
+            if (ImGui.CollapsingHeader("Custom shout messages"))
+            {
+                ImGui.TextWrapped("** HOW TO USE **" +
+                    "\nType the messages you want in each line, to enter the next line press \"Enter\"" +
+                    "\nPlease see below for the list of available formatting\n");
+                ImGui.TextWrapped("** AVAILABLE FORMATTINGS **");
+                ImGui.BulletText("%%bossName%% - Replaced with fate boss name");
+                ImGui.BulletText("%%fateName%% - Replaced with fate name");
+                ImGui.BulletText("%%flag%% - Replaced with <flag>");
+                ImGui.Spacing();
+                ImGui.InputTextMultiline("###CustomShoutMessages", ref CustomMessages, 9999, new Vector2(-1, -1));
+                if (ImGui.IsItemDeactivatedAfterEdit())
+                {
+                    if (!string.IsNullOrWhiteSpace(CustomMessages))
+                    {
+                        EurekaHelper.Config.CustomMessages = CustomMessages.Split("\n").Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+                        save = true;
+                    }
+                    else
+                    {
+                        CustomMessages = "/shout %bossName% POP. %flag%";
+                        EurekaHelper.Config.CustomMessages = new() { CustomMessages };
+                        save = true;
+                    }
+                }
+            }
 
             if (save)
                 EurekaHelper.Config.Save();
