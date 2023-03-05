@@ -19,6 +19,9 @@ To open the window, type `/eurekahelper` or `/ehelper`
 | `/arisu` | Display next weather for Crab, Cassie & Skoll |
 
 ## Main Window
-
+| Default | Connected To Tracker |
+|:-------:|----------------------|
+| ![image](https://user-images.githubusercontent.com/34697265/222973228-212a83bd-ba93-437e-9b31-1d06f6cee7eb.png) | ![image](https://user-images.githubusercontent.com/34697265/222973354-b0d7aa6b-59b8-4767-be42-520ac91d651e.png) |
 
 ## Configuration Tab
+![image](https://user-images.githubusercontent.com/34697265/222973409-a6af9ae0-6f44-49b9-a563-5d4ee1dd9421.png)
