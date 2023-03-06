@@ -443,7 +443,7 @@ namespace EurekaHelper
                     ImGui.PopStyleColor();
                 }
                 if (ImGui.IsItemClicked())
-                    Utils.SetFlagMarker(fate, true);
+                    Utils.SetFlagMarker(fate, openMap: true);
 
                 // Spawned By
                 ImGui.TableNextColumn();
@@ -671,8 +671,12 @@ namespace EurekaHelper
             }
             Utils.SetTooltip("Sets what the clickable payload does.\n" +
                 "For example: Setting it to \'ShoutToChat\' will shout the pop when you click the button in chat.");
-
             ImGui.NextColumn();
+
+            save |= ImGui.Checkbox("Randomize Map Coords", ref EurekaHelper.Config.RandomizeMapCoords);
+            Utils.SetTooltip("Randomizes map coords to range of +- 0.5 (recommended to enable)");
+            ImGui.NextColumn();
+
             ImGui.Columns(1);
             if (ImGui.CollapsingHeader("Custom shout messages"))
             {

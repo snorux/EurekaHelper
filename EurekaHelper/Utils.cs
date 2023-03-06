@@ -28,6 +28,8 @@ namespace EurekaHelper
 
         public static readonly ushort[] BunnyFates = { 1367, 1368, 1407, 1408, 1425 };
 
+        public static readonly float RandomizeRange = 0.5f;
+
         // Only allow these datacenters, the rest are not supported.
         public static readonly Dictionary<int, string> DatacenterToEurekaDataCenterId = new()
         {
@@ -47,7 +49,7 @@ namespace EurekaHelper
 
     internal class Utils
     {
-        private static Random random = new Random();
+        private static readonly Random random = new();
 
         public static bool IsPlayerInEurekaZone(ushort territoryId) => Constants.EurekaZones.Contains(territoryId);
 
@@ -120,7 +122,6 @@ namespace EurekaHelper
             {
                 DrawUnderline(ImGui.GetColorU32(ImGuiCol.Button));
             }
-
         }
 
         public static void DrawUnderline(uint color)
@@ -156,13 +157,16 @@ namespace EurekaHelper
                 ImGui.TextColored((Vector4)color, text);
         }
 
-        public static unsafe void SetFlagMarker(EurekaFate fateInfo, bool openMap = false)
+        public static unsafe void SetFlagMarker(EurekaFate fateInfo, bool openMap = false, bool randomizeCoords = false)
         {
             var instance = AgentMap.Instance();
 
+            var XValue = randomizeCoords ? GetRandomizeFloat(fateInfo.FatePosition.X) : fateInfo.FatePosition.X;
+            var YValue = randomizeCoords ? GetRandomizeFloat(fateInfo.FatePosition.Y) : fateInfo.FatePosition.Y;
+
             if (instance != null)
             {
-                var mapPayload = new MapLinkPayload(fateInfo.TerritoryId, fateInfo.MapId, fateInfo.FatePosition.X, fateInfo.FatePosition.Y);
+                var mapPayload = new MapLinkPayload(fateInfo.TerritoryId, fateInfo.MapId, XValue, YValue);
                 instance->IsFlagMarkerSet = 0;
                 instance->SetFlagMapMarker(mapPayload.Map.TerritoryType.Row, mapPayload.Map.RowId, mapPayload.RawX / 1000f, mapPayload.RawY / 1000f);
 
@@ -170,6 +174,8 @@ namespace EurekaHelper
                     instance->OpenMap(mapPayload.Map.RowId, mapPayload.Map.TerritoryType.Row);
             }
         }
+
+        public static float GetRandomizeFloat(float centerValue) => (float)(centerValue + (random.NextDouble() * Constants.RandomizeRange * 2.0f - Constants.RandomizeRange));
 
         public static void SendMessage(string message)
         {

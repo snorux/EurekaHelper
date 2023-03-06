@@ -97,7 +97,7 @@ namespace EurekaHelper.System
                     DalamudApi.PluginInterface.RemoveChatLinkHandler(fate.FateId);
                     DalamudLinkPayload payload = DalamudApi.PluginInterface.AddChatLinkHandler(fate.FateId, (i, m) =>
                     {
-                        Utils.SetFlagMarker(fate);
+                        Utils.SetFlagMarker(fate, randomizeCoords: EurekaHelper.Config.RandomizeMapCoords);
 
                         switch (EurekaHelper.Config.PayloadOptions)
                         {
