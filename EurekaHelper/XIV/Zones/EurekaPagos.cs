@@ -25,25 +25,25 @@ namespace EurekaHelper.XIV.Zones
         {
             List<EurekaFate> PagosFates = new()
             {
-                new(1351, 21, 763, 467,     "Eternity", "The Snow Queen", new Vector2(21.7f, 26.3f), "Yukinko", EurekaWeather.None, EurekaWeather.None, EurekaElement.Ice, EurekaElement.Ice, false),
-                new(1369, 22, 763, 467,     "Cairn Blight 451", "Taxim", new Vector2(25.0f, 28.0f), "Demon of the Incunable", EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Wind, true),
-                new(1353, 23, 763, 467,     "Ash the Magic Dragon", "Ash Dragon", new Vector2(29.0f, 30.0f), "Blood Demon", EurekaWeather.None, EurekaWeather.None, EurekaElement.Fire, EurekaElement.Fire, false),
-                new(1354, 24, 763, 467,     "Conqueror Worm", "Glavoid", new Vector2(32.0f, 26.0f), "Val Worm", EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Earth, false),
-                new(1355, 25, 763, 467,     "Melting Point", "Anapos", new Vector2(32.9f, 21.5f), "Snowmelt Sprite", EurekaWeather.None, EurekaWeather.Fog, EurekaElement.Water, EurekaElement.Water, false),
-                new(1366, 26, 763, 467,     "The Wobbler in Darkness", "Hakutaku", new Vector2(29.0f, 22.0f), "Blubber Eyes", EurekaWeather.None, EurekaWeather.None, EurekaElement.Fire, EurekaElement.Fire, false),
-                new(1357, 27, 763, 467,     "Does It Have to Be a Snowman", "King Igloo", new Vector2(17.0f, 16.0f), "Huwasi", EurekaWeather.None, EurekaWeather.None, EurekaElement.Ice, EurekaElement.Ice, false),
-                new(1356, 28, 763, 467,     "Disorder in the Court", "Asag", new Vector2(10.0f, 10.0f), "Wandering Opken", EurekaWeather.None, EurekaWeather.None, EurekaElement.Lightning, EurekaElement.Lightning, false),
-                new(1352, 29, 763, 467,     "Cows for Concern", "Surabhi", new Vector2(10.0f, 20.0f), "Pagos Billygoat", EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Earth, false),
-                new(1360, 30, 763, 467,     "Morte Arthro", "King Arthro", new Vector2(8.7f, 15.4f), "Val Snipper", EurekaWeather.Fog, EurekaWeather.None, EurekaElement.Water, EurekaElement.Water, false),
-                new(1358, 31, 763, 467,     "Brothers", "Mindertaur/Eldertaur", new Vector2(13.9f, 18.7f), "Lab Minotaur", EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Wind, false),
-                new(1361, 32, 763, 467,     "Apocalypse Cow", "Holy Cow", new Vector2(26.0f, 16.0f), "Elder Buffalo", EurekaWeather.None, EurekaWeather.None, EurekaElement.Water, EurekaElement.Wind, false),
-                new(1362, 33, 763, 467,     "Third Impact", "Hadhayosh", new Vector2(30.0f, 19.0f), "Lesser Void Dragon", EurekaWeather.Thunder, EurekaWeather.None, EurekaElement.Lightning, EurekaElement.Lightning, false),
-                new(1359, 34, 763, 467,     "Eye of Horus", "Horus", new Vector2(25.0f, 19.0f), "Void Vouivre", EurekaWeather.HeatWaves, EurekaWeather.None, EurekaElement.Fire, EurekaElement.Fire, false),
-                new(1363, 35, 763, 467,     "Eye Scream for Ice Cream", "Arch Angra Mainyu", new Vector2(24.0f, 25.0f), "Gawper", EurekaWeather.None, EurekaWeather.None, EurekaElement.Wind, EurekaElement.Wind, false),
-                new(1365, 36, 763, 467,     "Cassie and the Copycats", "Copycat Cassie", new Vector2(22.3f, 14.3f), "Ameretat", EurekaWeather.Blizzards, EurekaWeather.None, EurekaElement.Ice, EurekaElement.Ice, false),
-                new(1364, 37, 763, 467,     "Louhi on Ice", "Louhi", new Vector2(36.0f, 19.0f), "Val Corpse", EurekaWeather.None, EurekaWeather.None, EurekaElement.Ice, EurekaElement.Ice, true),
-                new(1367, null, 763, 467,   "Down the Rabbit Hole", "Bunny Fate 1", new Vector2(18.0f, 27.5f), null, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, false, true),
-                new(1368, null, 763, 467,   "Curiouser and Curiouser", "Bunny Fate 2", new Vector2(20.5f, 21.0f), null, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, false, true)
+                new(1351, 21, 763, 467,     "Eternity", "The Snow Queen", "Queen", new Vector2(21.7f, 26.3f), "Yukinko", EurekaWeather.None, EurekaWeather.None, EurekaElement.Ice, EurekaElement.Ice, false),
+                new(1369, 22, 763, 467,     "Cairn Blight 451", "Taxim", "Taxim", new Vector2(25.0f, 28.0f), "Demon of the Incunable", EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Wind, true),
+                new(1353, 23, 763, 467,     "Ash the Magic Dragon", "Ash Dragon", "Dragon", new Vector2(29.0f, 30.0f), "Blood Demon", EurekaWeather.None, EurekaWeather.None, EurekaElement.Fire, EurekaElement.Fire, false),
+                new(1354, 24, 763, 467,     "Conqueror Worm", "Glavoid", "Glavoid", new Vector2(32.0f, 26.0f), "Val Worm", EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Earth, false),
+                new(1355, 25, 763, 467,     "Melting Point", "Anapos", "Anapos", new Vector2(32.9f, 21.5f), "Snowmelt Sprite", EurekaWeather.None, EurekaWeather.Fog, EurekaElement.Water, EurekaElement.Water, false),
+                new(1366, 26, 763, 467,     "The Wobbler in Darkness", "Hakutaku", "Haku", new Vector2(29.0f, 22.0f), "Blubber Eyes", EurekaWeather.None, EurekaWeather.None, EurekaElement.Fire, EurekaElement.Fire, false),
+                new(1357, 27, 763, 467,     "Does It Have to Be a Snowman", "King Igloo", "Igloo", new Vector2(17.0f, 16.0f), "Huwasi", EurekaWeather.None, EurekaWeather.None, EurekaElement.Ice, EurekaElement.Ice, false),
+                new(1356, 28, 763, 467,     "Disorder in the Court", "Asag", "Asag", new Vector2(10.5f, 11.0f), "Wandering Opken", EurekaWeather.None, EurekaWeather.None, EurekaElement.Lightning, EurekaElement.Lightning, false),
+                new(1352, 29, 763, 467,     "Cows for Concern", "Surabhi", "Surabhi", new Vector2(10.0f, 20.0f), "Pagos Billygoat", EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Earth, false),
+                new(1360, 30, 763, 467,     "Morte Arthro", "King Arthro", "Arthro", new Vector2(8.7f, 15.4f), "Val Snipper", EurekaWeather.Fog, EurekaWeather.None, EurekaElement.Water, EurekaElement.Water, false),
+                new(1358, 31, 763, 467,     "Brothers", "Mindertaur/Eldertaur", "Brothers", new Vector2(13.9f, 18.7f), "Lab Minotaur", EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Wind, false),
+                new(1361, 32, 763, 467,     "Apocalypse Cow", "Holy Cow", "Holy Cow", new Vector2(26.0f, 16.0f), "Elder Buffalo", EurekaWeather.None, EurekaWeather.None, EurekaElement.Water, EurekaElement.Wind, false),
+                new(1362, 33, 763, 467,     "Third Impact", "Hadhayosh", "Behe", new Vector2(30.0f, 19.0f), "Lesser Void Dragon", EurekaWeather.Thunder, EurekaWeather.None, EurekaElement.Lightning, EurekaElement.Lightning, false),
+                new(1359, 34, 763, 467,     "Eye of Horus", "Horus", "Horus", new Vector2(25.0f, 19.0f), "Void Vouivre", EurekaWeather.HeatWaves, EurekaWeather.None, EurekaElement.Fire, EurekaElement.Fire, false),
+                new(1363, 35, 763, 467,     "Eye Scream for Ice Cream", "Arch Angra Mainyu", "Mainyu", new Vector2(24.0f, 25.0f), "Gawper", EurekaWeather.None, EurekaWeather.None, EurekaElement.Wind, EurekaElement.Wind, false),
+                new(1365, 36, 763, 467,     "Cassie and the Copycats", "Copycat Cassie", "Cassie", new Vector2(22.3f, 14.3f), "Ameretat", EurekaWeather.Blizzards, EurekaWeather.None, EurekaElement.Ice, EurekaElement.Ice, false),
+                new(1364, 37, 763, 467,     "Louhi on Ice", "Louhi", "Louhi", new Vector2(36.0f, 19.0f), "Val Corpse", EurekaWeather.None, EurekaWeather.None, EurekaElement.Ice, EurekaElement.Ice, true),
+                new(1367, null, 763, 467,   "Down the Rabbit Hole", "Bunny Fate 1", "Bunny Fate 1", new Vector2(18.0f, 27.5f), null, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, false, true),
+                new(1368, null, 763, 467,   "Curiouser and Curiouser", "Bunny Fate 2", "Bunny Fate 2", new Vector2(20.5f, 21.0f), null, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, false, true)
             };
 
             return new EurekaPagos(PagosFates);

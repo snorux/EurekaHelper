@@ -681,6 +681,7 @@ namespace EurekaHelper
                     "\nPlease see below for the list of available formatting\n");
                 ImGui.TextWrapped("** AVAILABLE FORMATTINGS **");
                 ImGui.BulletText("%%bossName%% - Replaced with fate boss name");
+                ImGui.BulletText("%%bossShortName%% - Replaced with fate boss short name");
                 ImGui.BulletText("%%fateName%% - Replaced with fate name");
                 ImGui.BulletText("%%flag%% - Replaced with <flag>");
                 ImGui.Spacing();

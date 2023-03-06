@@ -187,6 +187,7 @@ namespace EurekaHelper
 
             return randomMessage
                 .Replace("%bossName%", fate.BossName)
+                .Replace("%bossShortName%", fate.BossShortName)
                 .Replace("%fateName%", fate.FateName)
                 .Replace("%flag%", "<flag>");
         }
