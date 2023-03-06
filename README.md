@@ -16,7 +16,7 @@ To open the window, type `/eurekahelper` or `/ehelper`
 |:-------:|-------------|
 | `/ehelper` or `/eurekahelper` | Opens the main window |
 | `/etrackers` | Attempts to get a tracker for the current instance in the same datacenter |
-| `/arisu` | Display next weather for Crab, Cassie & Skoll |
+| `/arisu` | Display next weather for Crab, Cassie & Skoll<br />![image](https://user-images.githubusercontent.com/34697265/223168197-4dc544ae-c467-4b17-a754-b2835ff4e7e0.png) |
 
 ## Main Window
 | Default | Connected To Tracker |
@@ -24,4 +24,4 @@ To open the window, type `/eurekahelper` or `/ehelper`
 | ![image](https://user-images.githubusercontent.com/34697265/222973228-212a83bd-ba93-437e-9b31-1d06f6cee7eb.png) | ![image](https://user-images.githubusercontent.com/34697265/222973354-b0d7aa6b-59b8-4767-be42-520ac91d651e.png) |
 
 ## Configuration Tab
-![image](https://user-images.githubusercontent.com/34697265/222973409-a6af9ae0-6f44-49b9-a563-5d4ee1dd9421.png)
+![image](https://user-images.githubusercontent.com/34697265/223168760-5eed26d4-7a58-492d-bf73-506abc35bb04.png)
