@@ -13,6 +13,7 @@ namespace EurekaHelper.System
             SignatureHelper.Initialise(this);
         }
     }
+
     public static class SoundManager
     {
         public enum SoundEffect

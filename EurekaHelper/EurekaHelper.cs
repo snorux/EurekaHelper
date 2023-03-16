@@ -22,6 +22,7 @@ namespace EurekaHelper
         private PluginWindow PluginWindow { get; init; }
 
         private readonly FatesManager FatesManager;
+        private readonly ZoneManager ZoneManager;
 
         public EurekaHelper(DalamudPluginInterface pluginInterface)
         {
@@ -32,6 +33,7 @@ namespace EurekaHelper
             Config.Initialize();
 
             FatesManager = new();
+            ZoneManager = new();
             PluginWindow = new PluginWindow();
 
             WindowSystem.AddWindow(PluginWindow);
@@ -265,6 +267,7 @@ namespace EurekaHelper
             WindowSystem.RemoveAllWindows();
             DalamudApi.Dispose();
             FatesManager.Dispose();
+            ZoneManager.Dispose();
             PluginWindow.GetConnection().Dispose();
         }
     }

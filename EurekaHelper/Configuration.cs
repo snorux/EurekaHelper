@@ -39,6 +39,8 @@ namespace EurekaHelper
 
         public bool RandomizeMapCoords = true;
 
+        public bool DisplayServerId = false;
+
         public List<string> CustomMessages { get; set; } = new();
 
         public SoundManager.SoundEffect NMSoundEffect { get; set; } = SoundManager.SoundEffect.SoundEffect36;

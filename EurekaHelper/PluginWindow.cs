@@ -34,9 +34,15 @@ namespace EurekaHelper
                     ImGui.EndTabItem();
                 }
 
-                if (ImGui.BeginTabItem("Settings"))
+                if (ImGui.BeginTabItem("Configuration"))
                 {
                     DrawSettingsTab();
+                    ImGui.EndTabItem();
+                }
+
+                if (ImGui.BeginTabItem("Instance"))
+                {
+                    DrawInstanceTab();
                     ImGui.EndTabItem();
                 }
 
@@ -54,7 +60,7 @@ namespace EurekaHelper
         public async void DrawTrackerTab()
         {
             ImGui.AlignTextToFramePadding();
-            ImGui.Text("Tracker Settings:"); ImGui.SameLine();
+            ImGui.Text("Settings:"); ImGui.SameLine();
 
             ImGui.SameLine();
 
@@ -183,7 +189,7 @@ namespace EurekaHelper
                 ImGui.PushFont(UiBuilder.IconFont);
                 ImGui.Button(FontAwesomeIcon.CloudSun.ToIconString());
                 ImGui.PopFont();
-                
+
                 if (ImGui.IsItemHovered())
                 {
                     ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 1f);
@@ -705,6 +711,17 @@ namespace EurekaHelper
                     }
                 }
             }
+
+            if (save)
+                EurekaHelper.Config.Save();
+        }
+
+        public static void DrawInstanceTab()
+        {
+            var save = false;
+
+            save |= ImGui.Checkbox("Display Server Id", ref EurekaHelper.Config.DisplayServerId);
+
 
             if (save)
                 EurekaHelper.Config.Save();
