@@ -70,6 +70,18 @@ namespace EurekaHelper
             };
         }
 
+        public static string GetZoneName(ushort zoneId)
+        {
+            return zoneId switch
+            {
+                732 => "Anemos",
+                763 => "Pagos",
+                795 => "Pyros",
+                827 => "Hydatos",
+                _ => "Unknown"
+            };
+        }
+
         public static void CopyToClipboard(string message) => ImGui.SetClipboardText(message);
 
         public static SeString MapLink(uint territoryId, uint mapId, Vector2 position)
