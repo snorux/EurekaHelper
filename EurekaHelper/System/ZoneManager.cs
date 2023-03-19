@@ -27,8 +27,8 @@ namespace EurekaHelper.System
                 ushort zoneId = MemoryHelper.Read<ushort>(a3 + 2);
                 var zoneName = Utils.GetZoneName(zoneId);
 
-                if (EurekaHelper.Config.DisplayServerId)
-                    EurekaHelper.PrintMessage($"{zoneName}: {serverId}");
+                if (zoneName != null && EurekaHelper.Config.DisplayServerId)
+                    EurekaHelper.PrintMessage($"{zoneName} Server ID: {serverId}");
             }
             catch (Exception ex)
             {

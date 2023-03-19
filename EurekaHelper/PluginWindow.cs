@@ -684,7 +684,7 @@ namespace EurekaHelper
             ImGui.NextColumn();
 
             ImGui.Columns(1);
-            if (ImGui.CollapsingHeader("Custom shout messages"))
+            if (ImGui.CollapsingHeader("Custom Messages"))
             {
                 ImGui.TextWrapped("** HOW TO USE **" +
                     "\nType the messages you want in each line, to enter the next line press \"Enter\"" +

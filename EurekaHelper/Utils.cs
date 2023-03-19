@@ -78,7 +78,7 @@ namespace EurekaHelper
                 763 => "Pagos",
                 795 => "Pyros",
                 827 => "Hydatos",
-                _ => "Unknown"
+                _ => null
             };
         }
 
