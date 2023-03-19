@@ -611,6 +611,7 @@ namespace EurekaHelper
                 ImGui.PopStyleVar();
             }
         }
+
         static string CustomMessages = string.Join("\n", EurekaHelper.Config.CustomMessages);
         public static void DrawSettingsTab()
         {
@@ -721,6 +722,19 @@ namespace EurekaHelper
             var save = false;
 
             save |= ImGui.Checkbox("Display Server Id", ref EurekaHelper.Config.DisplayServerId);
+
+            ImGui.Separator();
+
+            ImGui.TextColored(RedColorText, "** DISCLAIMER, READ THIS **");
+            ImGui.TextWrapped("This option will display the current server ID of the instance in chat each time you instance into a Eureka zone. " +
+                "This might help you identify unique instances. However, there are a few things you should note." +
+                "\n\nFirst of all, this method is definitely not the best way to uniquely identify Eureka zones." +
+                "\n\nSecondly, according to sources and self-testing, the server ID may get reused for the new instance after the old instance gets locked." +
+                "\n\nFor Example: If a zone in Pyros with server ID (59) gets locked, on very rare occasions, the new Pyros instance might get the same server ID (59) as well." +
+                "\n\nThirdly, from what I know and have read (but have been unable to test), these server IDs are unique to people in the same world as you. " +
+                "This means that another person in another world will get a different server ID than what you have." +
+                "\n\nAfter reading all this information, I hope that you will use it only for your own good. And I will not be entertaining any feedback mentioning that the server ID is \"incorrect\".");
+
 
 
             if (save)
