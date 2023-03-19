@@ -15,7 +15,7 @@ To open the window, type `/eurekahelper` or `/ehelper`
 | Command | Description |
 |:-------:|-------------|
 | `/ehelper` or `/eurekahelper` | Opens the main window |
-| `/etrackers` | Attempts to get a tracker for the current instance in the same datacenter |
+| `/etrackers` | Attempts to get a list of public trackers for the current instance in the same datacenter |
 | `/arisu` | Display next weather for Crab, Cassie & Skoll<br />![image](https://user-images.githubusercontent.com/34697265/223168197-4dc544ae-c467-4b17-a754-b2835ff4e7e0.png) |
 
 ## Main Window
