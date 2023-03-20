@@ -730,12 +730,11 @@ namespace EurekaHelper
                 "This might help you identify unique instances. However, there are a few things you should note." +
                 "\n\nFirst of all, this method is definitely not the best way to uniquely identify Eureka zones." +
                 "\n\nSecondly, according to sources and self-testing, the server ID may get reused for the new instance after the old instance gets locked." +
-                "\n\nFor Example: If a zone in Pyros with server ID (59) gets locked, on very rare occasions, the new Pyros instance might get the same server ID (59) as well." +
+                "\n\nExamples:\nIf you enter a Pagos zone with server ID (60) and you rejoin to another Pagos zone with server ID (61), it would have meant that you've just joined another instance." +
+                "\nIf a zone in Pyros with server ID (59) gets locked, on very rare occasions, the new Pyros instance might get the same server ID (59) as well." +
                 "\n\nThirdly, from what I know and have read (but have been unable to test), these server IDs are unique to people in the same world as you. " +
                 "This means that another person in another world will get a different server ID than what you have." +
                 "\n\nAfter reading all this information, I hope that you will use it only for your own good. And I will not be entertaining any feedback mentioning that the server ID is \"incorrect\".");
-
-
 
             if (save)
                 EurekaHelper.Config.Save();

@@ -30,6 +30,8 @@ namespace EurekaHelper
 
         public static readonly float RandomizeRange = 0.5f;
 
+        public static readonly int MapCircleRadius = 80;
+
         // Only allow these datacenters, the rest are not supported.
         public static readonly Dictionary<int, string> DatacenterToEurekaDataCenterId = new()
         {
@@ -169,7 +171,7 @@ namespace EurekaHelper
                 ImGui.TextColored((Vector4)color, text);
         }
 
-        public static unsafe void SetFlagMarker(EurekaFate fateInfo, bool openMap = false, bool randomizeCoords = false)
+        public static unsafe void SetFlagMarker(EurekaFate fateInfo, bool openMap = false, bool randomizeCoords = false, bool drawCircle = false)
         {
             var instance = AgentMap.Instance();
 
@@ -180,10 +182,17 @@ namespace EurekaHelper
             {
                 var mapPayload = new MapLinkPayload(fateInfo.TerritoryId, fateInfo.MapId, XValue, YValue);
                 instance->IsFlagMarkerSet = 0;
+
+                if (drawCircle)
+                {
+                    instance->TempMapMarkerCount = 0;
+                    instance->AddGatheringTempMarker(mapPayload.RawX / 1000, mapPayload.RawY / 1000, Constants.MapCircleRadius);
+                }
+
                 instance->SetFlagMapMarker(mapPayload.Map.TerritoryType.Row, mapPayload.Map.RowId, mapPayload.RawX / 1000f, mapPayload.RawY / 1000f);
 
                 if (openMap)
-                    instance->OpenMap(mapPayload.Map.RowId, mapPayload.Map.TerritoryType.Row);
+                    instance->OpenMap(mapPayload.Map.RowId, mapPayload.Map.TerritoryType.Row, type: drawCircle ? MapType.GatheringLog : MapType.FlagMarker);
             }
         }
 
