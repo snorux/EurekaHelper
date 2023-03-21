@@ -14,6 +14,7 @@ namespace EurekaHelper.XIV
         public string BossShortName { get; private set; }
         public Vector2 FatePosition { get; private set; }
         public string SpawnedBy { get; private set; }
+        public Vector2 SpawnByPosition { get; private set; }
         public EurekaWeather SpawnRequiredWeather { get; private set; }
         public EurekaWeather SpawnByRequiredWeather { get; private set; }
         public EurekaElement BossElement { get; private set; }
@@ -24,7 +25,7 @@ namespace EurekaHelper.XIV
         public bool IncludeInTracker { get; private set; }
         public bool IsBunnyFate { get; private set; }
 
-        public EurekaFate(ushort fateId, ushort? trackerId, ushort territoryId, ushort mapId, string fateName, string bossName, string bossShortName, Vector2 fatePosition, string spawnedBy, EurekaWeather spawnRequiredWeather, EurekaWeather spawnByRequiredWeather, EurekaElement bossElement, EurekaElement spawnByElement, bool spawnByRequiredNight, bool includeInTracker = true, bool isBunnyFate = false)
+        public EurekaFate(ushort fateId, ushort? trackerId, ushort territoryId, ushort mapId, string fateName, string bossName, string bossShortName, Vector2 fatePosition, string spawnedBy, Vector2 spawnedByPosition, EurekaWeather spawnRequiredWeather, EurekaWeather spawnByRequiredWeather, EurekaElement bossElement, EurekaElement spawnByElement, bool spawnByRequiredNight, bool includeInTracker = true, bool isBunnyFate = false)
         {
             FateId = fateId;
             TrackerId = trackerId;
@@ -35,6 +36,7 @@ namespace EurekaHelper.XIV
             BossShortName = bossShortName;
             FatePosition = fatePosition;
             SpawnedBy = spawnedBy;
+            SpawnByPosition = spawnedByPosition;
             SpawnRequiredWeather = spawnRequiredWeather;
             SpawnByRequiredWeather = spawnByRequiredWeather;
             BossElement = bossElement;

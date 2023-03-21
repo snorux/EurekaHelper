@@ -449,7 +449,7 @@ namespace EurekaHelper
                     ImGui.PopStyleColor();
                 }
                 if (ImGui.IsItemClicked())
-                    Utils.SetFlagMarker(fate, openMap: true);
+                    Utils.SetFlagMarker(fate, openMap: true, drawCircle: true);
 
                 // Spawned By
                 ImGui.TableNextColumn();
