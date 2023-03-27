@@ -449,7 +449,7 @@ namespace EurekaHelper
                     ImGui.PopStyleColor();
                 }
                 if (ImGui.IsItemClicked())
-                    Utils.SetFlagMarker(fate, openMap: true, drawCircle: true);
+                    Utils.SetFlagMarker(fate, openMap: true);
 
                 // Spawned By
                 ImGui.TableNextColumn();
@@ -478,6 +478,8 @@ namespace EurekaHelper
                     ImGui.PopStyleVar();
                     ImGui.PopStyleColor();
                 }
+                if (ImGui.IsItemClicked())
+                    Utils.SetFlagMarker(fate.TerritoryId, fate.MapId, new Vector2(fate.SpawnByPosition.X, fate.SpawnByPosition.Y), openMap: true, drawCircle: true);
 
                 // Popped At
                 ImGui.TableNextColumn();

@@ -171,16 +171,16 @@ namespace EurekaHelper
                 ImGui.TextColored((Vector4)color, text);
         }
 
-        public static unsafe void SetFlagMarker(EurekaFate fateInfo, bool openMap = false, bool randomizeCoords = false, bool drawCircle = false)
+        public static unsafe void SetFlagMarker(ushort territoryId, ushort mapId, Vector2 position, bool openMap = false, bool randomizeCoords = false, bool drawCircle = false)
         {
             var instance = AgentMap.Instance();
 
-            var XValue = randomizeCoords ? GetRandomizeFloat(fateInfo.FatePosition.X) : fateInfo.FatePosition.X;
-            var YValue = randomizeCoords ? GetRandomizeFloat(fateInfo.FatePosition.Y) : fateInfo.FatePosition.Y;
+            var PosX = randomizeCoords ? GetRandomizeFloat(position.X) : position.X;
+            var PosY = randomizeCoords ? GetRandomizeFloat(position.Y) : position.Y;
 
             if (instance != null)
             {
-                var mapPayload = new MapLinkPayload(fateInfo.TerritoryId, fateInfo.MapId, XValue, YValue);
+                var mapPayload = new MapLinkPayload(territoryId, mapId, PosX, PosY);
                 instance->IsFlagMarkerSet = 0;
 
                 if (drawCircle)
@@ -195,6 +195,9 @@ namespace EurekaHelper
                     instance->OpenMap(mapPayload.Map.RowId, mapPayload.Map.TerritoryType.Row, type: drawCircle ? MapType.GatheringLog : MapType.FlagMarker);
             }
         }
+
+        public static void SetFlagMarker(EurekaFate fateInfo, bool openMap = false, bool randomizeCoords = false, bool drawCircle = false)
+            => SetFlagMarker(fateInfo.TerritoryId, fateInfo.MapId, new Vector2(fateInfo.FatePosition.X, fateInfo.FatePosition.Y), openMap, randomizeCoords, drawCircle);
 
         public static float GetRandomizeFloat(float centerValue) => (float)(centerValue + (random.NextDouble() * Constants.RandomizeRange * 2.0f - Constants.RandomizeRange));
 
