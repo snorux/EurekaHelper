@@ -1,4 +1,6 @@
 # EurekaHelper
+[![Download count](https://img.shields.io/endpoint?url=https://vz32sgcoal.execute-api.us-east-1.amazonaws.com/EurekaHelper)](https://github.com/MidoriKami/DailyDuty)  
+ 
 A FFXIV Dalamud plugin - In-Game Eureka Tracker with QoL features.  
 
 EurekaHelper allows you to join or create a [Eureka Tracker](https://ffxiv-eureka.com/) instance in-game.  
