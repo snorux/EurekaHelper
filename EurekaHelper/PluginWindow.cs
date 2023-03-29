@@ -723,7 +723,14 @@ namespace EurekaHelper
         {
             var save = false;
 
-            save |= ImGui.Checkbox("Display Server Id", ref EurekaHelper.Config.DisplayServerId);
+            ImGui.Columns(2);
+
+            save |= ImGui.Checkbox("Display Server Id in chat", ref EurekaHelper.Config.DisplayServerId);
+            ImGui.NextColumn();
+
+            save |= ImGui.Checkbox("Display Server Id in \"server info\" bar", ref EurekaHelper.Config.DisplayServerIdInServerInfo);
+
+            ImGui.Columns(1);
 
             ImGui.Separator();
 

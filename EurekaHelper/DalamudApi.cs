@@ -15,6 +15,7 @@ using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
+using Dalamud.Game.Gui.Dtr;
 using Dalamud.Game.Gui.FlyText;
 using Dalamud.Game.Gui.PartyFinder;
 using Dalamud.Game.Gui.Toast;
@@ -119,6 +120,10 @@ namespace Dalamud
         [PluginService]
         //[RequiredVersion("1.0")]
         public static ToastGui ToastGui { get; private set; }
+
+        [PluginService]
+        //[RequiredVersion("1.0")]
+        public static DtrBar DtrBar { get; private set; }
 
         public static XivCommonBase XivCommonBase { get; private set; }
 

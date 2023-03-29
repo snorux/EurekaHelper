@@ -41,6 +41,8 @@ namespace EurekaHelper
 
         public bool DisplayServerId = false;
 
+        public bool DisplayServerIdInServerInfo = false;
+
         public List<string> CustomMessages { get; set; } = new();
 
         public SoundManager.SoundEffect NMSoundEffect { get; set; } = SoundManager.SoundEffect.SoundEffect36;
