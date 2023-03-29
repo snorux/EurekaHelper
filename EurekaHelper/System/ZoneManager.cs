@@ -86,6 +86,7 @@ namespace EurekaHelper.System
         public void Dispose()
         {
             InitZoneHook?.Dispose();
+            _dtrBarEntry?.Dispose();
         }
     }
 }
