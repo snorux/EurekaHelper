@@ -43,7 +43,7 @@ namespace EurekaHelper
         }
 
         [Command("/eurekahelper")]
-        [Aliases("/ehelper")]
+        [Aliases("/ehelper", "/eh")]
         [HelpMessage("Opens / Closes the configuration window")]
         private void ToggleConfig(string command, string argument) => DrawConfigUI();
 
