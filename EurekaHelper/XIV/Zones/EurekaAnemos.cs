@@ -45,6 +45,8 @@ namespace EurekaHelper.XIV.Zones
                 new(1329, 20, 732, 414, "Wail in the Willows", "Pazuzu", "Paz", new Vector2(7.4f, 21.6f), "Shadow Wraith", new Vector2(8.6f, 20.2f), EurekaWeather.Gales, EurekaWeather.None, EurekaElement.Wind, EurekaElement.Fire, true)
             };
 
+            Utils.GetFatePositionFromLgb(732, AnemosFates);
+
             return new EurekaAnemos(AnemosFates);
         }
 

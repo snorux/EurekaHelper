@@ -13,6 +13,10 @@ using System.Reflection;
 using System.Numerics;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using System.Collections.Generic;
+using Lumina.Data.Parsing.Layer;
+using Lumina.Excel.GeneratedSheets;
+using Lumina.Data.Files;
+using Dalamud.Utility;
 
 namespace EurekaHelper
 {
@@ -53,6 +57,8 @@ namespace EurekaHelper
     {
         private static readonly Random random = new();
 
+        private static readonly Dictionary<int, List<LayerCommon.InstanceObject>> LgbEventData = new();
+
         public static bool IsPlayerInEurekaZone(ushort territoryId) => Constants.EurekaZones.Contains(territoryId);
 
         public static bool IsBunnyFate(ushort fateId) => Constants.BunnyFates.Contains(fateId);
@@ -82,6 +88,67 @@ namespace EurekaHelper
                 827 => "Hydatos",
                 _ => null
             };
+        }
+
+        public static void BuildLgbData()
+        {
+            foreach (var zone in Constants.EurekaZones)
+            {
+                List<LayerCommon.InstanceObject> eventData = new();
+
+                var territoryType = DalamudApi.DataManager.GetExcelSheet<TerritoryType>()!.GetRow(zone);
+
+                if (territoryType == null)
+                    continue;
+
+                var bg = territoryType.Bg.ToString();
+                if (string.IsNullOrWhiteSpace(bg))
+                    continue;
+
+                var lgbFileName = "bg/" + bg[..(bg.IndexOf("/level/") + 1)] + "level/planevent.lgb";
+                var lgbFile = DalamudApi.DataManager.GetFile<LgbFile>(lgbFileName);
+
+                if (lgbFile == null)
+                    continue;
+
+                foreach (var lgbGroup in lgbFile.Layers)
+                {
+                    foreach (var instanceObject in lgbGroup.InstanceObjects)
+                    {
+                        if (instanceObject.AssetType == LayerEntryType.EventRange)
+                            eventData.Add(instanceObject);
+                    }
+                }
+
+                LgbEventData.Add(zone, eventData);
+            }
+        }
+
+        public static void GetFatePositionFromLgb(ushort territoryId, List<EurekaFate> fates)
+        {
+            if (!LgbEventData.TryGetValue(territoryId, out var eventData))
+                return;
+
+            var territoryType = DalamudApi.DataManager.GetExcelSheet<TerritoryType>()!.GetRow(territoryId);
+
+            if (territoryType == null)
+                return;
+
+            foreach (var fate in fates)
+            {
+                var fateSheetData = DalamudApi.DataManager.GetExcelSheet<Fate>()!.GetRow(fate.FateId);
+                if (fateSheetData.Location == 0)
+                    continue;
+
+                if (!eventData.Exists(x => x.InstanceId == fateSheetData.Location))
+                    continue;
+
+                var match = eventData.Find(x => x.InstanceId == fateSheetData.Location);
+
+                var vector = MapUtil.WorldToMap(new Vector2(match.Transform.Translation.X, match.Transform.Translation.Z), territoryType.Map.Value);
+
+                fate.FatePosition = vector;
+            }
         }
 
         public static void CopyToClipboard(string message) => ImGui.SetClipboardText(message);
@@ -192,7 +259,7 @@ namespace EurekaHelper
                 instance->SetFlagMapMarker(mapPayload.Map.TerritoryType.Row, mapPayload.Map.RowId, mapPayload.RawX / 1000f, mapPayload.RawY / 1000f);
 
                 if (openMap)
-                    instance->OpenMap(mapPayload.Map.RowId, mapPayload.Map.TerritoryType.Row, type: drawCircle ? MapType.GatheringLog : MapType.FlagMarker);
+                    instance->OpenMap(mapPayload.Map.RowId, mapPayload.Map.TerritoryType.Row, type: drawCircle ? FFXIVClientStructs.FFXIV.Client.UI.Agent.MapType.GatheringLog : FFXIVClientStructs.FFXIV.Client.UI.Agent.MapType.FlagMarker);
             }
         }
 

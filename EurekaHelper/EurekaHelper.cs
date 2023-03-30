@@ -36,6 +36,8 @@ namespace EurekaHelper
             ZoneManager = new();
             PluginWindow = new PluginWindow();
 
+            Utils.BuildLgbData();
+
             WindowSystem.AddWindow(PluginWindow);
 
             DalamudApi.PluginInterface.UiBuilder.Draw += DrawUI;
@@ -242,6 +244,15 @@ namespace EurekaHelper
             foreach (var tracker in filteredList)
                 PrintMessage(Utils.CombineUrl(Constants.EurekaTrackerLink, tracker["id"].ToString()));
         }
+
+#if DEBUG
+        [Command("/edebug")]
+        [DoNotShowInHelp]
+        private void Debug(string command, string argument)
+        {
+           
+        }
+#endif
 
         private void DrawUI() => WindowSystem.Draw();
 

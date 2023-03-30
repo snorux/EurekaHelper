@@ -12,7 +12,7 @@ namespace EurekaHelper.XIV
         public string FateName { get; private set; }
         public string BossName { get; private set; }
         public string BossShortName { get; private set; }
-        public Vector2 FatePosition { get; private set; }
+        public Vector2 FatePosition { get; set; }
         public string SpawnedBy { get; private set; }
         public Vector2 SpawnByPosition { get; private set; }
         public EurekaWeather SpawnRequiredWeather { get; private set; }

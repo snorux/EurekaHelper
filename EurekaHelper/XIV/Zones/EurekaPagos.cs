@@ -46,6 +46,8 @@ namespace EurekaHelper.XIV.Zones
                 new(1368, null, 763, 467,   "Curiouser and Curiouser", "Bunny Fate 2", "Bunny Fate 2", new Vector2(20.5f, 21.0f), null, Vector2.Zero, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, false, true)
             };
 
+            Utils.GetFatePositionFromLgb(763, PagosFates);
+
             return new EurekaPagos(PagosFates);
         }
 

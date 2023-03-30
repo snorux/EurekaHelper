@@ -46,6 +46,8 @@ namespace EurekaHelper.XIV.Zones
                 new(1408, null, 795, 484,   "Uncommon Nonsense", "Bunny Fate 2", "Bunny Fate 2", new Vector2(24.9f, 11.1f), null, Vector2.Zero, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, false, true)
             };
 
+            Utils.GetFatePositionFromLgb(795, PyrosFates);
+
             return new EurekaPyros(PyrosFates);
         }
 

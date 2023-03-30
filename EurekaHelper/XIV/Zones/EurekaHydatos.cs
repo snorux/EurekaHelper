@@ -22,7 +22,7 @@ namespace EurekaHelper.XIV.Zones
 
         public static EurekaHydatos GetTracker()
         {
-            List<EurekaFate> HydatosFate = new()
+            List<EurekaFate> HydatosFates = new()
             {
                 new(1412, 55, 827, 515,     "I Ink, Therefore I Am", "Khalamari", "Khalamari", new Vector2(11.0f, 25.3f), "Xzomit", new Vector2(11.0f, 25.3f), EurekaWeather.None, EurekaWeather.None, EurekaElement.Water, EurekaElement.Water, false),
                 new(1413, 56, 827, 515,     "From Tusk till Dawn", "Stegodon", "Stegodon", new Vector2(10.1f, 17.9f), "Hydatos Primelephas", new Vector2(11.1f, 16.0f), EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Earth, false),
@@ -39,7 +39,9 @@ namespace EurekaHelper.XIV.Zones
                 new(1425, null, 827, 515,   "Drink Me", "Bunny Fate 1", "Bunny Fate 1", new Vector2(14.0f, 21.5f), null, Vector2.Zero, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, false, true),
             };
 
-            return new EurekaHydatos(HydatosFate);
+            Utils.GetFatePositionFromLgb(827, HydatosFates);
+
+            return new EurekaHydatos(HydatosFates);
         }
 
         public List<EurekaFate> GetFates() => Fates;
