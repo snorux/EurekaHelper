@@ -21,7 +21,7 @@ namespace EurekaHelper
         public WindowSystem WindowSystem = new("EurekaHelper");
         private PluginWindow PluginWindow { get; init; }
 
-        private readonly FatesManager FatesManager;
+        private readonly FateManager FatesManager;
         private readonly ZoneManager ZoneManager;
 
         public EurekaHelper(DalamudPluginInterface pluginInterface)
@@ -34,7 +34,7 @@ namespace EurekaHelper
 
             FatesManager = new();
             ZoneManager = new();
-            PluginWindow = new PluginWindow();
+            PluginWindow = new();
 
             Utils.BuildLgbData();
 

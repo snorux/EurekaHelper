@@ -10,12 +10,12 @@ using EurekaHelper.XIV;
 
 namespace EurekaHelper.System
 {
-    public class FatesManager : IDisposable
+    public class FateManager : IDisposable
     {
         private List<Fate> lastFates = new();
         private IEurekaTracker EurekaTracker;
 
-        public FatesManager()
+        public FateManager()
         {
             DalamudApi.ClientState.TerritoryChanged += OnTerritoryChanged;
 

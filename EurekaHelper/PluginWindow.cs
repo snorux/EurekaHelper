@@ -34,6 +34,12 @@ namespace EurekaHelper
                     ImGui.EndTabItem();
                 }
 
+                if (ImGui.BeginTabItem("Elementals"))
+                {
+                    DrawElementalTab();
+                    ImGui.EndTabItem();
+                }
+
                 if (ImGui.BeginTabItem("Configuration"))
                 {
                     DrawSettingsTab();
@@ -612,6 +618,11 @@ namespace EurekaHelper
                 }
                 ImGui.PopStyleVar();
             }
+        }
+
+        public static void DrawElementalTab()
+        {
+
         }
 
         static string CustomMessages = string.Join("\n", EurekaHelper.Config.CustomMessages);
