@@ -3,12 +3,15 @@ using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Interface.Windowing;
 using Dalamud.Logging;
 using Dalamud.Plugin;
+using Dalamud.Utility;
 using EurekaHelper.System;
 using EurekaHelper.XIV;
 using EurekaHelper.XIV.Zones;
+using Lumina.Excel.GeneratedSheets;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
 
 namespace EurekaHelper
@@ -18,11 +21,13 @@ namespace EurekaHelper
         public string Name => "Eureka Helper";
         public static Configuration Config { get; private set; }
         public static EurekaHelper Plugin { get; private set; }
-        public WindowSystem WindowSystem = new("EurekaHelper");
-        private PluginWindow PluginWindow { get; init; }
 
-        private readonly FateManager FatesManager;
-        private readonly ZoneManager ZoneManager;
+        internal readonly WindowSystem WindowSystem;
+        internal readonly PluginWindow PluginWindow;
+
+        internal readonly FateManager FatesManager;
+        internal readonly ZoneManager ZoneManager;
+        internal readonly ElementalManager ElementalManager;
 
         public EurekaHelper(DalamudPluginInterface pluginInterface)
         {
@@ -34,10 +39,12 @@ namespace EurekaHelper
 
             FatesManager = new();
             ZoneManager = new();
-            PluginWindow = new();
+            ElementalManager = new();
+            PluginWindow = new(this);
 
             Utils.BuildLgbData();
 
+            WindowSystem = new("Eureka Helper");
             WindowSystem.AddWindow(PluginWindow);
 
             DalamudApi.PluginInterface.UiBuilder.Draw += DrawUI;
@@ -250,13 +257,15 @@ namespace EurekaHelper
         [DoNotShowInHelp]
         private void Debug(string command, string argument)
         {
-           
+            var territoryType = DalamudApi.DataManager.GetExcelSheet<TerritoryType>()!.GetRow(827);
+            var vector = MapUtil.WorldToMap(new Vector2(227.9124f, -160.7634f), territoryType.Map.Value);
+            
+            Utils.SetFlagMarker(827, 515, vector, openMap: true);
         }
 #endif
 
         private void DrawUI() => WindowSystem.Draw();
-
-        private void DrawConfigUI() => PluginWindow.IsOpen = true;
+        private void DrawConfigUI() => PluginWindow.IsOpen ^= true;
 
         public static void PrintMessage(SeString message)
         {
@@ -279,6 +288,7 @@ namespace EurekaHelper
             DalamudApi.Dispose();
             FatesManager.Dispose();
             ZoneManager.Dispose();
+            ElementalManager.Dispose();
             PluginWindow.GetConnection().Dispose();
         }
     }

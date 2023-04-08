@@ -21,8 +21,8 @@ namespace EurekaHelper.System
 
             if (Utils.IsPlayerInEurekaZone(DalamudApi.ClientState.TerritoryType))
             {
-                DalamudApi.Framework.Update += OnUpdate;
                 EurekaTracker = Utils.GetEurekaTracker(DalamudApi.ClientState.TerritoryType);
+                DalamudApi.Framework.Update += OnUpdate;
             }
         }
 
@@ -30,8 +30,8 @@ namespace EurekaHelper.System
         {
             if (Utils.IsPlayerInEurekaZone(territoryId))
             {
-                DalamudApi.Framework.Update += OnUpdate;
                 EurekaTracker = Utils.GetEurekaTracker(territoryId);
+                DalamudApi.Framework.Update += OnUpdate;
             }
             else
             {

@@ -32,6 +32,8 @@ namespace EurekaHelper
 
         public static readonly ushort[] BunnyFates = { 1367, 1368, 1407, 1408, 1425 };
 
+        public static readonly uint[] EurekaElementals = { 7184, 7567, 7764, 8131 };
+
         public static readonly float RandomizeRange = 0.5f;
 
         public static readonly int MapCircleRadius = 80;
