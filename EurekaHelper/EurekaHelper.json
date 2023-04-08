@@ -11,7 +11,9 @@
 		"QoL",
 		"Instance",
 		"Weather",
-		"NM"
+		"NM",
+		"Elemental",
+		"Fairy"
 	],
 	"CategoryTags": [
 		"utility"
