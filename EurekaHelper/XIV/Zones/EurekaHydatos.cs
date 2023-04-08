@@ -18,6 +18,19 @@ namespace EurekaHelper.XIV.Zones
             (100, EurekaWeather.Snow)
         };
 
+        public static readonly List<Vector3> ElementalPositions = new()
+        {
+            new(-312.15518f, 502.0328f, -228.2824f),
+            new(-360.7999f, 500f, -710.83484f),
+            new(-365.2967f, 494f, -68.05076f),
+            new(-579.59796f, 504.07983f, -213.05739f),
+            new(-583.8156f, 507.74808f, -468.509f),
+            new(-895.5052f, 507.7101f, -130.0577f),
+            new(28.61431f, 496.32492f, -54.40704f),
+            new(113.322f, 495.31586f, -191.00049f),
+            new(400.4016f, 495.38144f, -33.853767f)
+        };
+
         public EurekaHydatos(List<EurekaFate> fates) { Fates = fates; }
 
         public static EurekaHydatos GetTracker()

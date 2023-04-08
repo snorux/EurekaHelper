@@ -10,12 +10,13 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using Dalamud.Logging;
+using Dalamud.Interface.Components;
 
 namespace EurekaHelper
 {
     public class PluginWindow : Window, IDisposable
     {
-        private EurekaHelper _plugin = null!;
+        private readonly EurekaHelper _plugin = null!;
 
         public PluginWindow(EurekaHelper plugin) : base("Eureka Helper")
         {
@@ -623,9 +624,126 @@ namespace EurekaHelper
             }
         }
 
-        public static void DrawElementalTab()
-        {
+        private static uint DefaultIcon = 60474;
+        public static void ResetDefaultIcon() => DefaultIcon = 60474;
 
+        public void DrawElementalTab()
+        {
+            ImGui.Columns(2);
+
+            var save = false;
+
+            save |= ImGui.Checkbox("Display Elemental", ref EurekaHelper.Config.DisplayElemental);
+            Utils.SetTooltip("Displays in chat whenever an Elemental appears near the player");
+            ImGui.NextColumn();
+
+            save |= ImGui.Checkbox("Display Elemental Toast", ref EurekaHelper.Config.DisplayElementalToast);
+            Utils.SetTooltip("Displays a toast whenever an Elemental appears near the player");
+            ImGui.NextColumn();
+
+            save |= ImGui.Checkbox("Crowdsource Locations", ref EurekaHelper.Config.ElementalCrowdsource);
+            Utils.SetTooltip("Assist to crowdsource for Elemental locations");
+            ImGui.NextColumn();
+
+            ImGui.SetNextItemWidth(140f);
+            var enumNames = Enum.GetNames<PayloadOptions>();
+            var enumValues = Enum.GetValues<PayloadOptions>();
+            var enumCurrent = Array.IndexOf(enumValues, EurekaHelper.Config.ElementalPayloadOptions);
+            if (ImGui.Combo("Payload Options", ref enumCurrent, enumNames, enumNames.Length))
+            {
+                EurekaHelper.Config.ElementalPayloadOptions = enumValues[enumCurrent];
+                save = true;
+            }
+            Utils.SetTooltip("Sets what the clickable payload does.\nThis also affects the Shout/Copy column in the table.\n" +
+                "For example: Setting it to \'ShoutToChat\' will send the Elemental to current chat when you click the button.");
+            ImGui.NextColumn();
+
+            ImGui.Columns(1);
+
+            if (save)
+                EurekaHelper.Config.Save();
+
+            ImGui.Separator();
+            
+            if (ImGui.Button("Clear All Elementals"))
+            {
+                _plugin.ElementalManager.Elementals.Clear();
+                ResetDefaultIcon();
+            }
+            ImGui.SameLine();
+            if (ImGui.Button("Clear All Map Markers"))
+            {
+                Utils.ClearMapMarker();
+                ResetDefaultIcon();
+            }
+
+            ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
+            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0.0f, 0.0f));
+            ImGui.BeginChild("ElementalsChild", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y), true);
+            ImGui.PopStyleColor();
+            ImGui.PopStyleVar();
+
+            if (ImGui.BeginTable("ElementalsTablegfjytwr", 6, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings))
+            {
+                ImGui.TableSetupColumn("Elemental");
+                ImGui.TableSetupColumn("Location");
+                ImGui.TableSetupColumn("Last Seen");
+                ImGui.TableSetupColumn("S/C", ImGuiTableColumnFlags.WidthFixed);
+                ImGui.TableSetupColumn("Mark", ImGuiTableColumnFlags.WidthFixed);
+                ImGui.TableSetupColumn("Delete", ImGuiTableColumnFlags.WidthFixed);
+                ImGui.TableHeadersRow();
+
+                for (int i = _plugin.ElementalManager.Elementals.Count - 1; i >= 0; i--)
+                {
+                    var elemental = _plugin.ElementalManager.Elementals[i];
+
+                    ImGui.TableNextColumn();
+                    ImGui.Text(elemental.Name);
+
+                    ImGui.TableNextColumn();
+                    ImGui.Text($"X: {elemental.Position.X:0.0}, Y: {elemental.Position.Y:0.0}");
+                    if (ImGui.IsItemClicked())
+                        Utils.SetFlagMarker(elemental.TerritoryId, elemental.MapId, elemental.Position, openMap: true);
+
+                    ImGui.TableNextColumn();
+                    var dateTime = EorzeaTime.Zero.AddSeconds(elemental.LastSeen).ToLocalTime();
+                    ImGui.Text(dateTime.ToString());
+
+                    ImGui.TableNextColumn();
+                    if (ImGui.Button($"{(EurekaHelper.Config.ElementalPayloadOptions == PayloadOptions.CopyToClipboard ? $"C##{elemental.ObjectId}": $"S##{elemental.ObjectId}")}"))
+                    {
+                        Utils.SetFlagMarker(elemental.TerritoryId, elemental.MapId, elemental.Position);
+                        switch (EurekaHelper.Config.ElementalPayloadOptions)
+                        {
+                            case PayloadOptions.CopyToClipboard:
+                                Utils.CopyToClipboard($"{elemental.Name} <flag>");
+                                break;
+
+                            default:
+                            case PayloadOptions.ShoutToChat:
+                                Utils.SendMessage($"/sh {elemental.Name} <flag>");
+                                break;
+                        }
+                    }
+
+                    ImGui.TableNextColumn();
+                    if (ImGuiComponents.IconButton($"Elemental{elemental.ObjectId}", FontAwesomeIcon.MapMarked))
+                    {
+                        Utils.AddMapMarker(elemental.TerritoryId, elemental.RawPosition, DefaultIcon);
+                        DefaultIcon++;
+
+                        if (DefaultIcon > 60476)
+                            ResetDefaultIcon();
+                    }
+
+                    ImGui.TableNextColumn();
+                    if (ImGuiComponents.IconButton($"Elemental{elemental.ObjectId}", FontAwesomeIcon.Trash))
+                        _plugin.ElementalManager.Elementals.RemoveAt(i);
+                }
+
+            }
+            ImGui.EndTable();
+            ImGui.EndChild();
         }
 
         static string CustomMessages = string.Join("\n", EurekaHelper.Config.CustomMessages);

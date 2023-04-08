@@ -17,6 +17,7 @@ using Lumina.Data.Parsing.Layer;
 using Lumina.Excel.GeneratedSheets;
 using Lumina.Data.Files;
 using Dalamud.Utility;
+using Dalamud.Logging;
 
 namespace EurekaHelper
 {
@@ -230,7 +231,7 @@ namespace EurekaHelper
 
         public static void RightAlignTextInColumn(string text, Vector4? color = null)
         {
-            var posX = (ImGui.GetCursorPosX() + ImGui.GetColumnWidth() - ImGui.CalcTextSize(text).X - ImGui.GetScrollX());
+            var posX = ImGui.GetCursorPosX() + ImGui.GetColumnWidth() - ImGui.CalcTextSize(text).X - ImGui.GetScrollX();
             if (posX > ImGui.GetCursorPosX())
                 ImGui.SetCursorPosX(posX);
 
@@ -268,6 +269,44 @@ namespace EurekaHelper
         public static void SetFlagMarker(EurekaFate fateInfo, bool openMap = false, bool randomizeCoords = false, bool drawCircle = false)
             => SetFlagMarker(fateInfo.TerritoryId, fateInfo.MapId, new Vector2(fateInfo.FatePosition.X, fateInfo.FatePosition.Y), openMap, randomizeCoords, drawCircle);
 
+        public static unsafe void AddMapMarker(ushort territoryId, Vector3 position, uint iconId)
+        {
+            if (DalamudApi.ClientState.TerritoryType != territoryId)
+            {
+                EurekaHelper.PrintMessage("You must be in the same zone to place a marker.");
+                return;
+            }
+
+            var instance = AgentMap.Instance();
+
+            if (instance != null)
+            {
+                var territoryType = DalamudApi.DataManager.GetExcelSheet<TerritoryType>()!.GetRow(territoryId);
+                var mapPosition = position;
+                mapPosition.X += territoryType.Map.Value.OffsetX;
+                mapPosition.Z += territoryType.Map.Value.OffsetY;
+
+                if (!instance->AddMapMarker(mapPosition, iconId))
+                    PluginLog.Error("Unable to place map marker");
+
+                if (!instance->AddMiniMapMarker(position, iconId))
+                    PluginLog.Error("Unable to place mini map marker");
+
+                instance->OpenMap(territoryType.Map.Value.RowId, territoryType.RowId);
+            }
+        }
+
+        public static unsafe void ClearMapMarker()
+        {
+            var instance = AgentMap.Instance();
+
+            if (instance != null)
+            {
+                instance->ResetMapMarkers();
+                instance->ResetMiniMapMarkers();
+            }
+        }
+
         public static float GetRandomizeFloat(float centerValue) => (float)(centerValue + (random.NextDouble() * Constants.RandomizeRange * 2.0f - Constants.RandomizeRange));
 
         public static void SendMessage(string message)
@@ -289,6 +328,12 @@ namespace EurekaHelper
                 .Replace("%bossShortName%", fate.BossShortName)
                 .Replace("%fateName%", fate.FateName)
                 .Replace("%flag%", "<flag>");
+        }
+
+        public static bool IsWithinMinimumDistance(Vector3 position, Vector3 targetPosition, float minDistance)
+        {
+            float distance = Vector3.Distance(position, targetPosition);
+            return distance < minDistance;
         }
 
         public static string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unable to get version";

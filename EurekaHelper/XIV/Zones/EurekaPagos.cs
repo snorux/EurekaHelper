@@ -19,6 +19,11 @@ namespace EurekaHelper.XIV.Zones
             (100, EurekaWeather.Blizzards)
         };
 
+        public static readonly List<Vector3> ElementalPositions = new()
+        {
+
+        };
+
         public EurekaPagos(List<EurekaFate> fates) { Fates = fates; }
 
         public static EurekaPagos GetTracker()

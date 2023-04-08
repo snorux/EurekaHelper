@@ -25,6 +25,9 @@ namespace EurekaHelper
             }
         }
 
+        /*
+         * Tracker Configurations
+         */
         public bool DisplayFateProgress = false;
 
         public bool DisplayBunnyFates = false;
@@ -39,10 +42,6 @@ namespace EurekaHelper
 
         public bool RandomizeMapCoords = true;
 
-        public bool DisplayServerId = false;
-
-        public bool DisplayServerIdInServerInfo = false;
-
         public List<string> CustomMessages { get; set; } = new();
 
         public SoundManager.SoundEffect NMSoundEffect { get; set; } = SoundManager.SoundEffect.SoundEffect36;
@@ -50,6 +49,25 @@ namespace EurekaHelper
         public SoundManager.SoundEffect BunnySoundEffect { get; set; } = SoundManager.SoundEffect.SoundEffect41;
 
         public PayloadOptions PayloadOptions { get; set; } = PayloadOptions.ShoutToChat;
+
+        /*
+         * Server ID Configurations
+         */
+        public bool DisplayServerId = false;
+
+        public bool DisplayServerIdInServerInfo = false;
+
+        /*
+         * Elemental Configurations
+         */
+
+        public bool DisplayElemental = true;
+
+        public bool DisplayElementalToast = false;
+
+        public bool ElementalCrowdsource = true;
+
+        public PayloadOptions ElementalPayloadOptions { get; set;} = PayloadOptions.CopyToClipboard;
 
         public void Save() => DalamudApi.PluginInterface.SavePluginConfig(this);
     }

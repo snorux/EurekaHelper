@@ -3,15 +3,12 @@ using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Interface.Windowing;
 using Dalamud.Logging;
 using Dalamud.Plugin;
-using Dalamud.Utility;
 using EurekaHelper.System;
 using EurekaHelper.XIV;
 using EurekaHelper.XIV.Zones;
-using Lumina.Excel.GeneratedSheets;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
-using System.Numerics;
 using System.Threading;
 
 namespace EurekaHelper
@@ -25,7 +22,7 @@ namespace EurekaHelper
         internal readonly WindowSystem WindowSystem;
         internal readonly PluginWindow PluginWindow;
 
-        internal readonly FateManager FatesManager;
+        internal readonly FateManager FateManager;
         internal readonly ZoneManager ZoneManager;
         internal readonly ElementalManager ElementalManager;
 
@@ -37,7 +34,7 @@ namespace EurekaHelper
             Config = (Configuration)DalamudApi.PluginInterface.GetPluginConfig() ?? new();
             Config.Initialize();
 
-            FatesManager = new();
+            FateManager = new();
             ZoneManager = new();
             ElementalManager = new();
             PluginWindow = new(this);
@@ -257,10 +254,7 @@ namespace EurekaHelper
         [DoNotShowInHelp]
         private void Debug(string command, string argument)
         {
-            var territoryType = DalamudApi.DataManager.GetExcelSheet<TerritoryType>()!.GetRow(827);
-            var vector = MapUtil.WorldToMap(new Vector2(227.9124f, -160.7634f), territoryType.Map.Value);
-            
-            Utils.SetFlagMarker(827, 515, vector, openMap: true);
+
         }
 #endif
 
@@ -286,7 +280,7 @@ namespace EurekaHelper
         {
             WindowSystem.RemoveAllWindows();
             DalamudApi.Dispose();
-            FatesManager.Dispose();
+            FateManager.Dispose();
             ZoneManager.Dispose();
             ElementalManager.Dispose();
             PluginWindow.GetConnection().Dispose();
