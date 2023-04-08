@@ -6,13 +6,14 @@ A FFXIV Dalamud plugin - In-Game Eureka Tracker with QoL features.
 EurekaHelper allows you to join or create a [Eureka Tracker](https://ffxiv-eureka.com/) instance in-game.  
 It also contains a GUI which is almost identical to that on the website.  
 
-To open the window, type `/eurekahelper` or `/ehelper`
+To open the window, type `/eurekahelper` or `/ehelper` or `/eh`
 
 ## Table of Contents
 1. [Commands](#commands)
 2. [Main Window](#main-window)
-3. [Configuration Tab](#configuration-tab)
-4. [Instance Tab](#instance-tab)
+3. [Elementals Tab](#elementals-tab)
+4. [Configuration Tab](#configuration-tab)
+5. [Instance Tab](#instance-tab)
 
 ## Commands
 | Command | Description |
@@ -24,11 +25,16 @@ To open the window, type `/eurekahelper` or `/ehelper`
 ## Main Window
 | Default | Connected To Tracker |
 |:-------:|----------------------|
-| ![image](https://user-images.githubusercontent.com/34697265/229262935-25476e85-0811-4ece-8260-36253c96d0ed.png) | ![image](https://user-images.githubusercontent.com/34697265/229262949-d18a0ce0-33ff-45c5-94ba-6a085722fe81.png) |
+| ![image](https://user-images.githubusercontent.com/34697265/230734206-ed781c1a-16cb-47bb-bfa9-3312a6544a06.png) | ![image](https://user-images.githubusercontent.com/34697265/230734225-7d8feac4-5493-4ec4-b302-5a73d223873a.png) |
+
+## Elementals Tab
+All known Elementals position in game are listed [here](https://github.com/snooooowy/EurekaHelper/issues/13).  
+Feel free to add new Elemental positions in the link above or you can DM me on Discord (Snowy#9716)  
+![image](https://user-images.githubusercontent.com/34697265/230734369-e45cdb4a-0c90-4571-a241-d231e8c706cc.png)
 
 ## Configuration Tab
-![image](https://user-images.githubusercontent.com/34697265/229262968-b9bf4953-67a4-4bdf-8795-ef27ab9b8807.png)
+![image](https://user-images.githubusercontent.com/34697265/230734376-c83cb3c6-3976-419e-bc07-2ce2018d4543.png)
 
 ## Instance Tab
-![image](https://user-images.githubusercontent.com/34697265/229262987-3b74ddaf-4df9-406c-bed0-c7507bda2f55.png)
+![image](https://user-images.githubusercontent.com/34697265/230734398-fc07cca2-934b-40ea-8170-6645f5942d9a.png)
 
