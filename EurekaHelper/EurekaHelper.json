@@ -2,7 +2,7 @@
 	"Author": "Snowy",
 	"Name": "Eureka Helper",
 	"Punchline": "Eureka Tracker in a plugin with QoL features",
-	"Description": "A tool to assist you on your Eureka adventures. Type /eurekahelper to get started.\nFeatures include:\n- In-Game Tracker GUI\n- Instance Tracker\n- Money NM weather times\n- More to come",
+	"Description": "A tool to assist you on your Eureka adventures. Type /eurekahelper to get started.\nFeatures include:\n- In-Game Tracker GUI\n- Instance Tracker\n- Elementals Tracker\n- Money NM weather times\n- More to come",
 	"InternalName": "EurekaHelper",
 	"RepoUrl": "https://github.com/snooooowy/EurekaHelper",
 	"Tags": [
