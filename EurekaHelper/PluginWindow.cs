@@ -683,7 +683,7 @@ namespace EurekaHelper
             ImGui.PopStyleColor();
             ImGui.PopStyleVar();
 
-            if (ImGui.BeginTable("ElementalsTablegfjytwr", 6, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings))
+            if (ImGui.BeginTable("ElementalsTable", 6, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings))
             {
                 ImGui.TableSetupColumn("Elemental");
                 ImGui.TableSetupColumn("Location");
