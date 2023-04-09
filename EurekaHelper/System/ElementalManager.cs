@@ -54,13 +54,16 @@ namespace EurekaHelper.System
                 Elementals.Add(eurekaElemental);
                 Elementals.Sort((x, y) => x.LastSeen.CompareTo(y.LastSeen));
 
-                var knownLocations = GetKnownLocations(DalamudApi.ClientState.TerritoryType);
-                if (!knownLocations.Any(x => Utils.IsWithinMinimumDistance(x, eurekaElemental.RawPosition, 5.0f)))
+                if (EurekaHelper.Config.ElementalCrowdsource)
                 {
-                    EurekaHelper.PrintMessage("Elemental found that is not in the plugin database.");
-                    EurekaHelper.PrintMessage("Please send the following information to the developer on GitHub or Discord DM. You can find the contact information in the \"About\" tab.");
-                    EurekaHelper.PrintMessage("You can also opt-out of crowdsourcing for Elemental positions in the \"Elementals\" tab.");
-                    EurekaHelper.PrintMessage($"Send -> T: {DalamudApi.ClientState.TerritoryType} X: {eurekaElemental.RawPosition.X} Y: {eurekaElemental.RawPosition.Y} Z: {eurekaElemental.RawPosition.Z}");
+                    var knownLocations = GetKnownLocations(DalamudApi.ClientState.TerritoryType);
+                    if (!knownLocations.Any(x => Utils.IsWithinMinimumDistance(x, eurekaElemental.RawPosition, 5.0f)))
+                    {
+                        EurekaHelper.PrintMessage("Elemental found that is not in the plugin database.");
+                        EurekaHelper.PrintMessage("Please send the following information to the developer on GitHub or Discord DM. You can find the contact information in the \"About\" tab.");
+                        EurekaHelper.PrintMessage("You can also opt-out of crowdsourcing for Elemental positions in the \"Elementals\" tab.");
+                        EurekaHelper.PrintMessage($"Send -> T: {DalamudApi.ClientState.TerritoryType} X: {eurekaElemental.RawPosition.X} Y: {eurekaElemental.RawPosition.Y} Z: {eurekaElemental.RawPosition.Z}");
+                    }
                 }
 
                 var sb = new SeStringBuilder()
