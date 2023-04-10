@@ -423,6 +423,9 @@ namespace EurekaHelper
         static readonly Vector4 RedColorText = new(0.82f, 0.49f, 0.49f, 1f);
         static readonly Vector4 OrangeColorText = new(0.9f, 0.52f, 0f, 1f);
 
+        private string TimeAgoHours = "0";
+        private string TimeAgoMinutes = "0";
+        private bool IsEditing = false;
         public void DrawTracker()
         {
             var zoneFates = Connection.GetTracker()?.GetFates().Where(x => x.IncludeInTracker).ToList();
@@ -497,12 +500,56 @@ namespace EurekaHelper
                 if (fate.IsPopped())
                 {
                     Utils.RightAlignTextInColumn(fate.GetPoppedTime().ToString("HH:mm"), RedColorText);
+                    if (ImGui.IsItemClicked())
+                    {
+                        IsEditing = false;
+                        ImGui.OpenPopup($"EditPopTime##{fate.TrackerId}");
+                    }
 
                     ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 1f);
                     ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
                     Utils.SetTooltip($"Popped on {fate.GetPoppedTime()} local time");
                     ImGui.PopStyleVar();
                     ImGui.PopStyleColor();
+
+                    if (ImGui.BeginPopup($"EditPopTime##{fate.TrackerId}"))
+                    {
+                        unsafe
+                        {
+                            if (!IsEditing)
+                            {
+                                var timeDiff = DateTime.Now - fate.GetPoppedTime();
+                                TimeAgoHours = timeDiff.Hours.ToString();
+                                TimeAgoMinutes = timeDiff.Minutes.ToString();
+
+                                IsEditing = true;
+                            }
+
+                            ImGui.Text("- TIME AGO -");
+                            ImGui.Text($"NM: {fate.BossName}");
+
+                            var width = ImGui.CalcTextSize("TIME").X;
+                            ImGui.SetNextItemWidth(width);
+                            ImGui.InputText($"hr##{fate.TrackerId}", ref TimeAgoHours, 1, ImGuiInputTextFlags.CharsDecimal | ImGuiInputTextFlags.CallbackCharFilter, IntegerCheck);
+                            ImGui.SameLine();
+                            ImGui.SetNextItemWidth(width);
+                            ImGui.InputText($"min##{fate.TrackerId}", ref TimeAgoMinutes, 2,  ImGuiInputTextFlags.CharsDecimal | ImGuiInputTextFlags.CallbackCharFilter, IntegerCheck);
+
+                            if (String.IsNullOrWhiteSpace(TimeAgoHours))
+                                TimeAgoHours = "0";
+                            if (String.IsNullOrWhiteSpace(TimeAgoMinutes))
+                                TimeAgoMinutes = "0";
+
+                            var ts = new TimeSpan(int.Parse(TimeAgoHours), int.Parse(TimeAgoMinutes), 0);
+                            ImGui.Text($"{ts.Hours} {(ts.Hours > 1 ? "hours" : "hour")} {ts.Minutes} {(ts.Minutes > 1 ? "minutes" : "minute")} ago");
+                            if (ImGui.Button($"Set##{fate.TrackerId}", new Vector2(ImGui.GetContentRegionAvail().X, 0)))
+                            {
+                                PluginLog.Information($"{ts.Hours} - {ts.Minutes}");
+                                ImGui.CloseCurrentPopup();
+                            }
+                            ImGui.EndPopup();
+                        }
+                    }
                 }
 
                 // Respawn In:
@@ -916,5 +963,15 @@ namespace EurekaHelper
         }
 
         public static EurekaConnectionManager GetConnection() => Connection;
+
+        private unsafe int IntegerCheck(ImGuiInputTextCallbackData* data)
+        {
+            char c = Convert.ToChar(data->EventChar);
+
+            if (c >= '0' && c <= '9')
+                return 0;
+
+            return 1;
+        }
     }
 }
