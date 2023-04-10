@@ -76,10 +76,8 @@ namespace EurekaHelper
 
             if (!Connection.IsConnected())
             {
-                ImGui.PushFont(UiBuilder.IconFont);
-                if (ImGui.Button(FontAwesomeIcon.Plus.ToIconString()))
+                if (ImGuiComponents.IconButton(FontAwesomeIcon.Plus))
                     ImGui.OpenPopup("CreateTracker");
-                ImGui.PopFont();
                 Utils.SetTooltip("Create a new tracker");
 
                 ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 1f);
@@ -118,40 +116,30 @@ namespace EurekaHelper
 
             else if (Connection.IsConnected())
             {
-                ImGui.PushFont(UiBuilder.IconFont);
-                if (ImGui.Button(FontAwesomeIcon.Link.ToIconString()))
+                if (ImGuiComponents.IconButton(FontAwesomeIcon.Link))
                     Utils.CopyToClipboard($"{Utils.CombineUrl(Constants.EurekaTrackerLink, Connection.GetTrackerId())}");
-                ImGui.PopFont();
                 Utils.SetTooltip("Copy tracker link to clipboard");
 
                 if (Connection.CanModify())
                 {
                     ImGui.SameLine();
 
-                    ImGui.PushFont(UiBuilder.IconFont);
-                    if (ImGui.Button(FontAwesomeIcon.Key.ToIconString()))
+                    if (ImGuiComponents.IconButton(FontAwesomeIcon.Key))
                         Utils.CopyToClipboard($"Password: {Connection.GetTrackerPassword()}");
-                    ImGui.PopFont();
                     Utils.SetTooltip("Copy tracker password to clipboard");
 
                     ImGui.SameLine();
 
                     if (Connection.IsPublic())
                     {
-                        ImGui.PushFont(UiBuilder.IconFont);
-
-                        if (ImGui.Button(FontAwesomeIcon.Lock.ToIconString()))
+                        if (ImGuiComponents.IconButton(FontAwesomeIcon.Lock))
                             await Connection.SetTrackerVisiblity();
-
-                        ImGui.PopFont();
 
                         Utils.SetTooltip("Set tracker to private");
                     }
                     else
                     {
-                        ImGui.PushFont(UiBuilder.IconFont);
-
-                        if (ImGui.Button(FontAwesomeIcon.LockOpen.ToIconString()))
+                        if (ImGuiComponents.IconButton(FontAwesomeIcon.LockOpen))
                         {
                             var datacenterId = Utils.DatacenterToEurekaDatacenterId(DalamudApi.ClientState.LocalPlayer.CurrentWorld.GameData.DataCenter.Value?.Name.RawString ?? "null");
 
@@ -161,16 +149,13 @@ namespace EurekaHelper
                                 await Connection.SetTrackerVisiblity(datacenterId);
                         }
 
-                        ImGui.PopFont();
-
                         Utils.SetTooltip("Set tracker to public");
                     }
                 }
 
                 ImGui.SameLine();
 
-                ImGui.PushFont(UiBuilder.IconFont);
-                if (ImGui.Button(FontAwesomeIcon.Globe.ToIconString()))
+                if (ImGuiComponents.IconButton(FontAwesomeIcon.Globe))
                 {
                     Process.Start(new ProcessStartInfo
                     {
@@ -178,28 +163,28 @@ namespace EurekaHelper
                         UseShellExecute = true
                     });
                 }
-                ImGui.PopFont();
                 Utils.SetTooltip("Opens the tracker in a browser");
 
                 ImGui.SameLine();
 
-                ImGui.PushFont(UiBuilder.IconFont);
-                if (ImGui.Button(FontAwesomeIcon.SignOutAlt.ToIconString()))
+                if (ImGuiComponents.IconButton(FontAwesomeIcon.FileExport))
+                    _ = Task.Run(async () => { await ExportTracker(TrackerCode); });
+                Utils.SetTooltip("Exports the current tracker to a new one");
+
+                ImGui.SameLine();
+
+                if (ImGuiComponents.IconButton(FontAwesomeIcon.SignOutAlt))
                 {
                     _ = Task.Run(async () =>
                     {
                         await Connection.Close();
                     });
                 }
-                ImGui.PopFont();
                 Utils.SetTooltip("Leave the current tracker");
 
                 ImGui.SameLine();
 
-                ImGui.PushFont(UiBuilder.IconFont);
-                ImGui.Button(FontAwesomeIcon.CloudSun.ToIconString());
-                ImGui.PopFont();
-
+                ImGuiComponents.IconButton(FontAwesomeIcon.CloudSun);
                 if (ImGui.IsItemHovered())
                 {
                     ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 1f);
@@ -245,9 +230,8 @@ namespace EurekaHelper
                 }
 
                 ImGui.SameLine();
-                ImGui.PushFont(UiBuilder.IconFont);
-                ImGui.Button(FontAwesomeIcon.InfoCircle.ToIconString());
-                ImGui.PopFont();
+
+                ImGuiComponents.IconButton(FontAwesomeIcon.InfoCircle);
                 if (ImGui.IsItemHovered())
                 {
                     ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 1f);
@@ -325,6 +309,23 @@ namespace EurekaHelper
         public async Task CreateTracker(int zoneId)
         {
             (string trackerId, string password) = await EurekaConnectionManager.CreateTracker(zoneId);
+
+            if (String.IsNullOrWhiteSpace(trackerId) && String.IsNullOrWhiteSpace(password))
+            {
+                PluginLog.Error("TrackerId and Password not returned from API for some reason.");
+                return;
+            }
+
+            if (Connection.IsConnected())
+                await Connection.Close();
+
+            TrackerCode = trackerId; TrackerPassword = password;
+            Connection = await EurekaConnectionManager.JoinTracker(trackerId, password);
+        }
+
+        public async Task ExportTracker(string oldTrackerId)
+        {
+            (string trackerId, string password) = await EurekaConnectionManager.ExportTracker(oldTrackerId);
 
             if (String.IsNullOrWhiteSpace(trackerId) && String.IsNullOrWhiteSpace(password))
             {

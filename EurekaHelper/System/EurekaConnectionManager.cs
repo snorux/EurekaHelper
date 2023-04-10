@@ -362,6 +362,27 @@ namespace EurekaHelper.System
             return (String.Empty, String.Empty);
         }
 
+        public static async Task<(string trackerId, string password)> ExportTracker(string oldTrackerId)
+        {
+            string jsonContent = JObject.Parse(@$"{{ 'data': {{ 'attributes': {{ 'copy-from': '{oldTrackerId}' }}, 'type': 'instances' }} }}").ToString();
+
+            var httpResponseMessage = await HttpClient.PostAsync(
+                TrackerAPIUrl,
+                new StringContent(jsonContent, Encoding.UTF8, "application/json"));
+
+            if (httpResponseMessage.IsSuccessStatusCode)
+            {
+                var response = await httpResponseMessage.Content.ReadAsStringAsync();
+                var json = JObject.Parse(response);
+                string trackerId = (string)json["data"]["id"];
+                string password = (string)json["data"]["attributes"]["password"];
+
+                return (trackerId, password);
+            }
+
+            return (String.Empty, String.Empty);
+        }
+
         public List<JToken> GetCurrentTrackers() => TrackerList;
 
         public bool IsConnected() => this.Connected;
