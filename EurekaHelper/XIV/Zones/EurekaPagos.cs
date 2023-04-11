@@ -21,7 +21,8 @@ namespace EurekaHelper.XIV.Zones
 
         public static readonly List<Vector3> ElementalPositions = new()
         {
-
+            new(-263.0846f, -569.75006f, -337.29272f),
+            new(-713.46967f, -624.1894f, -270.3222f)
         };
 
         public EurekaPagos(List<EurekaFate> fates) { Fates = fates; }
