@@ -725,20 +725,6 @@ namespace EurekaHelper
                 EurekaHelper.Config.Save();
 
             ImGui.Separator();
-            
-            if (ImGui.Button("Clear All Elementals"))
-            {
-                _plugin.ElementalManager.Elementals.Clear();
-                ResetDefaultIcon();
-            }
-            ImGui.SameLine();
-
-            if (ImGui.Button("Clear All Map Markers"))
-            {
-                Utils.ClearMapMarker();
-                ResetDefaultIcon();
-            }
-            ImGui.SameLine();
 
             if (ImGui.Button("Add Known Elemental Map Markers"))
             {
@@ -757,6 +743,22 @@ namespace EurekaHelper
                 {
                     EurekaHelper.PrintMessage("You must be in one of the Eureka zone to use this.");
                 }
+            }
+            Utils.SetTooltip("Adds a marker to known Elemental positions on the current map and minimap.\n" +
+                "Help contribute to the known locations by providing the developer the necessary information");
+            ImGui.SameLine();
+
+            if (ImGui.Button("Clear All Elementals"))
+            {
+                _plugin.ElementalManager.Elementals.Clear();
+                ResetDefaultIcon();
+            }
+            ImGui.SameLine();
+
+            if (ImGui.Button("Clear All Map Markers"))
+            {
+                Utils.ClearMapMarker();
+                ResetDefaultIcon();
             }
 
             ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
