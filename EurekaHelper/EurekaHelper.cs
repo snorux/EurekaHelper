@@ -271,7 +271,7 @@ namespace EurekaHelper
 
             DalamudApi.ChatGui.PrintChat(new XivChatEntry()
             {
-                Type = XivChatType.Echo,
+                Type = Config.ChatChannel,
                 Message = sb.BuiltString
             });
         }

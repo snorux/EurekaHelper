@@ -112,7 +112,7 @@ namespace EurekaHelper.System
             }
         }
 
-        private static List<Vector3> GetKnownLocations(ushort territoryId)
+        public static List<Vector3> GetKnownLocations(ushort territoryId)
         {
             return territoryId switch
             {

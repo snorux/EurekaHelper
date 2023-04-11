@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Dalamud.Logging;
 using Dalamud.Interface.Components;
+using Dalamud.Game.Text;
 
 namespace EurekaHelper
 {
@@ -731,10 +732,31 @@ namespace EurekaHelper
                 ResetDefaultIcon();
             }
             ImGui.SameLine();
+
             if (ImGui.Button("Clear All Map Markers"))
             {
                 Utils.ClearMapMarker();
                 ResetDefaultIcon();
+            }
+            ImGui.SameLine();
+
+            if (ImGui.Button("Add Known Elemental Map Markers"))
+            {
+                var territoryType = DalamudApi.ClientState.TerritoryType;
+                if (Utils.IsPlayerInEurekaZone(territoryType))
+                {
+                    var knownLocations = ElementalManager.GetKnownLocations(territoryType);
+                    foreach (var location in knownLocations)
+                    {
+                        // 61502 - X
+                        // 63922 - MOOGLE
+                        Utils.AddMapMarker(territoryType, location, 63922);
+                    }
+                }
+                else
+                {
+                    EurekaHelper.PrintMessage("You must be in one of the Eureka zone to use this.");
+                }
             }
 
             ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
@@ -876,6 +898,18 @@ namespace EurekaHelper
 
             save |= ImGui.Checkbox("Randomize Map Coords", ref EurekaHelper.Config.RandomizeMapCoords);
             Utils.SetTooltip("Randomizes map coords to range of +- 0.5 (recommended to enable)");
+            ImGui.NextColumn();
+
+            ImGui.SetNextItemWidth(140f);
+            enumNames = Enum.GetNames<XivChatType>();
+            var chValues = Enum.GetValues<XivChatType>();
+            enumCurrent = Array.IndexOf(chValues, EurekaHelper.Config.ChatChannel);
+            if (ImGui.Combo("Chat Channel", ref enumCurrent, enumNames, enumNames.Length))
+            {
+                EurekaHelper.Config.ChatChannel = chValues[enumCurrent];
+                save = true;
+            }
+            Utils.SetTooltip("Set the channel which the plugin messages will display. Default: Echo");
             ImGui.NextColumn();
 
             ImGui.Columns(1);

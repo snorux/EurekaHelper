@@ -1,4 +1,5 @@
 ﻿using Dalamud.Configuration;
+using Dalamud.Game.Text;
 using EurekaHelper.System;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,11 @@ namespace EurekaHelper
                 Save();
             }
         }
+
+        /*
+         * General Configurations
+         */
+        public XivChatType ChatChannel { get; set; } = XivChatType.Echo;
 
         /*
          * Tracker Configurations
