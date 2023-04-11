@@ -25,15 +25,15 @@ To open the window, type `/eurekahelper` or `/ehelper` or `/eh`
 ## Main Window
 | Default | Connected To Tracker |
 |:-------:|----------------------|
-| ![image](https://user-images.githubusercontent.com/34697265/230734206-ed781c1a-16cb-47bb-bfa9-3312a6544a06.png) | ![image](https://user-images.githubusercontent.com/34697265/230734225-7d8feac4-5493-4ec4-b302-5a73d223873a.png) |
+| ![image](https://user-images.githubusercontent.com/34697265/230734206-ed781c1a-16cb-47bb-bfa9-3312a6544a06.png) | ![image](https://user-images.githubusercontent.com/34697265/231217093-41724e98-44e1-444d-b09b-cd35a377b1ae.png) |
 
 ## Elementals Tab
 All known Elementals position in game are listed [here](https://github.com/snooooowy/EurekaHelper/issues/13).  
 Feel free to add new Elemental positions in the link above or you can DM me on Discord (Snowy#9716)  
-![image](https://user-images.githubusercontent.com/34697265/230734369-e45cdb4a-0c90-4571-a241-d231e8c706cc.png)
+![image](https://user-images.githubusercontent.com/34697265/231217758-a0bd197e-dff4-4e64-ac78-f14d22ca1960.png)
 
 ## Configuration Tab
-![image](https://user-images.githubusercontent.com/34697265/230734376-c83cb3c6-3976-419e-bc07-2ce2018d4543.png)
+![image](https://user-images.githubusercontent.com/34697265/231217819-7530a3f7-e18a-4ae9-98d3-6fe3e235b901.png)
 
 ## Instance Tab
 ![image](https://user-images.githubusercontent.com/34697265/230734398-fc07cca2-934b-40ea-8170-6645f5942d9a.png)
