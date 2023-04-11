@@ -168,7 +168,7 @@ namespace EurekaHelper
                 ImGui.SameLine();
 
                 if (ImGuiComponents.IconButton(FontAwesomeIcon.FileExport))
-                    _ = Task.Run(async () => { await ExportTracker(TrackerCode); });
+                    _ = Task.Run(async () => { await ExportTracker(Connection.GetTrackerId()); });
                 Utils.SetTooltip("Exports the current tracker to a new one");
 
                 ImGui.SameLine();
@@ -500,10 +500,13 @@ namespace EurekaHelper
                 if (fate.IsPopped())
                 {
                     Utils.RightAlignTextInColumn(fate.GetPoppedTime().ToString("HH:mm"), RedColorText);
-                    if (ImGui.IsItemClicked())
+                    if (Connection.CanModify())
                     {
-                        IsEditing = false;
-                        ImGui.OpenPopup($"EditPopTime##{fate.TrackerId}");
+                        if (ImGui.IsItemClicked())
+                        {
+                            IsEditing = false;
+                            ImGui.OpenPopup($"EditPopTime##{fate.TrackerId}");
+                        }
                     }
 
                     ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 1f);
@@ -512,19 +515,21 @@ namespace EurekaHelper
                     ImGui.PopStyleVar();
                     ImGui.PopStyleColor();
 
+                    ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 1f);
+                    ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
                     if (ImGui.BeginPopup($"EditPopTime##{fate.TrackerId}"))
                     {
+                        if (!IsEditing)
+                        {
+                            var timeDiff = DateTime.Now - fate.GetPoppedTime();
+                            TimeAgoHours = timeDiff.Hours.ToString();
+                            TimeAgoMinutes = timeDiff.Minutes.ToString();
+
+                            IsEditing = true;
+                        }
+
                         unsafe
                         {
-                            if (!IsEditing)
-                            {
-                                var timeDiff = DateTime.Now - fate.GetPoppedTime();
-                                TimeAgoHours = timeDiff.Hours.ToString();
-                                TimeAgoMinutes = timeDiff.Minutes.ToString();
-
-                                IsEditing = true;
-                            }
-
                             ImGui.Text("- TIME AGO -");
                             ImGui.Text($"NM: {fate.BossName}");
 
@@ -533,23 +538,30 @@ namespace EurekaHelper
                             ImGui.InputText($"hr##{fate.TrackerId}", ref TimeAgoHours, 1, ImGuiInputTextFlags.CharsDecimal | ImGuiInputTextFlags.CallbackCharFilter, IntegerCheck);
                             ImGui.SameLine();
                             ImGui.SetNextItemWidth(width);
-                            ImGui.InputText($"min##{fate.TrackerId}", ref TimeAgoMinutes, 2,  ImGuiInputTextFlags.CharsDecimal | ImGuiInputTextFlags.CallbackCharFilter, IntegerCheck);
-
-                            if (String.IsNullOrWhiteSpace(TimeAgoHours))
-                                TimeAgoHours = "0";
-                            if (String.IsNullOrWhiteSpace(TimeAgoMinutes))
-                                TimeAgoMinutes = "0";
-
-                            var ts = new TimeSpan(int.Parse(TimeAgoHours), int.Parse(TimeAgoMinutes), 0);
-                            ImGui.Text($"{ts.Hours} {(ts.Hours > 1 ? "hours" : "hour")} {ts.Minutes} {(ts.Minutes > 1 ? "minutes" : "minute")} ago");
-                            if (ImGui.Button($"Set##{fate.TrackerId}", new Vector2(ImGui.GetContentRegionAvail().X, 0)))
-                            {
-                                PluginLog.Information($"{ts.Hours} - {ts.Minutes}");
-                                ImGui.CloseCurrentPopup();
-                            }
-                            ImGui.EndPopup();
+                            ImGui.InputText($"min##{fate.TrackerId}", ref TimeAgoMinutes, 2, ImGuiInputTextFlags.CharsDecimal | ImGuiInputTextFlags.CallbackCharFilter, IntegerCheck);
                         }
+
+                        if (String.IsNullOrWhiteSpace(TimeAgoHours))
+                            TimeAgoHours = "0";
+                        if (String.IsNullOrWhiteSpace(TimeAgoMinutes))
+                            TimeAgoMinutes = "0";
+
+                        var ts = new TimeSpan(int.Parse(TimeAgoHours), int.Parse(TimeAgoMinutes), 0);
+                        ImGui.Text($"{ts.Hours} {(ts.Hours > 1 ? "hours" : "hour")} {ts.Minutes} {(ts.Minutes > 1 ? "minutes" : "minute")} ago");
+                        if (ImGui.Button($"Set##{fate.TrackerId}", new Vector2(ImGui.GetContentRegionAvail().X, 0)))
+                        {
+                            var editedPopTime = DateTime.Now - ts;
+                            _ = Task.Run(async () =>
+                            {
+                                await Connection.SetPopTime((ushort)fate.TrackerId, new DateTimeOffset(editedPopTime).ToUnixTimeMilliseconds());
+                            });
+                            ImGui.CloseCurrentPopup();
+                        }
+                        ImGui.EndPopup();
                     }
+
+                    ImGui.PopStyleVar();
+                    ImGui.PopStyleColor();
                 }
 
                 // Respawn In:
