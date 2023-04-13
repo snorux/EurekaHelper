@@ -20,6 +20,7 @@ namespace EurekaHelper.XIV.Zones
         public static readonly List<Vector3> ElementalPositions = new()
         {
             new(-364.4897f, 69.47017f, -276.5466f),
+            new(-373.7721f, 82.72685f, 18.47673f),
             new(-399.8804f, 17.590218f, 291.9889f),
             new(-580.6493f, 41.84066f, -5.5684004f),
             new(-732.5733f, 25.723625f, 180.26799f),
