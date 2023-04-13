@@ -22,6 +22,7 @@ namespace EurekaHelper
 
         internal readonly WindowSystem WindowSystem;
         internal readonly PluginWindow PluginWindow;
+        internal readonly RelicWindow RelicWindow;
 
         internal readonly FateManager FateManager;
         internal readonly ZoneManager ZoneManager;
@@ -39,11 +40,13 @@ namespace EurekaHelper
             ZoneManager = new();
             ElementalManager = new();
             PluginWindow = new(this);
+            RelicWindow = new(this);
 
             Utils.BuildLgbData();
 
             WindowSystem = new("Eureka Helper");
             WindowSystem.AddWindow(PluginWindow);
+            WindowSystem.AddWindow(RelicWindow);
 
             DalamudApi.PluginInterface.UiBuilder.Draw += DrawUI;
             DalamudApi.PluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
@@ -165,6 +168,10 @@ namespace EurekaHelper
             foreach (var tracker in filteredList)
                 PrintMessage(Utils.CombineUrl(Constants.EurekaTrackerLink, tracker["id"].ToString()));
         }
+
+        [Command("/erelic")]
+        [HelpMessage("Opens / Closes the Eureka Relic helper window")]
+        private void RelicHelper(string command, string argument) => RelicWindow.IsOpen ^= true;
 
 #if DEBUG
         [Command("/edebug")]
