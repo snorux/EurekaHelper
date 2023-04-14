@@ -4,6 +4,7 @@ using Dalamud.Interface.Windowing;
 using Dalamud.Logging;
 using Dalamud.Plugin;
 using EurekaHelper.System;
+using EurekaHelper.Windows;
 using EurekaHelper.XIV;
 using EurekaHelper.XIV.Zones;
 using Newtonsoft.Json.Linq;
@@ -34,7 +35,7 @@ namespace EurekaHelper
             Config = (Configuration)DalamudApi.PluginInterface.GetPluginConfig() ?? new();
             Config.Initialize();
 
-            FateManager = new();
+            FateManager = new(this);
             ZoneManager = new();
             ElementalManager = new();
             PluginWindow = new(this);

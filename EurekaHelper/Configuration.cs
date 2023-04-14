@@ -48,6 +48,8 @@ namespace EurekaHelper
 
         public bool RandomizeMapCoords = true;
 
+        public bool AutoCreateTracker = false;
+
         public List<string> CustomMessages { get; set; } = new();
 
         public SoundManager.SoundEffect NMSoundEffect { get; set; } = SoundManager.SoundEffect.SoundEffect36;

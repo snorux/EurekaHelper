@@ -13,7 +13,7 @@ using Dalamud.Logging;
 using Dalamud.Interface.Components;
 using Dalamud.Game.Text;
 
-namespace EurekaHelper
+namespace EurekaHelper.Windows
 {
     public class PluginWindow : Window, IDisposable
     {
@@ -65,8 +65,8 @@ namespace EurekaHelper
             }
         }
 
-        public string TrackerCode = String.Empty;
-        public string TrackerPassword = String.Empty;
+        public string TrackerCode = string.Empty;
+        public string TrackerPassword = string.Empty;
 
         public async void DrawTrackerTab()
         {
@@ -279,13 +279,13 @@ namespace EurekaHelper
                 ImGui.TableNextColumn();
                 if (ImGui.Button("Set", new Vector2(ImGui.GetContentRegionAvail().X, 0.0f)))
                 {
-                    if (!String.IsNullOrWhiteSpace(TrackerCode))
+                    if (!string.IsNullOrWhiteSpace(TrackerCode))
                     {
                         _ = Task.Run(async () =>
                         {
                             if (Connection.GetTrackerId() == TrackerCode)
                             {
-                                if (Connection.IsConnected() && !Connection.CanModify() && !String.IsNullOrWhiteSpace(TrackerPassword))
+                                if (Connection.IsConnected() && !Connection.CanModify() && !string.IsNullOrWhiteSpace(TrackerPassword))
                                     await Connection.SetPassword(TrackerPassword);
                             }
                             else
@@ -307,11 +307,11 @@ namespace EurekaHelper
             DrawTrackerTable();
         }
 
-        public async Task CreateTracker(int zoneId)
+        public async Task CreateTracker(int zoneId, bool printMessage = false)
         {
             (string trackerId, string password) = await EurekaConnectionManager.CreateTracker(zoneId);
 
-            if (String.IsNullOrWhiteSpace(trackerId) && String.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(trackerId) && string.IsNullOrWhiteSpace(password))
             {
                 PluginLog.Error("TrackerId and Password not returned from API for some reason.");
                 return;
@@ -322,13 +322,16 @@ namespace EurekaHelper
 
             TrackerCode = trackerId; TrackerPassword = password;
             Connection = await EurekaConnectionManager.JoinTracker(trackerId, password);
+
+            if (printMessage)
+                EurekaHelper.PrintMessage($"Successfully created a tracker: {Utils.CombineUrl(Constants.EurekaTrackerLink, trackerId)}");
         }
 
-        public async Task ExportTracker(string oldTrackerId)
+        public async Task ExportTracker(string oldTrackerId, bool printMessage = false)
         {
             (string trackerId, string password) = await EurekaConnectionManager.ExportTracker(oldTrackerId);
 
-            if (String.IsNullOrWhiteSpace(trackerId) && String.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(trackerId) && string.IsNullOrWhiteSpace(password))
             {
                 PluginLog.Error("TrackerId and Password not returned from API for some reason.");
                 return;
@@ -339,6 +342,9 @@ namespace EurekaHelper
 
             TrackerCode = trackerId; TrackerPassword = password;
             Connection = await EurekaConnectionManager.JoinTracker(trackerId, password);
+
+            if (printMessage)
+                EurekaHelper.PrintMessage($"Successfully exported the previous tracker: {Utils.CombineUrl(Constants.EurekaTrackerLink, trackerId)}");
         }
 
         public void DrawTrackerTable()
@@ -542,9 +548,9 @@ namespace EurekaHelper
                             ImGui.InputText($"min##{fate.TrackerId}", ref TimeAgoMinutes, 2, ImGuiInputTextFlags.CharsDecimal | ImGuiInputTextFlags.CallbackCharFilter, IntegerCheck);
                         }
 
-                        if (String.IsNullOrWhiteSpace(TimeAgoHours))
+                        if (string.IsNullOrWhiteSpace(TimeAgoHours))
                             TimeAgoHours = "0";
-                        if (String.IsNullOrWhiteSpace(TimeAgoMinutes))
+                        if (string.IsNullOrWhiteSpace(TimeAgoMinutes))
                             TimeAgoMinutes = "0";
 
                         var ts = new TimeSpan(int.Parse(TimeAgoHours), int.Parse(TimeAgoMinutes), 0);
@@ -582,7 +588,7 @@ namespace EurekaHelper
                 if (fate.SpawnByRequiredWeather != EurekaWeather.None && fate.SpawnByRequiredWeather != Connection.GetTracker().GetCurrentWeatherInfo().Weather)
                 {
                     var (Weather, Time) = Connection.GetTracker().GetAllNextWeatherTime().Single(x => x.Weather == fate.SpawnByRequiredWeather);
-                    respawnRequirements.Add((Weather.ToFriendlyString(), (Time.ToString(Time.Hours > 0 ? "hh'h 'mm'm 'ss's'" : "mm'm 'ss's'"))));
+                    respawnRequirements.Add((Weather.ToFriendlyString(), Time.ToString(Time.Hours > 0 ? "hh'h 'mm'm 'ss's'" : "mm'm 'ss's'")));
 
                 }
                 else if (fate.SpawnRequiredWeather != EurekaWeather.None && fate.SpawnRequiredWeather != Connection.GetTracker().GetCurrentWeatherInfo().Weather)
@@ -794,7 +800,7 @@ namespace EurekaHelper
                     ImGui.Text(dateTime.ToString());
 
                     ImGui.TableNextColumn();
-                    if (ImGui.Button($"{(EurekaHelper.Config.ElementalPayloadOptions == PayloadOptions.CopyToClipboard ? $"C##{elemental.ObjectId}": $"S##{elemental.ObjectId}")}"))
+                    if (ImGui.Button($"{(EurekaHelper.Config.ElementalPayloadOptions == PayloadOptions.CopyToClipboard ? $"C##{elemental.ObjectId}" : $"S##{elemental.ObjectId}")}"))
                     {
                         Utils.SetFlagMarker(elemental.TerritoryId, elemental.MapId, elemental.Position);
                         switch (EurekaHelper.Config.ElementalPayloadOptions)
@@ -898,10 +904,6 @@ namespace EurekaHelper
                 "For example: Setting it to \'ShoutToChat\' will shout the pop when you click the button in chat.");
             ImGui.NextColumn();
 
-            save |= ImGui.Checkbox("Randomize Map Coords", ref EurekaHelper.Config.RandomizeMapCoords);
-            Utils.SetTooltip("Randomizes map coords to range of +- 0.5 (recommended to enable)");
-            ImGui.NextColumn();
-
             ImGui.SetNextItemWidth(140f);
             enumNames = Enum.GetNames<XivChatType>();
             var chValues = Enum.GetValues<XivChatType>();
@@ -912,6 +914,14 @@ namespace EurekaHelper
                 save = true;
             }
             Utils.SetTooltip("Set the channel which the plugin messages will display. Default: Echo");
+            ImGui.NextColumn();
+
+            save |= ImGui.Checkbox("Randomize Map Coords", ref EurekaHelper.Config.RandomizeMapCoords);
+            Utils.SetTooltip("Randomizes map coords to range of +- 0.5 (recommended to enable)");
+            ImGui.NextColumn();
+
+            save |= ImGui.Checkbox("Auto Create Tracker", ref EurekaHelper.Config.AutoCreateTracker);
+            Utils.SetTooltip("Auto creates tracker when joining an instance and prints the tracker link to chat");
             ImGui.NextColumn();
 
             ImGui.Columns(1);

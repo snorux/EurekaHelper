@@ -2,6 +2,7 @@
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using EurekaHelper.Windows;
 using EurekaHelper.XIV;
 using EurekaHelper.XIV.Zones;
 using System;

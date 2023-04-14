@@ -6,17 +6,20 @@ using Dalamud.Game;
 using Dalamud.Game.ClientState.Fates;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using EurekaHelper.Windows;
 using EurekaHelper.XIV;
 
 namespace EurekaHelper.System
 {
     public class FateManager : IDisposable
     {
+        private readonly EurekaHelper _plugin = null!;
         private List<Fate> lastFates = new();
         private IEurekaTracker EurekaTracker;
 
-        public FateManager()
+        public FateManager(EurekaHelper plugin)
         {
+            _plugin = plugin;
             DalamudApi.ClientState.TerritoryChanged += OnTerritoryChanged;
 
             if (Utils.IsPlayerInEurekaZone(DalamudApi.ClientState.TerritoryType))
@@ -30,6 +33,10 @@ namespace EurekaHelper.System
         {
             if (Utils.IsPlayerInEurekaZone(territoryId))
             {
+                if (EurekaHelper.Config.AutoCreateTracker)
+                    if (!PluginWindow.GetConnection().IsConnected())
+                        _ = Task.Run(async() => await _plugin.PluginWindow.CreateTracker(territoryId, true));
+
                 EurekaTracker = Utils.GetEurekaTracker(territoryId);
                 DalamudApi.Framework.Update += OnUpdate;
             }
