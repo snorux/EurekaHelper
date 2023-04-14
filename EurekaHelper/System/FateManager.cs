@@ -35,7 +35,7 @@ namespace EurekaHelper.System
             {
                 if (EurekaHelper.Config.AutoCreateTracker)
                     if (!PluginWindow.GetConnection().IsConnected())
-                        _ = Task.Run(async() => await _plugin.PluginWindow.CreateTracker(territoryId, true));
+                        _ = Task.Run(async() => await _plugin.PluginWindow.CreateTracker(Utils.GetIndexOfZone(territoryId), true));
 
                 EurekaTracker = Utils.GetEurekaTracker(territoryId);
                 DalamudApi.Framework.Update += OnUpdate;
