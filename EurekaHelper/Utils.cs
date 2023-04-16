@@ -336,6 +336,24 @@ namespace EurekaHelper
             return distance < minDistance;
         }
 
+        public static string GetItemName(uint itemId)
+        {
+            return DalamudApi.DataManager.Excel.GetSheet<Item>()!
+                .GetRow(itemId)!.Name
+                .ToDalamudString()
+                .ToString();
+        }
+
+        public static string GetJobCategory(uint itemId)
+        {
+            return DalamudApi.DataManager.Excel.GetSheet<Item>()!
+                .GetRow(itemId)!.ClassJobCategory
+                .Value
+                .Name
+                .ToDalamudString()
+                .ToString();
+        }
+
         public static string GetVersion() => Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unable to get version";
 
         public static string GetGitSha() => Assembly.GetExecutingAssembly()?.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "Unable to get Git Hash";
