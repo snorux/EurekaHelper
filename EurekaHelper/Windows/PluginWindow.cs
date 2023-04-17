@@ -17,11 +17,11 @@ namespace EurekaHelper.Windows
 {
     public class PluginWindow : Window, IDisposable
     {
-        private readonly EurekaHelper _plugin = null!;
+        private readonly EurekaHelper Plugin = null!;
 
         public PluginWindow(EurekaHelper plugin) : base("Eureka Helper")
         {
-            _plugin = plugin;
+            Plugin = plugin;
             SizeConstraints = new WindowSizeConstraints { MinimumSize = new Vector2(566, 520), MaximumSize = new Vector2(float.MaxValue, float.MaxValue) };
         }
 
@@ -783,7 +783,7 @@ namespace EurekaHelper.Windows
 
             if (ImGui.Button("Clear All Elementals"))
             {
-                _plugin.ElementalManager.Elementals.Clear();
+                Plugin.ElementalManager.Elementals.Clear();
                 ResetDefaultIcon();
             }
             ImGui.SameLine();
@@ -810,9 +810,9 @@ namespace EurekaHelper.Windows
                 ImGui.TableSetupColumn("Delete", ImGuiTableColumnFlags.WidthFixed);
                 ImGui.TableHeadersRow();
 
-                for (int i = _plugin.ElementalManager.Elementals.Count - 1; i >= 0; i--)
+                for (int i = Plugin.ElementalManager.Elementals.Count - 1; i >= 0; i--)
                 {
-                    var elemental = _plugin.ElementalManager.Elementals[i];
+                    var elemental = Plugin.ElementalManager.Elementals[i];
 
                     ImGui.TableNextColumn();
                     ImGui.Text(elemental.Name);
@@ -855,7 +855,7 @@ namespace EurekaHelper.Windows
 
                     ImGui.TableNextColumn();
                     if (ImGuiComponents.IconButton($"Elemental{elemental.ObjectId}", FontAwesomeIcon.Trash))
-                        _plugin.ElementalManager.Elementals.RemoveAt(i);
+                        Plugin.ElementalManager.Elementals.RemoveAt(i);
                 }
 
             }

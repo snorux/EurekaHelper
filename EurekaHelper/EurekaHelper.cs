@@ -27,6 +27,7 @@ namespace EurekaHelper
         internal readonly FateManager FateManager;
         internal readonly ZoneManager ZoneManager;
         internal readonly ElementalManager ElementalManager;
+        internal readonly InventoryManager InventoryManager;
 
         public EurekaHelper(DalamudPluginInterface pluginInterface)
         {
@@ -39,6 +40,7 @@ namespace EurekaHelper
             FateManager = new(this);
             ZoneManager = new();
             ElementalManager = new();
+            InventoryManager = new();
             PluginWindow = new(this);
             RelicWindow = new(this);
 
@@ -178,7 +180,10 @@ namespace EurekaHelper
         [DoNotShowInHelp]
         private void Debug(string command, string argument)
         {
-
+            foreach (var pair in InventoryManager.ScannedItems)
+            {
+                PluginLog.Information($"{pair.Key} - {pair.Value}");
+            }
         }
 #endif
 
@@ -207,6 +212,7 @@ namespace EurekaHelper
             FateManager.Dispose();
             ZoneManager.Dispose();
             ElementalManager.Dispose();
+            InventoryManager.Dispose();
             PluginWindow.GetConnection().Dispose();
         }
     }

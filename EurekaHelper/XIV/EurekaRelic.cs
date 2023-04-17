@@ -20,7 +20,7 @@ namespace EurekaHelper.XIV
         public string ItemName { get; set; }
         public string JobCategory { get; set; }
 
-        public RelicItem(ushort itemId)
+        public RelicItem(uint itemId)
         { 
             ItemId = itemId;
             ItemName = Utils.GetItemName(itemId);
