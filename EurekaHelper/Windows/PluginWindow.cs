@@ -357,13 +357,13 @@ namespace EurekaHelper.Windows
 
             if (Connection.IsConnected())
             {
-                if (ImGui.BeginTable("TrackerTable", 5, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings))
+                if (ImGui.BeginTable("TrackerTable", 5, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.Sortable | ImGuiTableFlags.SortTristate))
                 {
-                    ImGui.TableSetupColumn("NM", ImGuiTableColumnFlags.WidthFixed);
-                    ImGui.TableSetupColumn("Spawned By", ImGuiTableColumnFlags.WidthFixed);
-                    ImGui.TableSetupColumn("Popped At");
+                    ImGui.TableSetupColumn("NM", ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoSort);
+                    ImGui.TableSetupColumn("Spawned By", ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoSort);
+                    ImGui.TableSetupColumn("Popped At", ImGuiTableColumnFlags.NoSort);
                     ImGui.TableSetupColumn("Respawn In");
-                    ImGui.TableSetupColumn("Reset All", ImGuiTableColumnFlags.WidthStretch);
+                    ImGui.TableSetupColumn("Reset All", ImGuiTableColumnFlags.WidthStretch | ImGuiTableColumnFlags.NoSort);
                     ImGui.TableSetupScrollFreeze(0, 1);
 
                     ImGui.TableNextRow(ImGuiTableRowFlags.Headers);
@@ -441,6 +441,33 @@ namespace EurekaHelper.Windows
 
             var minRowHeight = ImGui.GetContentRegionAvail().Y / zoneFates.Count;
             var spacing = ImGui.GetStyle().ItemInnerSpacing.X;
+
+            var sortSpecs = ImGui.TableGetSortSpecs();
+            if (sortSpecs.SpecsDirty)
+            {
+                var specsCount = sortSpecs.SpecsCount;
+                if (specsCount > 0)
+                {
+                    switch (sortSpecs.Specs.SortDirection)
+                    {
+                        case ImGuiSortDirection.Ascending:
+                            zoneFates = zoneFates.OrderBy(x => x.IsPopped())
+                                .ThenBy(x => x.SpawnByRequiredWeather != EurekaWeather.None && x.SpawnByRequiredWeather != Connection.GetTracker().GetCurrentWeatherInfo().Weather)
+                                .ThenBy(x => x.SpawnRequiredWeather != EurekaWeather.None && x.SpawnRequiredWeather != Connection.GetTracker().GetCurrentWeatherInfo().Weather)
+                                .ThenBy(x => x.SpawnByRequiredNight && EorzeaTime.Now.EorzeaDateTime.Hour >= 6 && EorzeaTime.Now.EorzeaDateTime.Hour < 19)
+                                .ToList();
+                            break;
+
+                        case ImGuiSortDirection.Descending:
+                            zoneFates = zoneFates.OrderByDescending(x => x.IsPopped())
+                                .ThenByDescending(x => x.SpawnByRequiredWeather != EurekaWeather.None && x.SpawnByRequiredWeather != Connection.GetTracker().GetCurrentWeatherInfo().Weather)
+                                .ThenByDescending(x => x.SpawnRequiredWeather != EurekaWeather.None && x.SpawnRequiredWeather != Connection.GetTracker().GetCurrentWeatherInfo().Weather)
+                                .ThenByDescending(x => x.SpawnByRequiredNight && EorzeaTime.Now.EorzeaDateTime.Hour >= 6 && EorzeaTime.Now.EorzeaDateTime.Hour < 19)
+                                .ToList();
+                            break;
+                    }
+                }
+            }
 
             foreach (var fate in zoneFates)
             {
