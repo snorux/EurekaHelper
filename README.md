@@ -33,7 +33,7 @@ Feel free to add new Elemental positions in the link above or you can DM me on D
 ![image](https://user-images.githubusercontent.com/34697265/231217758-a0bd197e-dff4-4e64-ac78-f14d22ca1960.png)
 
 ## Configuration Tab
-![image](https://user-images.githubusercontent.com/34697265/231217819-7530a3f7-e18a-4ae9-98d3-6fe3e235b901.png)
+![image](https://user-images.githubusercontent.com/34697265/232818656-3346b714-26b2-48f7-aac4-4d2319c198b9.png)
 
 ## Instance Tab
 ![image](https://user-images.githubusercontent.com/34697265/230734398-fc07cca2-934b-40ea-8170-6645f5942d9a.png)
