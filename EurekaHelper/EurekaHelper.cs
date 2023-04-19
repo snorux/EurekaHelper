@@ -63,152 +63,68 @@ namespace EurekaHelper
             var skollWeatherTimes = EurekaPyros.GetWeatherForecast(EurekaWeather.Blizzards, 2);
 
             PrintMessage("Weather timers for important NMs:");
+
             #region Crab/KA
-            var crabTime1 = crabWeatherTimes[0]; var crabTime2 = crabWeatherTimes[1];
-            if (crabTime1 < DateTime.Now)
-            {
-                var currTimeDiff = crabTime1 + TimeSpan.FromMilliseconds(EorzeaTime.EIGHT_HOURS) - DateTime.Now;
-                var nextCrabTimeDiff = crabTime2 - DateTime.Now;
-                PluginLog.Information($"Crab/KA weather is up now! It ends in {(int)Math.Round(currTimeDiff.TotalMinutes)}m. Next Crab/KA weather (Fog) in {(int)Math.Round(nextCrabTimeDiff.TotalMinutes)}m @ {crabTime2:d MMM yyyy hh:mm tt}");
-                var sb = new SeStringBuilder()
-                    .AddUiForeground(523)
-                    .AddText("Crab/KA weather is up now! It ends in ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{(int)Math.Round(currTimeDiff.TotalMinutes)}m. ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(523)
-                    .AddText("Next Crab/KA weather (Fog) in ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{(int)Math.Round(nextCrabTimeDiff.TotalMinutes)}m ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(523)
-                    .AddText("@ ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{crabTime2:d MMM yyyy hh:mm tt}")
-                    .AddUiForegroundOff();
-                PrintMessage(sb.BuiltString);
-            }
-            else
-            {
-                var nextCrabTimeDiff = crabTime1 - DateTime.Now;
-                PluginLog.Information($"Next Crab/KA weather (Fog) in {(int)Math.Round(nextCrabTimeDiff.TotalMinutes)}m @ {crabTime1:d MMM yyyy hh:mm tt}");
-                var sb = new SeStringBuilder()
-                    .AddUiForeground(523)
-                    .AddText("Next Crab/KA weather (Fog) in ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{(int)Math.Round(nextCrabTimeDiff.TotalMinutes)}m ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(523)
-                    .AddText("@ ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{crabTime1:d MMM yyyy hh:mm tt}")
-                    .AddUiForegroundOff();
-                PrintMessage(sb.BuiltString);
-            }
+
+            var crabTime1 = crabWeatherTimes[0];
+            var crabTime2 = crabWeatherTimes[1];
+            var crabBuiltString = ArisuStringbuilder("Crab/KA", "Fog", crabTime1, crabTime2);
+            PrintMessage(crabBuiltString.BuiltString);
+            PluginLog.Information(crabBuiltString.ToString());
+
             #endregion
 
             #region Cassie
-            var cassieTime1 = cassieWeatherTimes[0]; var cassieTime2 = cassieWeatherTimes[1];
-            if (cassieTime1 < DateTime.Now)
-            {
-                var currTimeDiff = cassieTime1 + TimeSpan.FromMilliseconds(EorzeaTime.EIGHT_HOURS) - DateTime.Now;
-                var nextCassieTimeDiff = cassieTime2 - DateTime.Now;
-                PluginLog.Information($"Cassie weather is up now! It ends in {(int)Math.Round(currTimeDiff.TotalMinutes)}m. Next Cassie weather (Blizzards) in {(int)Math.Round(nextCassieTimeDiff.TotalMinutes)}m @ {cassieTime2:d MMM yyyy hh:mm tt}");
-                var sb = new SeStringBuilder()
-                    .AddUiForeground(523)
-                    .AddText("Cassie weather is up now! It ends in ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{(int)Math.Round(currTimeDiff.TotalMinutes)}m. ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(523)
-                    .AddText("Next Cassie weather (Blizzards) in ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{(int)Math.Round(nextCassieTimeDiff.TotalMinutes)}m ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(523)
-                    .AddText("@ ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{cassieTime2:d MMM yyyy hh:mm tt}")
-                    .AddUiForegroundOff();
-                PrintMessage(sb.BuiltString);
-            }
-            else
-            {
-                var nextCassieTimeDiff = cassieTime1 - DateTime.Now;
-                PluginLog.Information($"Next Cassie weather (Blizzards) in {(int)Math.Round(nextCassieTimeDiff.TotalMinutes)}m @ {cassieTime1:d MMM yyyy hh:mm tt}");
-                var sb = new SeStringBuilder()
-                    .AddUiForeground(523)
-                    .AddText("Next Cassie weather (Blizzards) in ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{(int)Math.Round(nextCassieTimeDiff.TotalMinutes)}m ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(523)
-                    .AddText("@ ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{cassieTime1:d MMM yyyy hh:mm tt}")
-                    .AddUiForegroundOff();
-                PrintMessage(sb.BuiltString);
-            }
+
+            var cassieTime1 = cassieWeatherTimes[0];
+            var cassieTime2 = cassieWeatherTimes[1];
+            var cassieBuiltString = ArisuStringbuilder("Cassie", "Blizzards", cassieTime1, cassieTime2);
+            PrintMessage(cassieBuiltString.BuiltString);
+            PluginLog.Information(cassieBuiltString.ToString());
+
             #endregion
 
             #region Skoll
-            var skollTime1 = skollWeatherTimes[0]; var skollTime2 = skollWeatherTimes[1];
-            if (skollTime1 < DateTime.Now)
-            {
-                var currTimeDiff = skollTime1 + TimeSpan.FromMilliseconds(EorzeaTime.EIGHT_HOURS) - DateTime.Now;
-                var nextSkollTimeDiff = skollTime2 - DateTime.Now;
-                PluginLog.Information($"Skoll weather is up now! It ends in {(int)Math.Round(currTimeDiff.TotalMinutes)}m. Next Skoll weather (Blizzards) in {(int)Math.Round(nextSkollTimeDiff.TotalMinutes)}m @ {skollTime2:d MMM yyyy hh:mm tt}");
-                var sb = new SeStringBuilder()
-                    .AddUiForeground(523)
-                    .AddText("Skoll weather is up now! It ends in ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{(int)Math.Round(currTimeDiff.TotalMinutes)}m. ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(523)
-                    .AddText("Next Skoll weather (Blizzards) in ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{(int)Math.Round(nextSkollTimeDiff.TotalMinutes)}m ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(523)
-                    .AddText("@ ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{skollTime2:d MMM yyyy hh:mm tt}")
-                    .AddUiForegroundOff();
-                PrintMessage(sb.BuiltString);
-            }
-            else
-            {
-                var nextSkollTimeDiff = skollTime1 - DateTime.Now;
-                PluginLog.Information($"Next Skoll weather (Blizzards) in {(int)Math.Round(nextSkollTimeDiff.TotalMinutes)}m @ {skollTime1:d MMM yyyy hh:mm tt}");
-                var sb = new SeStringBuilder()
-                    .AddUiForeground(523)
-                    .AddText("Next Skoll weather (Blizzards) in ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{(int)Math.Round(nextSkollTimeDiff.TotalMinutes)}m ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(523)
-                    .AddText("@ ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{skollTime1:d MMM yyyy hh:mm tt}")
-                    .AddUiForegroundOff();
-                PrintMessage(sb.BuiltString);
-            }
+
+            var skollTime1 = skollWeatherTimes[0];
+            var skollTime2 = skollWeatherTimes[1];
+            var skollBuildString = ArisuStringbuilder("Skoll", "Blizzards", skollTime1, skollTime2);
+            PrintMessage(skollBuildString.BuiltString);
+            PluginLog.Information(skollBuildString.ToString());
+
             #endregion
+        }
+
+        private SeStringBuilder ArisuStringbuilder(string nextNmString, string nextWeatherString, DateTime time1, DateTime time2)
+        {
+            var sb = new SeStringBuilder();
+            var nextTimeOfWeather = time1;
+            if (time1 < DateTime.Now)
+            {
+                var currTimeDiff = time1 + TimeSpan.FromMilliseconds(EorzeaTime.EIGHT_HOURS) - DateTime.Now;
+                sb.AddUiForeground(523)
+                    .AddText($"{nextNmString} weather is up now! It ends in ")
+                    .AddUiForegroundOff()
+                    .AddUiForeground(508)
+                    .AddText($"{(int)Math.Round(currTimeDiff.TotalMinutes)}m. ");
+                nextTimeOfWeather = time2;
+            }
+
+            var nextTimeDiff = nextTimeOfWeather - DateTime.Now;
+            sb
+                .AddUiForeground(523)
+                .AddText($"Next {nextNmString} weather ({nextWeatherString}) in ")
+                .AddUiForegroundOff()
+                .AddUiForeground(508)
+                .AddText($"{(int)Math.Round(nextTimeDiff.TotalMinutes)}m ")
+                .AddUiForegroundOff()
+                .AddUiForeground(523)
+                .AddText("@ ")
+                .AddUiForegroundOff()
+                .AddUiForeground(508)
+                .AddText($"{nextTimeOfWeather:d MMM yyyy hh:mm tt}")
+                .AddUiForegroundOff();
+            return sb;
         }
 
         [Command("/etrackers")]

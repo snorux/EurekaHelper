@@ -81,29 +81,8 @@ namespace EurekaHelper.XIV.Zones
 
         public (EurekaWeather Weather, TimeSpan Timeleft) GetCurrentWeatherInfo() => EorzeaWeather.GetCurrentWeatherInfo(Weathers);
 
-        public static List<DateTime> GetWeatherForecast(EurekaWeather targetWeather, int count)
-        {
-            var timeNow = EorzeaTime.GetNearestEarthInterval(DateTime.Now);
-            int counter = 0;
-
-            List<DateTime> result = new();
-            do
-            {
-                int chance = EorzeaWeather.CalculateTarget(timeNow);
-                EurekaWeather weather = EorzeaWeather.Forecast(Weathers, chance);
-
-                if (weather == targetWeather)
-                {
-                    result.Add(timeNow.ToLocalTime());
-                    counter++;
-                }
-
-                timeNow += TimeSpan.FromMilliseconds(EorzeaTime.EIGHT_HOURS);
-            }
-            while (counter < count);
-
-            return result;
-        }
+        public static List<DateTime> GetWeatherForecast(EurekaWeather targetWeather, int count) =>
+            EorzeaWeather.GetCountWeatherForecasts(targetWeather, count, Weathers);
 
         public List<(EurekaWeather Weather, TimeSpan Time)> GetAllNextWeatherTime() => EorzeaWeather.GetAllWeathers(Weathers);
 
