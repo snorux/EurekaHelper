@@ -176,6 +176,16 @@ namespace EurekaHelper
                 .BuiltString;
         }
 
+        public static SeString ItemLink(uint itemId, bool isHq = false, string? displayNameOverride = null)
+        {
+            var itemLink = SeString.CreateItemLink(itemId, isHq, displayNameOverride);
+            return new SeStringBuilder()
+                .AddText("Linked Item: ")
+                .Append(itemLink)
+                .Add(RawPayload.LinkTerminator)
+                .BuiltString;
+        }
+
         public static void TextURL(string name, string url, uint color)
         {
             ImGui.PushStyleColor(ImGuiCol.Text, color);

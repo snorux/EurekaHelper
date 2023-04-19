@@ -1,10 +1,12 @@
-﻿using Dalamud.Interface.Components;
+﻿using Dalamud.Interface.Colors;
+using Dalamud.Interface.Components;
 using Dalamud.Interface.Windowing;
 using EurekaHelper.XIV;
 using EurekaHelper.XIV.Relic;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace EurekaHelper.Windows
@@ -16,7 +18,7 @@ namespace EurekaHelper.Windows
         public RelicWindow(EurekaHelper plugin) : base("Eureka Helper - Relic")
         {
             Plugin = plugin;
-            SizeConstraints = new WindowSizeConstraints { MaximumSize = new Vector2(float.MaxValue, float.MaxValue) };
+            SizeConstraints = new WindowSizeConstraints { MinimumSize = new Vector2(415f, 500f), MaximumSize = new Vector2(float.MaxValue, float.MaxValue) };
         }
 
         public void Dispose() { }
@@ -27,45 +29,46 @@ namespace EurekaHelper.Windows
             {
                 if (ImGui.BeginTabItem("Anemos"))
                 {
-                    DrawRelicTab("Anemos", AnemosRelic.AnemosRelicStages);
+                    DrawRelicTab(AnemosRelic.AnemosRelicStages);
                     ImGui.EndTabItem();
                 }
 
                 if (ImGui.BeginTabItem("Pagos"))
                 {
-                    DrawRelicTab("Pagos", PagosRelic.AnemosRelicStages);
+                    DrawRelicTab(PagosRelic.AnemosRelicStages);
                     ImGui.EndTabItem();
                 }
 
                 if (ImGui.BeginTabItem("Pyros"))
                 {
-                    DrawRelicTab("Pyros", PyrosRelic.PyrosRelicStages);
+                    DrawRelicTab(PyrosRelic.PyrosRelicStages);
                     ImGui.EndTabItem();
                 }
 
                 if (ImGui.BeginTabItem("Hydatos"))
                 {
-                    DrawRelicTab("Hydatos", HydatosRelic.HydatosRelicStages);
+                    DrawRelicTab(HydatosRelic.HydatosRelicStages);
                     ImGui.EndTabItem();
                 }
             }
         }
 
-        private void DrawRelicTab(string zone, Dictionary<string, EurekaRelic> stages)
+        private void DrawRelicTab(Dictionary<string, EurekaRelic> stages)
         {
-            ImGui.BeginChild($"##{zone}Relic", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y), false);
+            ImGui.BeginChild($"##Relic", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y), false);
 
-            if (ImGui.BeginTabBar($"##{zone}RelicTabBar"))
+            if (ImGui.BeginTabBar($"##RelicTabBar"))
             {
                 foreach (var stage in stages)
                 {
                     if (ImGui.BeginTabItem(stage.Key))
                     {
-                        ImGui.TextColored(new Vector4(1.0f, 0.7f, 0.06f, 1.0f), "Requirements:");
+                        ImGui.TextColored(ImGuiColors.DalamudYellow, "Requirements:");
                         ImGui.SameLine();
                         ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 1f);
                         ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
-                        ImGuiComponents.HelpMarker("This shows the amount of items you need for each relic\n" +
+                        ImGuiComponents.HelpMarker("These are the requirements you need to complete/gather for each relic stage\n\n" +
+                            "The first number shows the amount you have while the second number shows the amount you need\n" +
                             "However, for \"Elemental +1\" and \"Elemental +2\" armor relics, the numbers varies from 30-50 and 21-35 respectively\n" +
                             "To keep it simple, requirements will only show the maximum number of items needed\n\n" +
                             "If you keep the items in other inventories (ex. Saddlebags, Retainers), you need to open it at least once to update the count.");
@@ -74,28 +77,73 @@ namespace EurekaHelper.Windows
 
                         foreach (var requirement in stage.Value.CompletionRequirements)
                         {
-                            ImGui.Text($"{requirement.ItemName} - {requirement.ItemCount}");
+                            ImGui.Text(requirement.ItemName);
+                            if (requirement.ItemId != 0)
+                            {
+                                if (ImGui.IsItemClicked())
+                                {
+                                    var itemLink = Utils.ItemLink(requirement.ItemId);
+                                    EurekaHelper.PrintMessage(itemLink);
+                                }
+                            }
+
+                            ImGui.SameLine();
+
+                            var itemCount = Plugin.InventoryManager.ScannedItems.TryGetValue(requirement.ItemId, out var count) ? count : 0;
+
+                            if (requirement.ItemId != 0)
+                                Utils.RightAlignTextInColumn($"{itemCount} / {requirement.ItemCount}", itemCount > requirement.ItemCount ? ImGuiColors.ParsedGreen : ImGuiColors.DalamudRed);
+                            else
+                                Utils.RightAlignTextInColumn($"{requirement.ItemCount}", ImGuiColors.DalamudOrange);
                         }
 
                         ImGui.Separator();
 
                         ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
                         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0.0f, 0.0f));
-                        ImGui.BeginChild($"##ChildItem{stage.Key}", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y), true);
+                        ImGui.BeginChild($"##ChildDisplay", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y), true);
                         ImGui.PopStyleColor();
                         ImGui.PopStyleVar();
 
-                        if (ImGui.BeginTable($"##Items{stage.Key}", 2, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings))
+                        if (ImGui.BeginTable($"##ItemsDisplay", 2, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.Sortable | ImGuiTableFlags.SortTristate))
                         {
                             ImGui.TableSetupScrollFreeze(0, 1);
-                            ImGui.TableSetupColumn("Item");
+                            ImGui.TableSetupColumn("Item", ImGuiTableColumnFlags.NoSort);
                             ImGui.TableSetupColumn("Job Category", ImGuiTableColumnFlags.WidthFixed);
                             ImGui.TableHeadersRow();
 
-                            foreach (var relic in stage.Value.RelicItems)
+                            var currentStageRelics = stage.Value.RelicItems;
+
+                            var sortSpecs = ImGui.TableGetSortSpecs();
+                            if (sortSpecs.SpecsDirty)
+                            {
+                                var specsCount = sortSpecs.SpecsCount;
+                                if (specsCount > 0)
+                                {
+                                    switch (sortSpecs.Specs.SortDirection)
+                                    {
+                                        case ImGuiSortDirection.Ascending:
+                                            currentStageRelics = currentStageRelics.OrderBy(x => x.JobCategory)
+                                                .ToList();
+                                            break;
+
+                                        case ImGuiSortDirection.Descending:
+                                            currentStageRelics = currentStageRelics.OrderByDescending(x => x.JobCategory)
+                                                .ToList();
+                                            break;
+                                    }
+                                }
+                            }
+
+                            foreach (var relic in currentStageRelics)
                             {
                                 ImGui.TableNextColumn();
                                 ImGui.Text(relic.ItemName);
+                                if (ImGui.IsItemClicked())
+                                {
+                                    var itemLink = Utils.ItemLink(relic.ItemId);
+                                    EurekaHelper.PrintMessage(itemLink);
+                                }
 
                                 ImGui.TableNextColumn();
                                 Utils.RightAlignTextInColumn(relic.JobCategory);
