@@ -93,5 +93,29 @@ namespace EurekaHelper.XIV
 
             return results;
         }
+        
+        public static List<DateTime> GetCountWeatherForecasts(EurekaWeather targetWeather, int count, (int, EurekaWeather)[] weathers)
+        {
+            var timeNow = EorzeaTime.GetNearestEarthInterval(DateTime.Now);
+            int counter = 0;
+
+            List<DateTime> result = new();
+            do
+            {
+                int chance = EorzeaWeather.CalculateTarget(timeNow);
+                EurekaWeather weather = EorzeaWeather.Forecast(weathers, chance);
+
+                if (weather == targetWeather)
+                {
+                    result.Add(timeNow.ToLocalTime());
+                    counter++;
+                }
+
+                timeNow += TimeSpan.FromMilliseconds(EorzeaTime.EIGHT_HOURS);
+            }
+            while (counter < count);
+
+            return result;
+        }
     }
 }
