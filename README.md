@@ -1,5 +1,5 @@
 # EurekaHelper
-[![Download count](https://img.shields.io/endpoint?url=https://vz32sgcoal.execute-api.us-east-1.amazonaws.com/EurekaHelper)](https://github.com/MidoriKami/DailyDuty)  
+[![Download count](https://img.shields.io/endpoint?url=https://vz32sgcoal.execute-api.us-east-1.amazonaws.com/EurekaHelper)](https://github.com/snooooowy/EurekaHelper)  
  
 A FFXIV Dalamud plugin - In-Game Eureka Tracker with QoL features.  
 
