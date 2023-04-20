@@ -186,6 +186,37 @@ namespace EurekaHelper
                 .BuiltString;
         }
 
+        public static SeStringBuilder ArisuStringbuilder(string nextNmString, string nextWeatherString, DateTime time1, DateTime time2)
+        {
+            var sb = new SeStringBuilder();
+            var nextTimeOfWeather = time1;
+            if (time1 < DateTime.Now)
+            {
+                var currTimeDiff = time1 + TimeSpan.FromMilliseconds(EorzeaTime.EIGHT_HOURS) - DateTime.Now;
+                sb.AddUiForeground(523)
+                    .AddText($"{nextNmString} weather is up now! It ends in ")
+                    .AddUiForegroundOff()
+                    .AddUiForeground(508)
+                    .AddText($"{(int)Math.Round(currTimeDiff.TotalMinutes)}m. ");
+                nextTimeOfWeather = time2;
+            }
+
+            var nextTimeDiff = nextTimeOfWeather - DateTime.Now;
+            sb.AddUiForeground(523)
+                .AddText($"Next {nextNmString} weather ({nextWeatherString}) in ")
+                .AddUiForegroundOff()
+                .AddUiForeground(508)
+                .AddText($"{(int)Math.Round(nextTimeDiff.TotalMinutes)}m ")
+                .AddUiForegroundOff()
+                .AddUiForeground(523)
+                .AddText("@ ")
+                .AddUiForegroundOff()
+                .AddUiForeground(508)
+                .AddText($"{nextTimeOfWeather:d MMM yyyy hh:mm tt}")
+                .AddUiForegroundOff();
+            return sb;
+        }
+
         public static void TextURL(string name, string url, uint color)
         {
             ImGui.PushStyleColor(ImGuiCol.Text, color);
