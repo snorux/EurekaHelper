@@ -142,10 +142,7 @@ namespace EurekaHelper
         [DoNotShowInHelp]
         private void Debug(string command, string argument)
         {
-            foreach (var pair in InventoryManager.ScannedItems)
-            {
-                PluginLog.Information($"{pair.Key} - {pair.Value}");
-            }
+
         }
 #endif
 
