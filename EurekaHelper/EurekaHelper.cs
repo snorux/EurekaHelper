@@ -22,10 +22,12 @@ namespace EurekaHelper
 
         internal readonly WindowSystem WindowSystem;
         internal readonly PluginWindow PluginWindow;
+        internal readonly RelicWindow RelicWindow;
 
         internal readonly FateManager FateManager;
         internal readonly ZoneManager ZoneManager;
         internal readonly ElementalManager ElementalManager;
+        internal readonly InventoryManager InventoryManager;
 
         public EurekaHelper(DalamudPluginInterface pluginInterface)
         {
@@ -38,12 +40,15 @@ namespace EurekaHelper
             FateManager = new(this);
             ZoneManager = new();
             ElementalManager = new();
+            InventoryManager = new();
             PluginWindow = new(this);
+            RelicWindow = new(this);
 
             Utils.BuildLgbData();
 
             WindowSystem = new("Eureka Helper");
             WindowSystem.AddWindow(PluginWindow);
+            WindowSystem.AddWindow(RelicWindow);
 
             DalamudApi.PluginInterface.UiBuilder.Draw += DrawUI;
             DalamudApi.PluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
@@ -65,66 +70,28 @@ namespace EurekaHelper
             PrintMessage("Weather timers for important NMs:");
 
             #region Crab/KA
-
             var crabTime1 = crabWeatherTimes[0];
             var crabTime2 = crabWeatherTimes[1];
-            var crabBuiltString = ArisuStringbuilder("Crab/KA", "Fog", crabTime1, crabTime2);
+            var crabBuiltString = Utils.ArisuStringbuilder("Crab/KA", "Fog", crabTime1, crabTime2);
             PrintMessage(crabBuiltString.BuiltString);
             PluginLog.Information(crabBuiltString.ToString());
-
             #endregion
 
             #region Cassie
-
             var cassieTime1 = cassieWeatherTimes[0];
             var cassieTime2 = cassieWeatherTimes[1];
-            var cassieBuiltString = ArisuStringbuilder("Cassie", "Blizzards", cassieTime1, cassieTime2);
+            var cassieBuiltString = Utils.ArisuStringbuilder("Cassie", "Blizzards", cassieTime1, cassieTime2);
             PrintMessage(cassieBuiltString.BuiltString);
             PluginLog.Information(cassieBuiltString.ToString());
-
             #endregion
 
             #region Skoll
-
             var skollTime1 = skollWeatherTimes[0];
             var skollTime2 = skollWeatherTimes[1];
-            var skollBuildString = ArisuStringbuilder("Skoll", "Blizzards", skollTime1, skollTime2);
+            var skollBuildString = Utils.ArisuStringbuilder("Skoll", "Blizzards", skollTime1, skollTime2);
             PrintMessage(skollBuildString.BuiltString);
             PluginLog.Information(skollBuildString.ToString());
-
             #endregion
-        }
-
-        private SeStringBuilder ArisuStringbuilder(string nextNmString, string nextWeatherString, DateTime time1, DateTime time2)
-        {
-            var sb = new SeStringBuilder();
-            var nextTimeOfWeather = time1;
-            if (time1 < DateTime.Now)
-            {
-                var currTimeDiff = time1 + TimeSpan.FromMilliseconds(EorzeaTime.EIGHT_HOURS) - DateTime.Now;
-                sb.AddUiForeground(523)
-                    .AddText($"{nextNmString} weather is up now! It ends in ")
-                    .AddUiForegroundOff()
-                    .AddUiForeground(508)
-                    .AddText($"{(int)Math.Round(currTimeDiff.TotalMinutes)}m. ");
-                nextTimeOfWeather = time2;
-            }
-
-            var nextTimeDiff = nextTimeOfWeather - DateTime.Now;
-            sb
-                .AddUiForeground(523)
-                .AddText($"Next {nextNmString} weather ({nextWeatherString}) in ")
-                .AddUiForegroundOff()
-                .AddUiForeground(508)
-                .AddText($"{(int)Math.Round(nextTimeDiff.TotalMinutes)}m ")
-                .AddUiForegroundOff()
-                .AddUiForeground(523)
-                .AddText("@ ")
-                .AddUiForegroundOff()
-                .AddUiForeground(508)
-                .AddText($"{nextTimeOfWeather:d MMM yyyy hh:mm tt}")
-                .AddUiForegroundOff();
-            return sb;
         }
 
         [Command("/etrackers")]
@@ -155,23 +122,30 @@ namespace EurekaHelper
             }
 
             var sb = new SeStringBuilder()
-                            .AddText("Found")
-                            .AddUiForeground(58)
-                            .AddText($" {filteredList.Count()} ")
-                            .AddUiForegroundOff()
-                            .AddText("public trackers:");
+                .AddText("Found")
+                .AddUiForeground(58)
+                .AddText($" {filteredList.Count()} ")
+                .AddUiForegroundOff()
+                .AddText("public trackers:");
             PrintMessage(sb.BuiltString);
 
             foreach (var tracker in filteredList)
                 PrintMessage(Utils.CombineUrl(Constants.EurekaTrackerLink, tracker["id"].ToString()));
         }
 
+        [Command("/erelic")]
+        [HelpMessage("Opens / Closes the Eureka Relic helper window")]
+        private void RelicHelper(string command, string argument) => RelicWindow.IsOpen ^= true;
+
 #if DEBUG
         [Command("/edebug")]
         [DoNotShowInHelp]
         private void Debug(string command, string argument)
         {
-
+            foreach (var pair in InventoryManager.ScannedItems)
+            {
+                PluginLog.Information($"{pair.Key} - {pair.Value}");
+            }
         }
 #endif
 
@@ -200,7 +174,9 @@ namespace EurekaHelper
             FateManager.Dispose();
             ZoneManager.Dispose();
             ElementalManager.Dispose();
+            InventoryManager.Dispose();
             PluginWindow.GetConnection().Dispose();
+            DalamudApi.PluginInterface.RemoveChatLinkHandler();
         }
     }
 }
