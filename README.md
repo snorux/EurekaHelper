@@ -14,6 +14,7 @@ To open the window, type `/eurekahelper` or `/ehelper` or `/eh`
 3. [Elementals Tab](#elementals-tab)
 4. [Configuration Tab](#configuration-tab)
 5. [Instance Tab](#instance-tab)
+6. [Relic Window](#relic-window)
 
 ## Commands
 | Command | Description |
@@ -37,4 +38,8 @@ Feel free to add new Elemental positions in the link above or you can DM me on D
 
 ## Instance Tab
 ![image](https://user-images.githubusercontent.com/34697265/230734398-fc07cca2-934b-40ea-8170-6645f5942d9a.png)
+
+## Relic Window
+![image](https://user-images.githubusercontent.com/34697265/233679040-364750e5-a001-46d8-9a57-f0116c5defe4.png)
+
 
