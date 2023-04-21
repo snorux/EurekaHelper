@@ -63,7 +63,7 @@ namespace EurekaHelper.System
                 if (EurekaHelper.Config.ElementalCrowdsource)
                 {
                     var knownLocations = GetKnownLocations(DalamudApi.ClientState.TerritoryType);
-                    if (!knownLocations.Any(x => Utils.IsWithinMinimumDistance(x, eurekaElemental.RawPosition, 6.0f)))
+                    if (!knownLocations.Any(x => Utils.IsWithinMinimumDistance(x, eurekaElemental.RawPosition, 10.0f)))
                     {
                         EurekaHelper.PrintMessage("Elemental found that is not in the plugin database.");
                         EurekaHelper.PrintMessage("Please send the following information to the developer on GitHub or Discord DM. You can find the contact information in the \"About\" tab.");
