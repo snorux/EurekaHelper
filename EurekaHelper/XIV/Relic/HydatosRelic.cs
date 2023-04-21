@@ -183,6 +183,7 @@ namespace EurekaHelper.XIV.Relic
         private static readonly List<CompletionRequirement> ElementalPlusOneArmorRelicCompletionRequirements = new()
         {
             new CompletionRequirement(24807, 50),
+            new CompletionRequirement(0, 56, "Logos Actions Unlocked")
         };
         #endregion
 
