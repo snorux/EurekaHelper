@@ -55,9 +55,9 @@ namespace EurekaHelper.Windows
 
         private void DrawRelicTab(Dictionary<string, EurekaRelic> stages)
         {
-            ImGui.BeginChild($"##Relic", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y), false);
+            ImGui.BeginChild("Relic", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y), false);
 
-            if (ImGui.BeginTabBar($"##RelicTabBar"))
+            if (ImGui.BeginTabBar("RelicTabBar"))
             {
                 foreach (var stage in stages)
                 {
@@ -101,11 +101,11 @@ namespace EurekaHelper.Windows
 
                         ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
                         ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0.0f, 0.0f));
-                        ImGui.BeginChild($"##ChildDisplay", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y), true);
+                        ImGui.BeginChild("ChildDisplay", new Vector2(ImGui.GetContentRegionAvail().X, ImGui.GetContentRegionAvail().Y), true);
                         ImGui.PopStyleColor();
                         ImGui.PopStyleVar();
 
-                        if (ImGui.BeginTable($"##ItemsDisplay", 2, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.Sortable | ImGuiTableFlags.SortTristate))
+                        if (ImGui.BeginTable("ItemsDisplayWindow", 2, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.Sortable | ImGuiTableFlags.SortTristate))
                         {
                             ImGui.TableSetupScrollFreeze(0, 1);
                             ImGui.TableSetupColumn("Item", ImGuiTableColumnFlags.NoSort);
@@ -148,9 +148,10 @@ namespace EurekaHelper.Windows
                                 ImGui.TableNextColumn();
                                 Utils.RightAlignTextInColumn(relic.JobCategory);
                             }
+
+                            ImGui.EndTable();
                         }
 
-                        ImGui.EndTable();
                         ImGui.EndChild();
                         ImGui.EndTabItem();
                     }

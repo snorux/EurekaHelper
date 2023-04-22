@@ -299,8 +299,10 @@ namespace EurekaHelper.Windows
                     }
                 }
                 Utils.SetTooltip("Joins a tracker with the specified ID and password");
+
+                ImGui.EndTable();
             }
-            ImGui.EndTable();
+
             ImGui.PopStyleVar();
 
             ImGui.Spacing();
@@ -409,8 +411,9 @@ namespace EurekaHelper.Windows
                     ImGui.PopStyleColor();
 
                     DrawTracker();
+
+                    ImGui.EndTable();
                 }
-                ImGui.EndTable();
             }
             else
             {
@@ -858,8 +861,9 @@ namespace EurekaHelper.Windows
                         Plugin.ElementalManager.Elementals.RemoveAt(i);
                 }
 
+                ImGui.EndTable();
             }
-            ImGui.EndTable();
+
             ImGui.EndChild();
         }
 
