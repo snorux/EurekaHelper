@@ -89,7 +89,7 @@ namespace EurekaHelper.Windows
 
                             ImGui.SameLine();
 
-                            var itemCount = Plugin.InventoryManager.ScannedItems.TryGetValue(requirement.ItemId, out var count) ? count : 0;
+                            var itemCount =  Plugin.InventoryManager.ScannedItems.TryGetValue(requirement.ItemId, out var inventoryCount) ? inventoryCount.Sum(x => x.Count) : 0;
 
                             if (requirement.ItemId != 0)
                                 Utils.RightAlignTextInColumn($"{itemCount} / {requirement.ItemCount}", itemCount > requirement.ItemCount ? ImGuiColors.ParsedGreen : ImGuiColors.DalamudRed);
