@@ -30,22 +30,22 @@ namespace EurekaHelper.System
             InventoryType.RetainerPage7,
         };
 
-        public Dictionary<uint, int> ScannedItems = new()
+        public Dictionary<uint, List<InventoryCount>> ScannedItems = new()
         {
-            [21801] = 0, // Protean Crystal
-            [21802] = 0, // Pazuzu's feather
-            [21803] = 0, // Anemos Crystal
+            [21801] = new(), // Protean Crystal
+            [21802] = new(), // Pazuzu's feather
+            [21803] = new(), // Anemos Crystal
 
-            [23309] = 0, // Frosted Protean Crystal
-            [22976] = 0, // Pagos Crystal
-            [22975] = 0, // Louhi's Ice
+            [23309] = new(), // Frosted Protean Crystal
+            [22976] = new(), // Pagos Crystal
+            [22975] = new(), // Louhi's Ice
 
-            [24124] = 0, // Pyros Crystal
-            [24123] = 0, // Penthesilea's Flame
+            [24124] = new(), // Pyros Crystal
+            [24123] = new(), // Penthesilea's Flame
 
-            [24807] = 0, // Hydatos Crystal
-            [24806] = 0, // Crystalline Scale
-            [24808] = 0, // Eureka Fragment
+            [24807] = new(), // Hydatos Crystal
+            [24806] = new(), // Crystalline Scale
+            [24808] = new(), // Eureka Fragment
         };
 
         public InventoryManager()
@@ -61,14 +61,24 @@ namespace EurekaHelper.System
 
                 foreach (var item in ScannedItems.ToList())
                 {
-                    int totalCount = 0;
-                    
                     foreach (var inventoryType in InventoriesToScan)
                     {
-                        totalCount += inventoryManger->GetItemCountInContainer(item.Key, inventoryType);
-                    }
+                        int totalCount = 0;
 
-                    ScannedItems[item.Key] = totalCount;
+                        var inventory = inventoryManger->GetInventoryContainer(inventoryType);
+                        if (inventory == null)
+                            continue;
+
+                        if (inventory->Loaded == 0)
+                            continue;
+
+                        totalCount += inventoryManger->GetItemCountInContainer(item.Key, inventoryType);
+
+                        if (ScannedItems[item.Key].Any(x => x.InventoryType == inventoryType))
+                            ScannedItems[item.Key].Single(x => x.InventoryType == inventoryType).Count = totalCount;
+                        else
+                            ScannedItems[item.Key].Add(new(inventoryType, totalCount));
+                    }
                 }
             }
             catch (Exception ex)
@@ -84,6 +94,18 @@ namespace EurekaHelper.System
         public void Dispose()
         {
             CancellationTokenSource.Cancel();
+        }
+    }
+
+    public class InventoryCount
+    {
+        public InventoryType InventoryType { get; set; }
+        public int Count { get; set; }
+
+        public InventoryCount(InventoryType inventoryType, int count)
+        {
+            InventoryType = inventoryType;
+            Count = count;
         }
     }
 }
