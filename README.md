@@ -22,6 +22,7 @@ To open the window, type `/eurekahelper` or `/ehelper` or `/eh`
 | `/ehelper` or `/eurekahelper` or `/eh` | Opens the main window |
 | `/etrackers` | Attempts to get a list of public trackers for the current instance in the same datacenter |
 | `/arisu` | Display next weather for Crab, Cassie & Skoll<br />![image](https://user-images.githubusercontent.com/34697265/223168197-4dc544ae-c467-4b17-a754-b2835ff4e7e0.png) |
+| `/erelic` | Opens the [Relic Window](#relic-window) |
 
 ## Main Window
 | Default | Connected To Tracker |
