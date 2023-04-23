@@ -8,7 +8,6 @@ using EurekaHelper.Windows;
 using EurekaHelper.XIV;
 using EurekaHelper.XIV.Zones;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Linq;
 using System.Threading;
 
