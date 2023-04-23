@@ -3,6 +3,7 @@ using Dalamud.Interface.Components;
 using Dalamud.Interface.Windowing;
 using EurekaHelper.XIV;
 using EurekaHelper.XIV.Relic;
+using FFXIVClientStructs.FFXIV.Client.Game;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
@@ -92,9 +93,62 @@ namespace EurekaHelper.Windows
                             var itemCount =  Plugin.InventoryManager.ScannedItems.TryGetValue(requirement.ItemId, out var inventoryCount) ? inventoryCount.Sum(x => x.Count) : 0;
 
                             if (requirement.ItemId != 0)
+                            {
                                 Utils.RightAlignTextInColumn($"{itemCount} / {requirement.ItemCount}", itemCount > requirement.ItemCount ? ImGuiColors.ParsedGreen : ImGuiColors.DalamudRed);
+
+                                if (ImGui.IsItemHovered())
+                                {
+                                    ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 1f);
+                                    ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
+
+                                    ImGui.BeginTooltip();
+
+                                    if (Plugin.InventoryManager.ScannedItems.TryGetValue(requirement.ItemId, out var inventories))
+                                    {
+                                        var spacing = ImGui.GetStyle().ItemInnerSpacing.X;
+
+                                        var characterInvCount = inventories.Where(x => x.InventoryType == InventoryType.Inventory1 
+                                                                        || x.InventoryType == InventoryType.Inventory2 
+                                                                        || x.InventoryType == InventoryType.Inventory3 
+                                                                        || x.InventoryType == InventoryType.Inventory4)
+                                                                        .Sum(x => x.Count);
+                                        ImGui.Text("Inventories:"); ImGui.SameLine(0.0f, spacing);
+                                        ImGui.TextColored(ImGuiColors.ParsedPink, $"{characterInvCount}");
+
+                                        var saddleInvCount = inventories.Where(x => x.InventoryType == InventoryType.SaddleBag1
+                                                                        || x.InventoryType == InventoryType.SaddleBag2
+                                                                        || x.InventoryType == InventoryType.PremiumSaddleBag1
+                                                                        || x.InventoryType == InventoryType.PremiumSaddleBag2)
+                                                                        .Sum(x => x.Count);
+                                        ImGui.Text("Saddlebags:"); ImGui.SameLine(0.0f, spacing);
+                                        ImGui.TextColored(ImGuiColors.ParsedPink, $"{saddleInvCount}");
+
+                                        var retainerInvCount = inventories.Where(x => x.InventoryType == InventoryType.RetainerPage1
+                                                                        || x.InventoryType== InventoryType.RetainerPage2
+                                                                        || x.InventoryType == InventoryType.RetainerPage3
+                                                                        || x.InventoryType == InventoryType.RetainerPage4
+                                                                        || x.InventoryType == InventoryType.RetainerPage5
+                                                                        || x.InventoryType == InventoryType.RetainerPage6
+                                                                        || x.InventoryType == InventoryType.RetainerPage7)
+                                                                        .Sum(x => x.Count);
+                                        ImGui.Text("Retainers:"); ImGui.SameLine(0.0f, spacing);
+                                        ImGui.TextColored(ImGuiColors.ParsedPink, $"{retainerInvCount}");
+                                    }
+                                    else
+                                    {
+                                        ImGui.TextColored(ImGuiColors.DalamudRed, "Failed to get value for some reason, please contact author.");
+                                    }
+
+                                    ImGui.EndTooltip();
+
+                                    ImGui.PopStyleVar();
+                                    ImGui.PopStyleColor();
+                                }
+                            }
                             else
+                            {
                                 Utils.RightAlignTextInColumn($"{requirement.ItemCount}", ImGuiColors.DalamudOrange);
+                            }
                         }
 
                         ImGui.Separator();
