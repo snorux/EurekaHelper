@@ -102,36 +102,40 @@ namespace EurekaHelper.System
                 if (EurekaHelper.Config.DisplayFatePop)
                 {
                     DalamudApi.PluginInterface.RemoveChatLinkHandler(fate.FateId);
-                    DalamudLinkPayload payload = DalamudApi.PluginInterface.AddChatLinkHandler(fate.FateId, (i, m) =>
+                    if (EurekaHelper.Config.PayloadOptions != PayloadOptions.Nothing)
                     {
-                        Utils.SetFlagMarker(fate, randomizeCoords: EurekaHelper.Config.RandomizeMapCoords);
+                        DalamudLinkPayload payload = DalamudApi.PluginInterface.AddChatLinkHandler(fate.FateId,
+                            (i, m) =>
+                            {
+                                Utils.SetFlagMarker(fate, randomizeCoords: EurekaHelper.Config.RandomizeMapCoords);
 
-                        switch (EurekaHelper.Config.PayloadOptions)
+                                switch (EurekaHelper.Config.PayloadOptions)
+                                {
+                                    case PayloadOptions.CopyToClipboard:
+                                        Utils.CopyToClipboard(Utils.RandomFormattedText(fate));
+                                        break;
+
+                                    default:
+                                    case PayloadOptions.ShoutToChat:
+                                        Utils.SendMessage(Utils.RandomFormattedText(fate));
+                                        break;
+                                }
+                            });
+
+                        var text = EurekaHelper.Config.PayloadOptions switch
                         {
-                            case PayloadOptions.CopyToClipboard:
-                                Utils.CopyToClipboard(Utils.RandomFormattedText(fate));
-                                break;
+                            PayloadOptions.ShoutToChat => "shout",
+                            PayloadOptions.CopyToClipboard => "copy",
+                            _ => "shout"
+                        };
 
-                            default:
-                            case PayloadOptions.ShoutToChat:
-                                Utils.SendMessage(Utils.RandomFormattedText(fate));
-                                break;
-                        }
-                    });
-
-                    var text = EurekaHelper.Config.PayloadOptions switch
-                    {
-                        PayloadOptions.ShoutToChat => "shout",
-                        PayloadOptions.CopyToClipboard => "copy",
-                        _ => "shout"
-                    };
-
-                    sb.AddText(" ");
-                    sb.AddUiForeground(32);
-                    sb.Add(payload);
-                    sb.AddText($"[Click to {text}]");
-                    sb.Add(RawPayload.LinkTerminator);
-                    sb.AddUiForegroundOff();
+                        sb.AddText(" ");
+                        sb.AddUiForeground(32);
+                        sb.Add(payload);
+                        sb.AddText($"[Click to {text}]");
+                        sb.Add(RawPayload.LinkTerminator);
+                        sb.AddUiForegroundOff();
+                    }
 
                     EurekaHelper.PrintMessage(sb.BuiltString);
                 }
