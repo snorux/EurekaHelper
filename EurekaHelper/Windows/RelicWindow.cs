@@ -94,7 +94,7 @@ namespace EurekaHelper.Windows
 
                             if (requirement.ItemId != 0)
                             {
-                                Utils.RightAlignTextInColumn($"{itemCount} / {requirement.ItemCount}", itemCount > requirement.ItemCount ? ImGuiColors.ParsedGreen : ImGuiColors.DalamudRed);
+                                Utils.RightAlignTextInColumn($"{itemCount} / {requirement.ItemCount}", itemCount >= requirement.ItemCount ? ImGuiColors.ParsedGreen : ImGuiColors.DalamudRed);
 
                                 if (ImGui.IsItemHovered())
                                 {
