@@ -9,7 +9,8 @@ namespace EurekaHelper
     public enum PayloadOptions
     {
         ShoutToChat,
-        CopyToClipboard
+        CopyToClipboard,
+        Nothing
     }
 
     [Serializable]
