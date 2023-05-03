@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<Authors>Snowy</Authors>
-		<Version>1.4.1.1</Version>
+		<Version>1.4.2.1</Version>
 		<Description>A plugin to enchance your Eureka experience</Description>
 		<PackageProjectUrl>https://github.com/Snooooowy</PackageProjectUrl>
 	</PropertyGroup>
