@@ -104,23 +104,22 @@ namespace EurekaHelper.System
                     DalamudApi.PluginInterface.RemoveChatLinkHandler(fate.FateId);
                     if (EurekaHelper.Config.PayloadOptions != PayloadOptions.Nothing)
                     {
-                        DalamudLinkPayload payload = DalamudApi.PluginInterface.AddChatLinkHandler(fate.FateId,
-                            (i, m) =>
+                        DalamudLinkPayload payload = DalamudApi.PluginInterface.AddChatLinkHandler(fate.FateId, (i, m) =>
+                        {
+                            Utils.SetFlagMarker(fate, randomizeCoords: EurekaHelper.Config.RandomizeMapCoords);
+
+                            switch (EurekaHelper.Config.PayloadOptions)
                             {
-                                Utils.SetFlagMarker(fate, randomizeCoords: EurekaHelper.Config.RandomizeMapCoords);
+                                case PayloadOptions.CopyToClipboard:
+                                    Utils.CopyToClipboard(Utils.RandomFormattedText(fate));
+                                    break;
 
-                                switch (EurekaHelper.Config.PayloadOptions)
-                                {
-                                    case PayloadOptions.CopyToClipboard:
-                                        Utils.CopyToClipboard(Utils.RandomFormattedText(fate));
-                                        break;
-
-                                    default:
-                                    case PayloadOptions.ShoutToChat:
-                                        Utils.SendMessage(Utils.RandomFormattedText(fate));
-                                        break;
-                                }
-                            });
+                                default:
+                                case PayloadOptions.ShoutToChat:
+                                    Utils.SendMessage(Utils.RandomFormattedText(fate));
+                                    break;
+                            }
+                        });
 
                         var text = EurekaHelper.Config.PayloadOptions switch
                         {
@@ -149,7 +148,7 @@ namespace EurekaHelper.System
                         if (trackerFate is null)
                             return;
 
-                        if (!trackerFate.IsPopped())
+                        if (!trackerFate.IsPopped() || (EurekaHelper.Config.AutoPopFateWithinRange && trackerFate.IsRespawnTimeWithinRange(TimeSpan.FromMinutes(5))))
                         {
                             _ = Task.Run(async () =>
                             {

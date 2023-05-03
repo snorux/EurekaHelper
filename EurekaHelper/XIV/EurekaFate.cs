@@ -49,6 +49,8 @@ namespace EurekaHelper.XIV
 
         public bool IsPopped() => KilledAt != -1 && (KilledAt + 7200000) > DateTimeOffset.Now.ToUnixTimeMilliseconds();
 
+        public bool IsRespawnTimeWithinRange(TimeSpan timespan) => GetRespawnTimeleft() <= timespan;
+
         public DateTime GetPoppedTime() => EorzeaTime.Zero.AddMilliseconds(KilledAt).ToLocalTime();
 
         public TimeSpan GetRespawnTimeleft() => TimeSpan.FromMilliseconds(KilledAt + 7200000 - DateTimeOffset.Now.ToUnixTimeMilliseconds());

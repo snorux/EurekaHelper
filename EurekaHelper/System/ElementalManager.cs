@@ -37,11 +37,9 @@ namespace EurekaHelper.System
 
         private void OnUpdate(Framework framework)
         {
-            if (!EurekaHelper.Config.ElementalCrowdsource && !EurekaHelper.Config.DisplayElemental &&
-                !EurekaHelper.Config.DisplayElementalToast)
-            {
+            if (!EurekaHelper.Config.ElementalCrowdsource && !EurekaHelper.Config.DisplayElemental && !EurekaHelper.Config.DisplayElementalToast)
                 return;
-            }
+
             var elementals = DalamudApi.ObjectTable.Where(x => x is BattleNpc bnpc && Constants.EurekaElementals.Contains(bnpc.NameId));
             foreach (var elemental in elementals)
             {
@@ -82,26 +80,25 @@ namespace EurekaHelper.System
                 if (EurekaHelper.Config.DisplayElemental)
                 {
                     DalamudApi.PluginInterface.RemoveChatLinkHandler(eurekaElemental.ObjectId);
+
                     if (EurekaHelper.Config.ElementalPayloadOptions != PayloadOptions.Nothing)
                     {
-                        DalamudLinkPayload payload = DalamudApi.PluginInterface.AddChatLinkHandler(
-                            eurekaElemental.ObjectId, (i, m) =>
+                        DalamudLinkPayload payload = DalamudApi.PluginInterface.AddChatLinkHandler(eurekaElemental.ObjectId, (i, m) =>
+                        {
+                            Utils.SetFlagMarker(eurekaElemental.TerritoryId, eurekaElemental.MapId, eurekaElemental.Position);
+
+                            switch (EurekaHelper.Config.ElementalPayloadOptions)
                             {
-                                Utils.SetFlagMarker(eurekaElemental.TerritoryId, eurekaElemental.MapId,
-                                    eurekaElemental.Position);
+                                case PayloadOptions.CopyToClipboard:
+                                    Utils.CopyToClipboard($"{eurekaElemental.Name} <flag>");
+                                    break;
 
-                                switch (EurekaHelper.Config.ElementalPayloadOptions)
-                                {
-                                    case PayloadOptions.CopyToClipboard:
-                                        Utils.CopyToClipboard($"{eurekaElemental.Name} <flag>");
-                                        break;
-
-                                    default:
-                                    case PayloadOptions.ShoutToChat:
-                                        Utils.SendMessage($"/sh {eurekaElemental.Name} <flag>");
-                                        break;
-                                }
-                            });
+                                default:
+                                case PayloadOptions.ShoutToChat:
+                                    Utils.SendMessage($"/sh {eurekaElemental.Name} <flag>");
+                                    break;
+                            }
+                        });
 
                         var text = EurekaHelper.Config.ElementalPayloadOptions switch
                         {

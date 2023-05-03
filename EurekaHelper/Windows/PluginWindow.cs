@@ -955,12 +955,17 @@ namespace EurekaHelper.Windows
             Utils.SetTooltip("Auto creates tracker when joining an instance and prints the tracker link to chat");
             ImGui.NextColumn();
 
+            save |= ImGui.Checkbox("Auto Pop fate within range", ref EurekaHelper.Config.AutoPopFateWithinRange);
+            Utils.SetTooltip("Requires \"Auto pop fate\" to be enabled.\n\n" +
+                "NM fates has an estimated respawn time of 2 hours\n" +
+                "This option will pop fates if it has a cooldown of less than 5 minutes instead of waiting for the normal 2 hour duration");
+            ImGui.NextColumn();
+
             ImGui.Columns(1);
             if (ImGui.CollapsingHeader("Custom Messages"))
             {
                 ImGui.TextWrapped("** HOW TO USE **" +
-                    "\nType the messages you want in each line, to enter the next line press \"Enter\"" +
-                    "\nPlease see below for the list of available formatting\n");
+                    "\nType the messages you want in each line, to enter the next line press \"Enter\"\n");
                 ImGui.TextWrapped("** AVAILABLE FORMATTINGS **");
                 ImGui.BulletText("%%bossName%% - Replaced with fate boss name");
                 ImGui.BulletText("%%bossShortName%% - Replaced with fate boss short name");

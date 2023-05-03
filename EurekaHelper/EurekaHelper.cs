@@ -139,7 +139,7 @@ namespace EurekaHelper
 #if DEBUG
         [Command("/edebug")]
         [DoNotShowInHelp]
-        private void Debug(string command, string argument)
+        private async void Debug(string command, string argument)
         {
 
         }
