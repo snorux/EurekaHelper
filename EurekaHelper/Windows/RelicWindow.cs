@@ -1,6 +1,8 @@
-﻿using Dalamud.Interface.Colors;
+﻿using Dalamud.Interface;
+using Dalamud.Interface.Colors;
 using Dalamud.Interface.Components;
 using Dalamud.Interface.Windowing;
+using Dalamud.Logging;
 using EurekaHelper.XIV;
 using EurekaHelper.XIV.Relic;
 using FFXIVClientStructs.FFXIV.Client.Game;
@@ -159,11 +161,12 @@ namespace EurekaHelper.Windows
                         ImGui.PopStyleColor();
                         ImGui.PopStyleVar();
 
-                        if (ImGui.BeginTable("ItemsDisplayWindow", 2, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.Sortable | ImGuiTableFlags.SortTristate))
+                        if (ImGui.BeginTable("ItemsDisplayWindow", 3, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.Sortable | ImGuiTableFlags.SortTristate))
                         {
                             ImGui.TableSetupScrollFreeze(0, 1);
                             ImGui.TableSetupColumn("Item", ImGuiTableColumnFlags.NoSort);
                             ImGui.TableSetupColumn("Job Category", ImGuiTableColumnFlags.WidthFixed);
+                            ImGui.TableSetupColumn("Done", ImGuiTableColumnFlags.NoSort | ImGuiTableColumnFlags.WidthFixed);
                             ImGui.TableHeadersRow();
 
                             var currentStageRelics = stage.Value.RelicItems;
@@ -192,6 +195,12 @@ namespace EurekaHelper.Windows
                             foreach (var relic in currentStageRelics)
                             {
                                 ImGui.TableNextColumn();
+
+                                var relicCompleted = EurekaHelper.Config.CompletedRelics.Contains(relic.ItemId);
+
+                                if (relicCompleted)
+                                    ImGui.TableSetBgColor(ImGuiTableBgTarget.RowBg1, ImGui.GetColorU32(new Vector4(0.0300f, 1.0f, 0.159f, 0.10f)));
+
                                 ImGui.Text(relic.ItemName);
                                 if (ImGui.IsItemClicked())
                                 {
@@ -201,6 +210,26 @@ namespace EurekaHelper.Windows
 
                                 ImGui.TableNextColumn();
                                 Utils.RightAlignTextInColumn(relic.JobCategory);
+
+                                ImGui.TableNextColumn();
+                                ImGui.PushFont(UiBuilder.IconFont);
+                                if (!relicCompleted)
+                                {
+                                    if (ImGui.Button($"{FontAwesomeIcon.Check.ToIconString()}##{relic.ItemId}", new Vector2(ImGui.GetColumnWidth(), 0.0f)))
+                                    {
+                                        EurekaHelper.Config.CompletedRelics.Add(relic.ItemId);
+                                        EurekaHelper.Config.Save();
+                                    }
+                                }
+                                else
+                                {
+                                    if (ImGui.Button($"{FontAwesomeIcon.Times.ToIconString()}##{relic.ItemId}", new Vector2(ImGui.GetColumnWidth(), 0.0f)))
+                                    {
+                                        EurekaHelper.Config.CompletedRelics.Remove(relic.ItemId);
+                                        EurekaHelper.Config.Save();
+                                    }
+                                }
+                                ImGui.PopFont();
                             }
 
                             ImGui.EndTable();

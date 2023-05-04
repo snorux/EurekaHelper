@@ -80,6 +80,11 @@ namespace EurekaHelper
 
         public PayloadOptions ElementalPayloadOptions { get; set;} = PayloadOptions.CopyToClipboard;
 
+        /*
+         * Relic Configurations
+         */
+        public List<uint> CompletedRelics { get; set; } = new();
+
         public void Save() => DalamudApi.PluginInterface.SavePluginConfig(this);
     }
 }
