@@ -8,6 +8,7 @@ using EurekaHelper.Windows;
 using EurekaHelper.XIV;
 using EurekaHelper.XIV.Zones;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Linq;
 using System.Threading;
 
@@ -22,11 +23,13 @@ namespace EurekaHelper
         internal readonly WindowSystem WindowSystem;
         internal readonly PluginWindow PluginWindow;
         internal readonly RelicWindow RelicWindow;
+        internal readonly AlarmWindow AlarmWindow;
 
         internal readonly FateManager FateManager;
         internal readonly ZoneManager ZoneManager;
         internal readonly ElementalManager ElementalManager;
         internal readonly InventoryManager InventoryManager;
+        internal readonly AlarmManager AlarmManager;
 
         public EurekaHelper(DalamudPluginInterface pluginInterface)
         {
@@ -36,18 +39,22 @@ namespace EurekaHelper
             Config = (Configuration)DalamudApi.PluginInterface.GetPluginConfig() ?? new();
             Config.Initialize();
 
+            Utils.BuildLgbData();
+
             FateManager = new(this);
             ZoneManager = new();
             ElementalManager = new();
             InventoryManager = new();
+            AlarmManager = new();
+
             PluginWindow = new(this);
             RelicWindow = new(this);
-
-            Utils.BuildLgbData();
+            AlarmWindow = new(this);
 
             WindowSystem = new("Eureka Helper");
             WindowSystem.AddWindow(PluginWindow);
             WindowSystem.AddWindow(RelicWindow);
+            WindowSystem.AddWindow(AlarmWindow);
 
             DalamudApi.PluginInterface.UiBuilder.Draw += DrawUI;
             DalamudApi.PluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
@@ -136,12 +143,23 @@ namespace EurekaHelper
         [HelpMessage("Opens / Closes the Eureka Relic helper window")]
         private void RelicHelper(string command, string argument) => RelicWindow.IsOpen ^= true;
 
+        [Command("/ealarms")]
+        [HelpMessage("Opens / Closes the Eureka Alarm window")]
+        private void AlarmCommand(string command, string argument) => AlarmWindow.IsOpen ^= true;
+
 #if DEBUG
         [Command("/edebug")]
         [DoNotShowInHelp]
         private async void Debug(string command, string argument)
         {
+            var uptime = EurekaAnemos.GetWeatherUptime(EurekaWeather.FairSkies, DateTime.Now);
+            PluginLog.Error($"Start: {uptime.Start} - End: {uptime.End}");
 
+            var uptime2 = EorzeaTime.NextDayTime();
+            PluginLog.Error($"Next day time: {uptime2.Start} - End: {uptime2.End}");
+
+            var uptime3 = EorzeaTime.NextNightTime();
+            PluginLog.Error($"Next night time: {uptime3.Start} - End: {uptime3.End}");
         }
 #endif
 
@@ -171,6 +189,7 @@ namespace EurekaHelper
             ZoneManager.Dispose();
             ElementalManager.Dispose();
             InventoryManager.Dispose();
+            AlarmManager.Dispose();
             PluginWindow.GetConnection().Dispose();
             DalamudApi.PluginInterface.RemoveChatLinkHandler();
         }

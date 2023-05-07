@@ -899,8 +899,8 @@ namespace EurekaHelper.Windows
             ImGui.NextColumn();
 
             ImGui.SetNextItemWidth(140f);
-            var enumNames = Enum.GetNames<SoundManager.SoundEffect>();
-            var enumValues = Enum.GetValues<SoundManager.SoundEffect>();
+            var enumNames = Enum.GetNames<SoundEffect>();
+            var enumValues = Enum.GetValues<SoundEffect>();
             var enumCurrent = Array.IndexOf(enumValues, EurekaHelper.Config.NMSoundEffect);
             if (ImGui.Combo("NM Sound Effect", ref enumCurrent, enumNames, enumNames.Length))
             {

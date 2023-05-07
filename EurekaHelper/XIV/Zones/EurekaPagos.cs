@@ -96,12 +96,17 @@ namespace EurekaHelper.XIV.Zones
 
         public List<EurekaFate> GetFates() => Fates;
 
+        public static List<EurekaWeather> GetZoneWeathers() => Weathers.Select(x => x.Item2).ToList();
+
         public (EurekaWeather Weather, TimeSpan Timeleft) GetCurrentWeatherInfo() => EorzeaWeather.GetCurrentWeatherInfo(Weathers);
 
         public static List<DateTime> GetWeatherForecast(EurekaWeather targetWeather, int count) =>
             EorzeaWeather.GetCountWeatherForecasts(targetWeather, count, Weathers);
 
         public List<(EurekaWeather Weather, TimeSpan Time)> GetAllNextWeatherTime() => EorzeaWeather.GetAllWeathers(Weathers);
+
+        public static (DateTime Start, DateTime End) GetWeatherUptime(EurekaWeather targetWeather, DateTime start)
+            => EorzeaWeather.GetWeatherUptime(targetWeather, Weathers, start);
 
         public void SetPopTimes(Dictionary<ushort, long> keyValuePairs)
         {

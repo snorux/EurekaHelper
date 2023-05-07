@@ -93,17 +93,20 @@ namespace EurekaHelper.XIV
 
             return results;
         }
-        
+
         public static List<DateTime> GetCountWeatherForecasts(EurekaWeather targetWeather, int count, (int, EurekaWeather)[] weathers)
+            => GetCountWeatherForecasts(targetWeather, count, weathers, DateTime.Now);
+
+        public static List<DateTime> GetCountWeatherForecasts(EurekaWeather targetWeather, int count, (int, EurekaWeather)[] weathers, DateTime start)
         {
-            var timeNow = EorzeaTime.GetNearestEarthInterval(DateTime.Now);
+            var timeNow = EorzeaTime.GetNearestEarthInterval(start);
             int counter = 0;
 
             List<DateTime> result = new();
             do
             {
-                int chance = EorzeaWeather.CalculateTarget(timeNow);
-                EurekaWeather weather = EorzeaWeather.Forecast(weathers, chance);
+                int chance = CalculateTarget(timeNow);
+                EurekaWeather weather = Forecast(weathers, chance);
 
                 if (weather == targetWeather)
                 {
@@ -116,6 +119,14 @@ namespace EurekaHelper.XIV
             while (counter < count);
 
             return result;
+        }
+
+        public static (DateTime Start, DateTime End) GetWeatherUptime(EurekaWeather targetWeather, (int, EurekaWeather)[] weathers, DateTime start)
+        {
+            var timeStart = GetCountWeatherForecasts(targetWeather, 1, weathers, start)[0];
+            var timeEnd = timeStart + TimeSpan.FromMilliseconds(EorzeaTime.EIGHT_HOURS);
+
+            return (timeStart, timeEnd);
         }
     }
 }

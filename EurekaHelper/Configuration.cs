@@ -1,6 +1,7 @@
 ﻿using Dalamud.Configuration;
 using Dalamud.Game.Text;
 using EurekaHelper.System;
+using EurekaHelper.XIV;
 using System;
 using System.Collections.Generic;
 
@@ -55,9 +56,9 @@ namespace EurekaHelper
 
         public List<string> CustomMessages { get; set; } = new();
 
-        public SoundManager.SoundEffect NMSoundEffect { get; set; } = SoundManager.SoundEffect.SoundEffect36;
+        public SoundEffect NMSoundEffect { get; set; } = SoundEffect.SoundEffect36;
 
-        public SoundManager.SoundEffect BunnySoundEffect { get; set; } = SoundManager.SoundEffect.SoundEffect41;
+        public SoundEffect BunnySoundEffect { get; set; } = SoundEffect.SoundEffect41;
 
         public PayloadOptions PayloadOptions { get; set; } = PayloadOptions.ShoutToChat;
 
@@ -84,6 +85,11 @@ namespace EurekaHelper
          * Relic Configurations
          */
         public List<uint> CompletedRelics { get; set; } = new();
+
+        /*
+         * Alarm Configurations
+         */
+        public List<EurekaAlarm> Alarms { get; set; } = new();
 
         public void Save() => DalamudApi.PluginInterface.SavePluginConfig(this);
     }

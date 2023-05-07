@@ -61,5 +61,27 @@ namespace EurekaHelper.XIV
 
             return TimeSpan.FromTicks(Convert.ToInt64((nextDay - EorzeaDateTime).Ticks * 7D / 144D));
         }
+
+        public static (DateTime Start, DateTime End) NextDayTime()
+            => NextDayTime(DateTime.Now);
+
+        public static (DateTime Start, DateTime End) NextDayTime(DateTime start)
+        {
+            var nextDayTime = start + ToEorzeaTime(start).TimeUntilDay();
+            var nextNightTime = ToEorzeaTime(nextDayTime).TimeUntilNight();
+
+            return (nextDayTime, nextDayTime + nextNightTime);
+        }
+
+        public static (DateTime Start, DateTime End) NextNightTime()
+            => NextNightTime(DateTime.Now);
+
+        public static (DateTime Start, DateTime End) NextNightTime(DateTime start)
+        {
+            var nextNightTime = start + ToEorzeaTime(start).TimeUntilNight();
+            var nextDayTime = ToEorzeaTime(nextNightTime).TimeUntilDay();
+
+            return (nextNightTime, nextNightTime + nextDayTime);
+        }
     }
 }
