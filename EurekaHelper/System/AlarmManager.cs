@@ -47,7 +47,7 @@ namespace EurekaHelper.System
                 return;
 
             var uptime = GetUptime(alarm);
-            EurekaHelper.PrintMessage($"Alarm: {alarm.Name}");
+            alarm.Announce(uptime);
             SoundManager.PlaySoundEffect(alarm.SoundEffect);
 
             var newUptime = uptime;
