@@ -154,8 +154,8 @@ namespace EurekaHelper.System
             {
                 return alarm.TimeType switch
                 {
-                    TimeType.Night => EorzeaTime.NextNightTime(start),
-                    TimeType.Day => EorzeaTime.NextDayTime(start),
+                    TimeType.Night => EorzeaTime.GetTimeUptime(start, TimeType.Night),
+                    TimeType.Day => EorzeaTime.GetTimeUptime(start, TimeType.Day),
                     _ => throw new NotImplementedException()
                 };
             }

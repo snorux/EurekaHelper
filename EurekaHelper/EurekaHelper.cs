@@ -152,14 +152,10 @@ namespace EurekaHelper
         [DoNotShowInHelp]
         private async void Debug(string command, string argument)
         {
-            var uptime = EurekaAnemos.GetWeatherUptime(EurekaWeather.FairSkies, DateTime.Now);
+            var test = EorzeaTime.NextDayTime();
+            PluginLog.Error($"Start: {test.Start} - End: {test.End}");
+            var uptime = EorzeaTime.GetTimeUptime(DateTime.Now, TimeType.Day);
             PluginLog.Error($"Start: {uptime.Start} - End: {uptime.End}");
-
-            var uptime2 = EorzeaTime.NextDayTime();
-            PluginLog.Error($"Next day time: {uptime2.Start} - End: {uptime2.End}");
-
-            var uptime3 = EorzeaTime.NextNightTime();
-            PluginLog.Error($"Next night time: {uptime3.Start} - End: {uptime3.End}");
         }
 #endif
 

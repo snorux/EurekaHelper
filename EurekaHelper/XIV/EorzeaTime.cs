@@ -62,6 +62,40 @@ namespace EurekaHelper.XIV
             return TimeSpan.FromTicks(Convert.ToInt64((nextDay - EorzeaDateTime).Ticks * 7D / 144D));
         }
 
+        public static (DateTime Start, DateTime End) GetTimeUptime(DateTime start, TimeType timeType)
+        {
+            var et = ToEorzeaTime(start);
+
+            if (timeType == TimeType.Night)
+            {
+                if (et.EorzeaDateTime.Hour >= 19 || et.EorzeaDateTime.Hour < 6)
+                {
+                    var sevenPmToday = et.EorzeaDateTime.Date.AddDays(et.EorzeaDateTime.Hour < 6 ? -1 : 0).AddHours(19);
+                    var ts = TimeSpan.FromTicks(Convert.ToInt64((et.EorzeaDateTime - sevenPmToday).Ticks * 7D / 144D));
+
+                    return (start - ts, start + et.TimeUntilDay());
+                }
+                else
+                {
+                    return NextNightTime(start);
+                }
+            }
+            else
+            {
+                if (et.EorzeaDateTime.Hour >= 6 && et.EorzeaDateTime.Hour < 18)
+                {
+                    var sixAmToday = et.EorzeaDateTime.Date.AddHours(6);
+                    var ts = TimeSpan.FromTicks(Convert.ToInt64((et.EorzeaDateTime - sixAmToday).Ticks * 7D / 144D));
+
+                    return (start - ts, start + et.TimeUntilNight());
+                }
+                else
+                {
+                    return NextDayTime(start);
+                }
+            }
+        }
+
         public static (DateTime Start, DateTime End) NextDayTime()
             => NextDayTime(DateTime.Now);
 
