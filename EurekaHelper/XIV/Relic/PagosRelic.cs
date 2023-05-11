@@ -82,7 +82,7 @@ namespace EurekaHelper.XIV.Relic
 
         private static readonly List<CompletionRequirement> ElementalRelicCompletionRequirements = new()
         {
-            new CompletionRequirement(23309, 10),
+            new CompletionRequirement(23309, 16),
             new CompletionRequirement(22975, 5)
         };
         #endregion

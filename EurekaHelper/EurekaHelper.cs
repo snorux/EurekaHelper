@@ -152,10 +152,11 @@ namespace EurekaHelper
         [DoNotShowInHelp]
         private async void Debug(string command, string argument)
         {
-            var test = EorzeaTime.NextDayTime();
-            PluginLog.Error($"Start: {test.Start} - End: {test.End}");
+
             var uptime = EorzeaTime.GetTimeUptime(DateTime.Now, TimeType.Day);
             PluginLog.Error($"Start: {uptime.Start} - End: {uptime.End}");
+            var uptime2 = EorzeaTime.GetTimeUptime(DateTime.Now, TimeType.Night);
+            PluginLog.Error($"Start: {uptime2.Start} - End: {uptime2.End}");
         }
 #endif
 
