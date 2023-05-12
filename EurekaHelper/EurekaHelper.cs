@@ -144,7 +144,7 @@ namespace EurekaHelper
         private void RelicHelper(string command, string argument) => RelicWindow.IsOpen ^= true;
 
         [Command("/ealarms")]
-        [HelpMessage("Opens / Closes the Eureka Alarm window")]
+        [HelpMessage("Opens / Closes the Eureka Alarms window")]
         private void AlarmCommand(string command, string argument) => AlarmWindow.IsOpen ^= true;
 
 #if DEBUG
