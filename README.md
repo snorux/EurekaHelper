@@ -15,6 +15,7 @@ To open the window, type `/eurekahelper` or `/ehelper` or `/eh`
 4. [Configuration Tab](#configuration-tab)
 5. [Instance Tab](#instance-tab)
 6. [Relic Window](#relic-window)
+7. [Alarms Window](#alarms-window)
 
 ## Commands
 | Command | Description |
@@ -23,6 +24,7 @@ To open the window, type `/eurekahelper` or `/ehelper` or `/eh`
 | `/etrackers` | Attempts to get a list of public trackers for the current instance in the same datacenter |
 | `/arisu` | Display next weather for Crab, Cassie & Skoll<br />![image](https://user-images.githubusercontent.com/34697265/223168197-4dc544ae-c467-4b17-a754-b2835ff4e7e0.png) |
 | `/erelic` | Opens the [Relic Window](#relic-window) |
+| `/ealarms` | Opens the [Alarms Window](#alarms-window) |
 
 ## Main Window
 | Default | Connected To Tracker |
@@ -42,5 +44,10 @@ Feel free to add new Elemental positions in the link above or you can DM me on D
 
 ## Relic Window
 ![image](https://user-images.githubusercontent.com/34697265/236366300-6039df37-7bdd-4b29-96df-5ef5642cc2f7.png)
+
+## Alarms Window
+![image](https://github.com/snooooowy/EurekaHelper/assets/34697265/1c50bb02-4242-4466-bcb7-8e82f93df49a)  
+![image](https://github.com/snooooowy/EurekaHelper/assets/34697265/64460d46-f3ff-4ba9-b960-26533f3cb494)
+
 
 
