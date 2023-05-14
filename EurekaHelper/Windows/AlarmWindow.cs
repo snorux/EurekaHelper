@@ -229,6 +229,26 @@ namespace EurekaHelper.Windows
                     else
                     {
                         Utils.RightAlignTextInColumn("Triggered", ImGuiColors.ParsedGreen);
+                        if (ImGui.IsItemHovered())
+                        {
+                            ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 1f);
+                            ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
+                            ImGui.BeginTooltip();
+
+                            ImGui.TextColored(ImGuiColors.DalamudOrange, "Uptime");
+
+                            ImGui.Text("Start:");
+                            ImGui.SameLine();
+                            ImGui.Text($"{start:d/MM/yyyy hh:mm tt}");
+
+                            ImGui.Text("End:");
+                            ImGui.SameLine();
+                            ImGui.Text($"{end:d/MM/yyyy hh:mm tt}");
+
+                            ImGui.EndTooltip();
+                            ImGui.PopStyleVar();
+                            ImGui.PopStyleColor();
+                        }
                     }
 
                     ImGui.TableNextColumn();
