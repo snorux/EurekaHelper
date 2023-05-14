@@ -239,11 +239,11 @@ namespace EurekaHelper.Windows
 
                             ImGui.Text("Start:");
                             ImGui.SameLine();
-                            ImGui.Text($"{start:d/MM/yyyy hh:mm tt}");
+                            ImGui.Text($"{start:d MMM yyyy hh:mm tt}");
 
                             ImGui.Text("End:");
                             ImGui.SameLine();
-                            ImGui.Text($"{end:d/MM/yyyy hh:mm tt}");
+                            ImGui.Text($"{end:d MMM yyyy hh:mm tt}");
 
                             ImGui.EndTooltip();
                             ImGui.PopStyleVar();
