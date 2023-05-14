@@ -19,7 +19,7 @@ namespace EurekaHelper.Windows
         public AlarmWindow(EurekaHelper plugin) : base("Eureka Helper - Alarms")
         {
             Plugin = plugin;
-            SizeConstraints = new WindowSizeConstraints { MinimumSize = new Vector2(360, 450), MaximumSize = new Vector2(float.MaxValue, float.MaxValue) };
+            SizeConstraints = new WindowSizeConstraints { MinimumSize = new Vector2(360, 350), MaximumSize = new Vector2(float.MaxValue, float.MaxValue) };
         }
 
         public void Dispose() { }
