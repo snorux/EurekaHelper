@@ -310,7 +310,7 @@ namespace EurekaHelper
         public static void SetFlagMarker(EurekaFate fateInfo, bool openMap = false, bool randomizeCoords = false, bool drawCircle = false)
             => SetFlagMarker(fateInfo.TerritoryId, fateInfo.MapId, new Vector2(fateInfo.FatePosition.X, fateInfo.FatePosition.Y), openMap, randomizeCoords, drawCircle);
 
-        public static unsafe void AddMapMarker(ushort territoryId, Vector3 position, uint iconId)
+        public static unsafe void AddMapMarker(ushort territoryId, Vector3 position, uint iconId, bool openMap = false)
         {
             if (DalamudApi.ClientState.TerritoryType != territoryId)
             {
@@ -333,7 +333,8 @@ namespace EurekaHelper
                 if (!instance->AddMiniMapMarker(position, iconId))
                     PluginLog.Error("Unable to place mini map marker");
 
-                instance->OpenMap(territoryType.Map.Value.RowId, territoryType.RowId);
+                if (openMap)
+                    instance->OpenMap(territoryType.Map.Value.RowId, territoryType.RowId);
             }
         }
 

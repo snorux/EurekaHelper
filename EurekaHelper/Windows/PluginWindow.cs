@@ -721,7 +721,7 @@ namespace EurekaHelper.Windows
             }
         }
 
-        private static uint DefaultIcon = 60474;
+        public static uint DefaultIcon = 60474;
         public static void ResetDefaultIcon() => DefaultIcon = 60474;
 
         public void DrawElementalTab()
@@ -755,6 +755,11 @@ namespace EurekaHelper.Windows
                 "For example: Setting it to \'ShoutToChat\' will send the Elemental to current chat when you click the button.");
             ImGui.NextColumn();
 
+            save |= ImGui.Checkbox("Auto Mark Elementals", ref EurekaHelper.Config.ElementalAutoMark);
+            Utils.SetTooltip("Auto mark Elementals (only new Elementals) on map as you find them.\n" +
+                "Due to some limitations, the map will always open when you find an Elemental with this configuration enabled.");
+            ImGui.NextColumn();
+
             ImGui.Columns(1);
 
             if (save)
@@ -772,7 +777,7 @@ namespace EurekaHelper.Windows
                     {
                         // 61502 - X
                         // 63922 - MOOGLE
-                        Utils.AddMapMarker(territoryType, location, 63922);
+                        Utils.AddMapMarker(territoryType, location, 63922, true);
                     }
                 }
                 else
@@ -849,7 +854,7 @@ namespace EurekaHelper.Windows
                     ImGui.TableNextColumn();
                     if (ImGuiComponents.IconButton($"Elemental{elemental.ObjectId}", FontAwesomeIcon.MapMarked))
                     {
-                        Utils.AddMapMarker(elemental.TerritoryId, elemental.RawPosition, DefaultIcon);
+                        Utils.AddMapMarker(elemental.TerritoryId, elemental.RawPosition, DefaultIcon, true);
                         DefaultIcon++;
 
                         if (DefaultIcon > 60476)

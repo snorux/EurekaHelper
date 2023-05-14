@@ -117,6 +117,15 @@ namespace EurekaHelper.System
 
                     EurekaHelper.PrintMessage(sb.BuiltString);
                 }
+
+                if (EurekaHelper.Config.ElementalAutoMark)
+                {
+                    Utils.AddMapMarker(eurekaElemental.TerritoryId, eurekaElemental.RawPosition, PluginWindow.DefaultIcon, true);
+                    PluginWindow.DefaultIcon++;
+
+                    if (PluginWindow.DefaultIcon > 60476)
+                        PluginWindow.ResetDefaultIcon();
+                }
             }
         }
 
