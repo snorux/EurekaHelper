@@ -12,6 +12,7 @@ using System.Linq;
 using Dalamud.Logging;
 using Dalamud.Interface.Components;
 using Dalamud.Game.Text;
+using Dalamud.Interface.Colors;
 
 namespace EurekaHelper.Windows
 {
@@ -1051,6 +1052,16 @@ namespace EurekaHelper.Windows
             ImGui.Indent();
             ImGui.Text("Discord:"); ImGui.SameLine(); ImGui.Text("Snowy#9716");
             ImGui.Text("Issues / Feedbacks:"); ImGui.SameLine(); Utils.TextURL("GitHub", "https://github.com/snooooowy/EurekaHelper/issues", ImGui.GetColorU32(ImGuiCol.Text));
+            ImGui.Unindent();
+            ImGui.Dummy(new Vector2(0.0f, 10.0f));
+
+            ImGui.TextColored(ImGuiColors.ParsedPurple, "Commands");
+            ImGui.Indent();
+            ImGui.Text("/eurekahelper | /eh | /ehelper → Opens / Closes the configuration window");
+            ImGui.Text("/etrackers → Attempts to get a tracker for the current instance in the same datacenter.");
+            ImGui.Text("/erelic → Opens / Closes the Eureka Relic helper window");
+            ImGui.Text("/ealarms → Opens / Closes the Eureka Alarms window");
+            ImGui.Text("/arisu → Display next weather for Crab, Cassie & Skoll");
             ImGui.Unindent();
             ImGui.Dummy(new Vector2(0.0f, 10.0f));
 
