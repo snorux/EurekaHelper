@@ -761,6 +761,10 @@ namespace EurekaHelper.Windows
                 "Due to some limitations, the map will always open when you find an Elemental with this configuration enabled.");
             ImGui.NextColumn();
 
+            save |= ImGui.Checkbox("Always Clear Elementals", ref EurekaHelper.Config.ElementalAlwaysClear);
+            Utils.SetTooltip("Always clear the Elemental list whenever you join a Eureka zone");
+            ImGui.NextColumn();
+
             ImGui.Columns(1);
 
             if (save)

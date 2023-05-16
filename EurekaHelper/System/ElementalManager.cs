@@ -30,9 +30,14 @@ namespace EurekaHelper.System
             {
                 DalamudApi.Framework.Update += OnUpdate;
                 PluginWindow.ResetDefaultIcon();
+
+                if (EurekaHelper.Config.ElementalAlwaysClear)
+                    Elementals.Clear();
             }
             else
+            {
                 DalamudApi.Framework.Update -= OnUpdate;
+            }
         }
 
         private void OnUpdate(Framework framework)

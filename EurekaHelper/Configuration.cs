@@ -81,6 +81,8 @@ namespace EurekaHelper
 
         public bool ElementalAutoMark = false;
 
+        public bool ElementalAlwaysClear = false;
+
         public PayloadOptions ElementalPayloadOptions { get; set;} = PayloadOptions.CopyToClipboard;
 
         /*
