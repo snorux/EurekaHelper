@@ -101,5 +101,21 @@ namespace EurekaHelper.XIV
                 DalamudApi.ToastGui.ShowQuest(sb.BuiltString);
                 // do something
         }
+
+        public EurekaAlarm Clone()
+            => new()
+            {
+                ID = ID,
+                Name = Name,
+                SoundEffect = SoundEffect,
+                Type = Type,
+                TimeType = TimeType,
+                Weather = Weather,
+                ZoneId = ZoneId,
+                MinutesOffset = MinutesOffset,
+                Enabled = Enabled,
+                PrintMessage = PrintMessage,
+                ShowToast = ShowToast,
+            };
     }
 }

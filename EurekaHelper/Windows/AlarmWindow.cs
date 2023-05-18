@@ -27,6 +27,8 @@ namespace EurekaHelper.Windows
         private readonly float LabelSize = 100f;
 
         // Default values
+        private bool IsAdding = false;
+        private bool IsEditing = false;
         private string AlarmName = string.Empty;
         private AlarmType AlarmType = AlarmType.Weather;
         private TimeType TimeType = TimeType.Day;
@@ -34,17 +36,35 @@ namespace EurekaHelper.Windows
         private SoundEffect SoundEffect = SoundEffect.SoundEffect45;
         private ushort AlarmZone = 732;
         private int MinutesBefore = 5;
+        private EurekaAlarm EditingAlarm;
 
         public override void Draw()
         {
             if (ImGuiComponents.IconButton(FontAwesomeIcon.Plus))
+            {
+                IsAdding = false;
                 ImGui.OpenPopup("Add Alarm");
+            }
             Utils.SetTooltip("Add an alarm");
 
             ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 1f);
             ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
             if (ImGui.BeginPopup("Add Alarm"))
             {
+                if (!IsAdding)
+                {
+                    // reset to default values
+                    AlarmName = string.Empty;
+                    AlarmType = AlarmType.Weather;
+                    TimeType = TimeType.Day;
+                    WeatherType = EurekaWeather.FairSkies;
+                    SoundEffect = SoundEffect.SoundEffect45;
+                    AlarmZone = 732;
+                    MinutesBefore = 5;
+
+                    IsAdding = true;
+                }
+
                 ImGui.Text("Add Alarm");
                 ImGui.SetNextItemWidth(LabelSize);
                 ImGui.LabelText("##NameLabel", "Name:"); 
@@ -163,7 +183,7 @@ namespace EurekaHelper.Windows
             {
                 ImGui.TableSetupColumn("Alarm Name");
                 ImGui.TableSetupColumn("Timeleft");
-                ImGui.TableSetupColumn("Alarm Configurations", ImGuiTableColumnFlags.WidthFixed);
+                ImGui.TableSetupColumn("Alarm Configurations / Edit", ImGuiTableColumnFlags.WidthFixed);
                 ImGui.TableHeadersRow();
 
                 for (int i = EurekaHelper.Config.Alarms.Count - 1; i >= 0; i--)
@@ -255,22 +275,45 @@ namespace EurekaHelper.Windows
                     var enabled = alarm.Enabled;
                     var printMessage = alarm.PrintMessage;
                     var showToast = alarm.ShowToast;
-                    
+
                     if (ImGui.Checkbox($"##Toggle{alarm.ID}", ref enabled))
                         Plugin.AlarmManager.ToggleAlarm(alarm);
                     Utils.SetTooltip("Toggles the alarm to be enabled/disabled");
                     ImGui.SameLine();
+
                     if (ImGui.Checkbox($"##Print{alarm.ID}", ref printMessage))
                         Plugin.AlarmManager.SetAlarmPrintMessage(alarm, printMessage);
                     Utils.SetTooltip("Prints a message whenever the alarm is triggered");
                     ImGui.SameLine();
+
                     if (ImGui.Checkbox($"##Toast{alarm.ID}", ref showToast))
                         Plugin.AlarmManager.SetAlarmShowToast(alarm, showToast);
                     Utils.SetTooltip("Display a toast whenever the alarm is triggered");
                     ImGui.SameLine();
-                    if (ImGuiComponents.IconButton($"##Delete{alarm.ID}",FontAwesomeIcon.Trash))
+
+                    if (ImGuiComponents.IconButton($"##Edit{alarm.ID}", FontAwesomeIcon.Edit))
+                    {
+                        IsEditing = false;
+                        ImGui.OpenPopup($"Edit Alarm {alarm.ID}");
+                    }
+                    Utils.SetTooltip("Edit the current alarm");
+                    ImGui.SameLine();
+
+                    if (ImGuiComponents.IconButton($"##Delete{alarm.ID}", FontAwesomeIcon.Trash))
                         Plugin.AlarmManager.DeleteAlarm(alarm);
                     Utils.SetTooltip("Delete the current alarm");
+
+                    if (ImGui.BeginPopup($"Edit Alarm {alarm.ID}"))
+                    {
+                        ImGui.Text("Edit Alarm");
+                        ImGui.SetNextItemWidth(LabelSize);
+                        ImGui.LabelText("##NameLabel", "Name:");
+                        ImGui.SameLine();
+                        ImGui.SetNextItemWidth(150f);
+                        ImGui.InputTextWithHint("##Name", "Name of alarm", ref AlarmName, 15);
+
+                        ImGui.EndPopup();
+                    }
                 }
 
                 ImGui.EndTable();
