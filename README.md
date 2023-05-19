@@ -34,7 +34,7 @@ To open the window, type `/eurekahelper` or `/ehelper` or `/eh`
 ## Elementals Tab
 All known Elementals position in game are listed [here](https://github.com/snooooowy/EurekaHelper/issues/13).  
 Feel free to add new Elemental positions in the link above or you can DM me on Discord (Snowy#9716)  
-![image](https://user-images.githubusercontent.com/34697265/231217758-a0bd197e-dff4-4e64-ac78-f14d22ca1960.png)
+![image](https://github.com/snooooowy/EurekaHelper/assets/34697265/5655c0f7-7df5-44ba-846c-58f87d542429)
 
 ## Configuration Tab
 ![image](https://user-images.githubusercontent.com/34697265/235935187-97466b2a-7d35-485d-aee0-23f5da3d0955.png)
@@ -46,7 +46,7 @@ Feel free to add new Elemental positions in the link above or you can DM me on D
 ![image](https://user-images.githubusercontent.com/34697265/236366300-6039df37-7bdd-4b29-96df-5ef5642cc2f7.png)
 
 ## Alarms Window
-![image](https://github.com/snooooowy/EurekaHelper/assets/34697265/1c50bb02-4242-4466-bcb7-8e82f93df49a)  
+![image](https://github.com/snooooowy/EurekaHelper/assets/34697265/ae7e7c57-6ac2-4848-bf59-9991eaa57867)
 ![image](https://github.com/snooooowy/EurekaHelper/assets/34697265/64460d46-f3ff-4ba9-b960-26533f3cb494)
 
 
