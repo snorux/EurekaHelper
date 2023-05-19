@@ -77,12 +77,28 @@ namespace EurekaHelper.System
                 EurekaHelper.Config.Save();
 
                 ActiveAlarms.Clear();
+                return;
             }
 
             EurekaHelper.Config.Alarms.RemoveAll(x => x.ID == alarm.ID);
             EurekaHelper.Config.Save();
 
             ActiveAlarms.RemoveAll(x => x.Item1.ID == alarm.ID);
+        }
+
+        public void UpdateAlarm(EurekaAlarm alarm)
+        {
+            EurekaHelper.Config.Save();
+
+            var index = ActiveAlarms.FindIndex(x => x.Item1.ID == alarm.ID);
+            if (index < 0)
+                return;
+
+            var existingAlarm = ActiveAlarms[index];
+
+            RemoveActiveAlarm(existingAlarm.Item1);
+            if (alarm.Enabled)
+                AddActiveAlarm(existingAlarm.Item1);
         }
 
         public void ToggleAlarm(EurekaAlarm alarm)
@@ -143,6 +159,14 @@ namespace EurekaHelper.System
             var startTime = Start.AddMinutes(-alarm.MinutesOffset);
             ActiveAlarms.Add((alarm, startTime));
             Dirty = true;
+        }
+
+        private void RemoveActiveAlarm(EurekaAlarm alarm)
+        {
+            if (!ActiveAlarms.Exists(x => x.Item1.ID == alarm.ID))
+                return;
+
+            ActiveAlarms.RemoveAll(x => x.Item1.ID == alarm.ID);
         }
 
         public static (DateTime Start, DateTime End) GetUptime(EurekaAlarm alarm)

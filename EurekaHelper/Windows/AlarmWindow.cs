@@ -27,8 +27,7 @@ namespace EurekaHelper.Windows
         private readonly float LabelSize = 100f;
 
         // Default values
-        private bool IsAdding = false;
-        private bool IsEditing = false;
+        private bool IsInMenu = false;
         private string AlarmName = string.Empty;
         private AlarmType AlarmType = AlarmType.Weather;
         private TimeType TimeType = TimeType.Day;
@@ -36,13 +35,12 @@ namespace EurekaHelper.Windows
         private SoundEffect SoundEffect = SoundEffect.SoundEffect45;
         private ushort AlarmZone = 732;
         private int MinutesBefore = 5;
-        private EurekaAlarm EditingAlarm;
 
         public override void Draw()
         {
             if (ImGuiComponents.IconButton(FontAwesomeIcon.Plus))
             {
-                IsAdding = false;
+                IsInMenu = false;
                 ImGui.OpenPopup("Add Alarm");
             }
             Utils.SetTooltip("Add an alarm");
@@ -51,7 +49,7 @@ namespace EurekaHelper.Windows
             ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
             if (ImGui.BeginPopup("Add Alarm"))
             {
-                if (!IsAdding)
+                if (!IsInMenu)
                 {
                     // reset to default values
                     AlarmName = string.Empty;
@@ -62,7 +60,7 @@ namespace EurekaHelper.Windows
                     AlarmZone = 732;
                     MinutesBefore = 5;
 
-                    IsAdding = true;
+                    IsInMenu = true;
                 }
 
                 ImGui.Text("Add Alarm");
@@ -293,7 +291,7 @@ namespace EurekaHelper.Windows
 
                     if (ImGuiComponents.IconButton($"##Edit{alarm.ID}", FontAwesomeIcon.Edit))
                     {
-                        IsEditing = false;
+                        IsInMenu = false;
                         ImGui.OpenPopup($"Edit Alarm {alarm.ID}");
                     }
                     Utils.SetTooltip("Edit the current alarm");
@@ -303,8 +301,24 @@ namespace EurekaHelper.Windows
                         Plugin.AlarmManager.DeleteAlarm(alarm);
                     Utils.SetTooltip("Delete the current alarm");
 
+                    ImGui.PushStyleVar(ImGuiStyleVar.PopupBorderSize, 1f);
+                    ImGui.PushStyleColor(ImGuiCol.Border, ImGui.GetColorU32(ImGuiCol.TabActive));
                     if (ImGui.BeginPopup($"Edit Alarm {alarm.ID}"))
                     {
+                        if (!IsInMenu)
+                        {
+                            // set values to existing alarm
+                            AlarmName = alarm.Name;
+                            AlarmType = alarm.Type;
+                            TimeType = alarm.TimeType;
+                            WeatherType = alarm.Weather;
+                            SoundEffect = alarm.SoundEffect;
+                            AlarmZone = alarm.ZoneId != 0 ? alarm.ZoneId : (ushort)732;
+                            MinutesBefore = alarm.MinutesOffset;
+
+                            IsInMenu = true;
+                        }
+
                         ImGui.Text("Edit Alarm");
                         ImGui.SetNextItemWidth(LabelSize);
                         ImGui.LabelText("##NameLabel", "Name:");
@@ -312,8 +326,89 @@ namespace EurekaHelper.Windows
                         ImGui.SetNextItemWidth(150f);
                         ImGui.InputTextWithHint("##Name", "Name of alarm", ref AlarmName, 15);
 
+                        ImGui.SetNextItemWidth(LabelSize);
+                        ImGui.LabelText("##TypeLabel", "Type:");
+                        ImGui.SameLine();
+                        ImGui.SetNextItemWidth(150f);
+                        var currentAlarmType = Array.IndexOf(Enum.GetValues<AlarmType>(), AlarmType);
+                        if (ImGui.Combo("##AlarmTypeCombo", ref currentAlarmType, Enum.GetNames<AlarmType>(), Enum.GetNames<AlarmType>().Length))
+                            AlarmType = Enum.GetValues<AlarmType>()[currentAlarmType];
+
+                        if (AlarmType == AlarmType.Weather)
+                        {
+                            ImGui.SetNextItemWidth(LabelSize);
+                            ImGui.LabelText("##ZoneLabel", "Zone:");
+                            ImGui.SameLine();
+                            ImGui.SetNextItemWidth(150f);
+                            var allZones = Constants.EurekaZones.Select(Utils.GetZoneName).ToArray();
+                            var currentZone = Array.IndexOf(allZones, Utils.GetZoneName(AlarmZone));
+                            if (ImGui.Combo("##AlarmZoneCombo", ref currentZone, allZones, 4))
+                                AlarmZone = Constants.EurekaZones[currentZone];
+
+                            ImGui.SetNextItemWidth(LabelSize);
+                            ImGui.LabelText("##WeatherLabel", "Weather:");
+                            ImGui.SameLine();
+                            ImGui.SetNextItemWidth(150f);
+
+                            // each zone has a different set of weathers:
+                            var selectedZoneWeathers = AlarmZone switch
+                            {
+                                732 => EurekaAnemos.GetZoneWeathers().ToArray(),
+                                763 => EurekaPagos.GetZoneWeathers().ToArray(),
+                                795 => EurekaPyros.GetZoneWeathers().ToArray(),
+                                827 => EurekaHydatos.GetZoneWeathers().ToArray(),
+                                _ => throw new NotImplementedException(),
+                            };
+
+                            var currentWeather = Array.IndexOf(selectedZoneWeathers, WeatherType);
+                            if (currentWeather == -1)
+                            {
+                                WeatherType = EurekaWeather.FairSkies;
+                                currentWeather = Array.IndexOf(selectedZoneWeathers, EurekaWeather.FairSkies);
+                            }
+
+                            if (ImGui.Combo("##WeatherCombo", ref currentWeather, selectedZoneWeathers.Select(x => x.ToFriendlyString()).ToArray(), selectedZoneWeathers.Length))
+                                WeatherType = selectedZoneWeathers[currentWeather];
+                        }
+                        else
+                        {
+                            ImGui.SetNextItemWidth(LabelSize);
+                            ImGui.LabelText("##TimeLabel", "Time:");
+                            ImGui.SameLine();
+                            ImGui.SetNextItemWidth(150f);
+                            var currentTimeType = Array.IndexOf(Enum.GetValues<TimeType>(), TimeType);
+                            if (ImGui.Combo("##TimeTypeCombo", ref currentTimeType, Enum.GetNames<TimeType>(), Enum.GetNames<TimeType>().Length))
+                                TimeType = Enum.GetValues<TimeType>()[currentTimeType];
+                        }
+
+                        ImGui.SetNextItemWidth(LabelSize);
+                        ImGui.LabelText("##SoundLabel", "Sound Effect:");
+                        ImGui.SameLine();
+                        ImGui.SetNextItemWidth(150f);
+                        var currentSoundEffect = Array.IndexOf(Enum.GetValues<SoundEffect>(), SoundEffect);
+                        if (ImGui.Combo("##Sound", ref currentSoundEffect, Enum.GetNames<SoundEffect>(), Enum.GetNames<SoundEffect>().Length))
+                        {
+                            SoundEffect = Enum.GetValues<SoundEffect>()[currentSoundEffect];
+                            SoundManager.PlaySoundEffect(SoundEffect);
+                        }
+
+                        ImGui.SetNextItemWidth(LabelSize);
+                        ImGui.LabelText("##TimeLabel", "Minutes Before:");
+                        ImGui.SameLine();
+                        ImGui.SetNextItemWidth(150f);
+                        ImGui.SliderInt("##TimeSlider", ref MinutesBefore, 1, 20, "%d", ImGuiSliderFlags.NoInput);
+
+                        if (ImGui.Button("Update", new Vector2(ImGui.GetContentRegionAvail().X, 0.0f)))
+                        {
+                            UpdateAlarm(alarm);
+                            ImGui.CloseCurrentPopup();
+                        }
+
                         ImGui.EndPopup();
                     }
+
+                    ImGui.PopStyleVar();
+                    ImGui.PopStyleColor();
                 }
 
                 ImGui.EndTable();
@@ -330,5 +425,36 @@ namespace EurekaHelper.Windows
             SoundEffect = SoundEffect,
             MinutesOffset = MinutesBefore
         };
+
+        private void UpdateAlarm(EurekaAlarm alarm)
+        {
+            var alarmName = !string.IsNullOrEmpty(AlarmName) ? AlarmName : "Unamed";
+            var alarmType = AlarmType;
+            var alarmZoneId = AlarmType == AlarmType.Weather ? AlarmZone : (ushort)0;
+            var alarmWeather = AlarmType == AlarmType.Weather ? WeatherType : 0;
+            var alarmTimeType = AlarmType == AlarmType.Time ? TimeType : 0;
+            var alarmSoundEffect = SoundEffect;
+            var alarmMinutesOffset = MinutesBefore;
+
+            alarm.Name = alarmName;
+            alarm.SoundEffect = alarmSoundEffect;
+            EurekaHelper.Config.Save();
+
+            // Check if values are updated
+            if (alarmType == alarm.Type &&
+                alarmTimeType == alarm.TimeType &&
+                alarmWeather == alarm.Weather &&
+                alarmZoneId == alarm.ZoneId &&
+                alarmMinutesOffset == alarm.MinutesOffset)
+                return;
+
+            alarm.Type = alarmType;
+            alarm.ZoneId = alarmZoneId;
+            alarm.Weather = alarmWeather;
+            alarm.TimeType = alarmTimeType;
+            alarm.MinutesOffset = alarmMinutesOffset;
+
+            Plugin.AlarmManager.UpdateAlarm(alarm);
+        }
     }
 }
