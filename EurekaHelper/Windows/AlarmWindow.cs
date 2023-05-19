@@ -158,8 +158,7 @@ namespace EurekaHelper.Windows
             if (ImGui.Button("Delete All"))
                 Plugin.AlarmManager.DeleteAlarm(null, true); 
             
-            ImGuiComponents.HelpMarker("Currently, you are not able to edit saved alarms.\n" +
-                "If you need to make changes to your existing alarm, you'll have to delete and re-add them.");
+            ImGuiComponents.HelpMarker("Wow, you can now edit alarms.");
 
             ImGui.Separator();
             ImGui.Text("Your Alarms");

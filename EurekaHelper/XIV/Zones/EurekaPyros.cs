@@ -52,7 +52,8 @@ namespace EurekaHelper.XIV.Zones
             new(460.0268f, 724.2298f, 482.7586f),
             new(462.5268f, 665.4831f, -601.6767f),
             new(472.0545f, 670.66797f, -332.1753f),
-            new(501.59842f, 668.1235f, -467.8756f)
+            new(501.59842f, 668.1235f, -467.8756f),
+            new(732.08276f, 656.574f, -343.12262f)
         };
 
         public EurekaPyros(List<EurekaFate> fates) { Fates = fates; }
