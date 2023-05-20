@@ -363,14 +363,12 @@ namespace EurekaHelper.Windows
                 var numColumns = 6;
                 if (ImGui.BeginTable("TrackerTable", numColumns, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.Sortable | ImGuiTableFlags.SortTristate))
                 {
-                    if (EurekaHelper.Config.ShowLevelInTrackerTable)
+                    var levelTableColumnFlags = ImGuiTableColumnFlags.WidthFixed;
+                    if (!EurekaHelper.Config.ShowLevelInTrackerTable)
                     {
-                        ImGui.TableSetupColumn("Lv", ImGuiTableColumnFlags.IsEnabled | ImGuiTableColumnFlags.WidthFixed);
+                        levelTableColumnFlags |= ImGuiTableColumnFlags.Disabled; 
                     }
-                    else
-                    {
-                        ImGui.TableSetupColumn("Lv", ImGuiTableColumnFlags.Disabled);
-                    }
+                    ImGui.TableSetupColumn("Lv", levelTableColumnFlags);
                     ImGui.TableSetupColumn("NM", ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoSort);
                     ImGui.TableSetupColumn("Spawned By", ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoSort);
                     ImGui.TableSetupColumn("Popped At", ImGuiTableColumnFlags.NoSort);
