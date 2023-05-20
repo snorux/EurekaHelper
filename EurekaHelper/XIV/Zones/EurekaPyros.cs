@@ -79,9 +79,9 @@ namespace EurekaHelper.XIV.Zones
                 new(1402, 52, 795, 484,     "Haunter of the Dark", "Ying-Yang", "YY", new Vector2(11.5f, 34.3f), "Pyros Hecteyes", new Vector2(11.5f, 34.3f), EurekaWeather.None, EurekaWeather.None, EurekaElement.Water, EurekaElement.Water, false, 49),
                 new(1403, 53, 795, 484,     "Heavens' Warg", "Skoll", "Skoll", new Vector2(24.0f, 30.0f), "Pyros Shuck", new Vector2(16.0f, 36.8f), EurekaWeather.Blizzards, EurekaWeather.None, EurekaElement.Ice, EurekaElement.Earth, false, 50),
                 new(1404, 54, 795, 484,     "Lost Epic", "Penthesilea", "Penny", new Vector2(35.9f, 5.9f), "Val Bloodglider", new Vector2(33.6f, 8.2f), EurekaWeather.HeatWaves, EurekaWeather.None, EurekaElement.Fire, EurekaElement.Fire, false, 50),
-                new(1407, null, 795, 484,   "We're All Mad Here", "Bunny Fate 1", "Bunny Fate 1", new Vector2(24.2f, 26.3f), null, Vector2.Zero, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, 1, false, true),
-                new(1408, null, 795, 484,   "Uncommon Nonsense", "Bunny Fate 2", "Bunny Fate 2", new Vector2(24.9f, 11.1f), null, Vector2.Zero, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, 1, false, true)
-            };// TODO: FIX BUNNY FATES
+                new(1407, null, 795, 484,   "We're All Mad Here", "Bunny Fate 1", "Bunny Fate 1", new Vector2(24.2f, 26.3f), null, Vector2.Zero, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, 35, false, true),
+                new(1408, null, 795, 484,   "Uncommon Nonsense", "Bunny Fate 2", "Bunny Fate 2", new Vector2(24.9f, 11.1f), null, Vector2.Zero, EurekaWeather.None, EurekaWeather.None, EurekaElement.Unknown, EurekaElement.Unknown, false, 46, false, true)
+            };
 
             Utils.GetFatePositionFromLgb(795, PyrosFates);
 
