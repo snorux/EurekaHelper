@@ -360,8 +360,17 @@ namespace EurekaHelper.Windows
 
             if (Connection.IsConnected())
             {
-                if (ImGui.BeginTable("TrackerTable", 5, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.Sortable | ImGuiTableFlags.SortTristate))
+                var numColumns = 6;
+                if (ImGui.BeginTable("TrackerTable", numColumns, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.Sortable | ImGuiTableFlags.SortTristate))
                 {
+                    if (EurekaHelper.Config.ShowLevelInTrackerTable)
+                    {
+                        ImGui.TableSetupColumn("Lv", ImGuiTableColumnFlags.IsEnabled | ImGuiTableColumnFlags.WidthFixed);
+                    }
+                    else
+                    {
+                        ImGui.TableSetupColumn("Lv", ImGuiTableColumnFlags.Disabled);
+                    }
                     ImGui.TableSetupColumn("NM", ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoSort);
                     ImGui.TableSetupColumn("Spawned By", ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoSort);
                     ImGui.TableSetupColumn("Popped At", ImGuiTableColumnFlags.NoSort);
@@ -370,7 +379,7 @@ namespace EurekaHelper.Windows
                     ImGui.TableSetupScrollFreeze(0, 1);
 
                     ImGui.TableNextRow(ImGuiTableRowFlags.Headers);
-                    for (int column = 0; column < 5; column++)
+                    for (int column = 0; column < numColumns; column++)
                     {
                         ImGui.TableSetColumnIndex(column);
                         string columnName = ImGui.TableGetColumnName(column);
@@ -476,9 +485,13 @@ namespace EurekaHelper.Windows
             foreach (var fate in zoneFates)
             {
                 ImGui.TableNextRow(ImGuiTableRowFlags.None, minRowHeight);
+                
+                // Fate Level
+                ImGui.TableSetColumnIndex(0);
+                ImGui.Text(fate.FateLevel.ToString());
 
                 // NM Boss Name
-                ImGui.TableSetColumnIndex(0);
+                ImGui.TableNextColumn();
                 ImGui.Text(fate.BossName);
                 if (ImGui.IsItemHovered())
                 {
@@ -971,6 +984,10 @@ namespace EurekaHelper.Windows
                 "This option will pop fates if it has a cooldown of less than 5 minutes instead of waiting for the normal 2 hour duration");
             ImGui.NextColumn();
 
+            save |= ImGui.Checkbox("Show Level On Tracker", ref EurekaHelper.Config.ShowLevelInTrackerTable);
+            Utils.SetTooltip("Will show the level of a given NM in the tracker table.");
+            ImGui.NextColumn();
+            
             ImGui.Columns(1);
             if (ImGui.CollapsingHeader("Custom Messages"))
             {

@@ -54,6 +54,8 @@ namespace EurekaHelper
 
         public bool AutoPopFateWithinRange = false;
 
+        public bool ShowLevelInTrackerTable = false;
+
         public List<string> CustomMessages { get; set; } = new();
 
         public SoundEffect NMSoundEffect { get; set; } = SoundEffect.SoundEffect36;

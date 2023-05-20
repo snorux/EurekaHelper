@@ -24,8 +24,9 @@ namespace EurekaHelper.XIV
         public byte FateProgress { get; set; }
         public bool IncludeInTracker { get; private set; }
         public bool IsBunnyFate { get; private set; }
+        public int FateLevel { get; private set; }
 
-        public EurekaFate(ushort fateId, ushort? trackerId, ushort territoryId, ushort mapId, string fateName, string bossName, string bossShortName, Vector2 fatePosition, string spawnedBy, Vector2 spawnedByPosition, EurekaWeather spawnRequiredWeather, EurekaWeather spawnByRequiredWeather, EurekaElement bossElement, EurekaElement spawnByElement, bool spawnByRequiredNight, bool includeInTracker = true, bool isBunnyFate = false)
+        public EurekaFate(ushort fateId, ushort? trackerId, ushort territoryId, ushort mapId, string fateName, string bossName, string bossShortName, Vector2 fatePosition, string spawnedBy, Vector2 spawnedByPosition, EurekaWeather spawnRequiredWeather, EurekaWeather spawnByRequiredWeather, EurekaElement bossElement, EurekaElement spawnByElement, bool spawnByRequiredNight, int fateLevel, bool includeInTracker = true, bool isBunnyFate = false)
         {
             FateId = fateId;
             TrackerId = trackerId;
@@ -45,6 +46,7 @@ namespace EurekaHelper.XIV
             KilledAt = -1;
             IncludeInTracker = includeInTracker;
             IsBunnyFate = isBunnyFate;
+            FateLevel = fateLevel;
         }
 
         public bool IsPopped() => KilledAt != -1 && (KilledAt + 7200000) > DateTimeOffset.Now.ToUnixTimeMilliseconds();
