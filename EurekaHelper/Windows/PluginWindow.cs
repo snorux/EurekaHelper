@@ -363,7 +363,7 @@ namespace EurekaHelper.Windows
                 var numColumns = 6;
                 if (ImGui.BeginTable("TrackerTable", numColumns, ImGuiTableFlags.Resizable | ImGuiTableFlags.BordersInnerH | ImGuiTableFlags.BordersV | ImGuiTableFlags.NoBordersInBody | ImGuiTableFlags.ScrollY | ImGuiTableFlags.NoSavedSettings | ImGuiTableFlags.Sortable | ImGuiTableFlags.SortTristate))
                 {
-                    var levelTableColumnFlags = ImGuiTableColumnFlags.WidthFixed;
+                    var levelTableColumnFlags = ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoSort;
                     if (!EurekaHelper.Config.ShowLevelInTrackerTable)
                     {
                         levelTableColumnFlags |= ImGuiTableColumnFlags.Disabled; 
