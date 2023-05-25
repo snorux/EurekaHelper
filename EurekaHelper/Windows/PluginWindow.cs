@@ -365,9 +365,8 @@ namespace EurekaHelper.Windows
                 {
                     var levelTableColumnFlags = ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoSort;
                     if (!EurekaHelper.Config.ShowLevelInTrackerTable)
-                    {
                         levelTableColumnFlags |= ImGuiTableColumnFlags.Disabled; 
-                    }
+
                     ImGui.TableSetupColumn("Lv", levelTableColumnFlags);
                     ImGui.TableSetupColumn("NM", ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoSort);
                     ImGui.TableSetupColumn("Spawned By", ImGuiTableColumnFlags.WidthFixed | ImGuiTableColumnFlags.NoSort);
@@ -386,6 +385,7 @@ namespace EurekaHelper.Windows
                             ImGui.TableHeader(columnName);
                             continue;
                         }
+
                         ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(0.0f, 0.0f));
                         if (Connection.CanModify())
                         {
@@ -498,6 +498,7 @@ namespace EurekaHelper.Windows
 
                     ImGui.BeginTooltip();
                     ImGui.Text($"FATE Name: {fate.FateName}");
+                    ImGui.Text($"FATE Level: {fate.FateLevel}");
                     ImGui.Text($"Element:"); ImGui.SameLine(0.0f, spacing);
                     ImGui.TextColored(new Vector4(0.68f, 0.88f, 0.12f, 1.0f), fate.BossElement.ToFriendlyString());
                     if (fate.SpawnRequiredWeather != EurekaWeather.None)

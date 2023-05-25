@@ -1,0 +1,29 @@
+name: Eureka Helper
+author: Snowy
+punchline: Eureka Tracker in a plugin with many other features.
+description: |-
+  A tool to assist you on your Eureka adventures. Type /eurekahelper to get started.
+  
+  Features include:
+  - In-Game Tracker GUI
+  - Instance Tracker
+  - Elementals Tracker
+  - Relic Helper
+  - Alarms
+  - Money NM weather timings
+  - More to come
+tags:
+  - Eureka
+  - Tracker
+  - QoL
+  - Instance
+  - Weather
+  - NM
+  - Elemental
+  - Fairy
+  - Relic
+  - Alarms
+category_tags:
+  - Utility
+repo_url: https://github.com/snooooowy/EurekaHelper
+dalamud_api_level: 8
