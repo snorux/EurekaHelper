@@ -1,61 +1,53 @@
-<section id="header" style="text-align:center;">
-<span style="font-size:50px;">Eureka Helper</span>
-<br>
-<span>A FFXIV Dalamud plugin</span>
-</section>
-
-<br>
-<div style="text-align:center;">
+<section id="header" align="center">
+  <h1>
+    <img href="https://https://github.com/snooooowy/EurekaHelper" src="/EurekaHelper/Resources/icon.png" width="150px" />
+    <br>
+    Eureka Helper
+  </h1>
+  <div align="center">
+    <h5>A FFXIV Dalamud plugin</h5>
     <a href="https://github.com/snooooowy/EurekaHelper/tags">
-        <img src="https://img.shields.io/github/v/tag/snooooowy/EurekaHelper?label=version&style=for-the-badge">
+        <img src="https://img.shields.io/github/v/tag/snooooowy/EurekaHelper?label=version&style=for-the-badge" />
     </a>
     <a href="https://github.com/snooooowy/EurekaHelper">
-        <img src="https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fvz32sgcoal.execute-api.us-east-1.amazonaws.com%2FEurekaHelper">
+        <img src="https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fvz32sgcoal.execute-api.us-east-1.amazonaws.com%2FEurekaHelper" />
     </a>
     <a href="https://github.com/goatcorp/Dalamud">
-        <img src="https://img.shields.io/badge/ffxiv-dalamud-red.svg?&style=for-the-badge">
+        <img src="https://img.shields.io/badge/ffxiv-dalamud-red.svg?&style=for-the-badge" />
     </a>
-</div>
+  </div>
+</section>
 
 <hr>
 
-<details>
-    <summary style="font-size:20px">
-        <span style="">Table of Contents</span>
-    </summary>
+<details open>
+  <summary>
+    <span>Table of Contents</span>
+  </summary>
+  <ol>
+    <li><a href="#description">Description</a></li>
+    <li><a href="#commands">Installation</a></li>
+    <li><a href="#commands">Commands</a></li>
+    <li><a href="#commands">Features</a></li>
     <ol>
-        <li><a href="#commands">Description</a></li>
-        <li><a href="#commands">Installation</a></li>
-        <li><a href="#commands">Commands</a></li>
-        <li><a href="#features">Features</a></li>
-        <ol>
-            <li><a href="#main-window">FFXIV Eureka Tracker GUI</a></li>
-            <li><a href="#elementals-tab">Elementals Manager</a></li>
-            <li><a href="#instance-tab">Instance Tracker</a></li>
-            <li><a href="#relic-window">Relic Helper</a></li>
-            <li><a href="#alarms-window">Alarms Manager</a></li>
-        </ol>
+      <li><a href="#main-window">FFXIV Eureka Tracker GUI</a></li>
+      <li><a href="#elementals-tab">Elementals Manager</a></li>
+      <li><a href="#instance-tab">Instance Tracker</a></li>
+      <li><a href="#relic-window">Relic Helper</a></li>
+      <li><a href="#alarms-window">Alarms Manager</a></li>
     </ol>
+    <li><a href="#commands">Known Issues</a></li>
+  </ol>
 </details>
 
 <hr>
 
 ## Description
-A FFXIV Dalamud plugin - In-Game Eureka Tracker with QoL features.  
+EurekaHelper is a plugin for [XIVLauncher](https://goatcorp.github.io/). It's a handy plugin that enhances your Eureka gameplay with an In-Game Eureka Tracker and convenient quality-of-life features.
 
-EurekaHelper allows you to join or create a [Eureka Tracker](https://ffxiv-eureka.com/) instance in-game.  
-It also contains a GUI which is almost identical to that on the website.  
+EurekaHelper allows you to effortlessly join or create an [Eureka Tracker](https://ffxiv-eureka.com/) instance within the game. It also provides a user-friendly graphical user interface (GUI) that closely resembles the website's interface.
 
-To open the window, type `/eurekahelper` or `/ehelper` or `/eh`
-
-## Table of Contents
-1. [Commands](#commands)
-2. [Main Window](#main-window)
-3. [Elementals Tab](#elementals-tab)
-4. [Configuration Tab](#configuration-tab)
-5. [Instance Tab](#instance-tab)
-6. [Relic Window](#relic-window)
-7. [Alarms Window](#alarms-window)
+To access the main window, simply type any of the following commands: /eurekahelper, /ehelper, or /eh. The commands are listed in the "About" tab.
 
 ## Commands
 | Command | Description |
