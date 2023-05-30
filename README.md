@@ -2,7 +2,7 @@
   <h1>
     <img href="https://https://github.com/snooooowy/EurekaHelper" src="/EurekaHelper/Resources/icon.png" width="150px" />
     <br>
-    <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Patrick+Hand&size=50&duration=3000&pause=1000&center=true&vCenter=true&width=435&lines=Eureka+Helper" alt="Eureka Helper" /></a>
+    <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Patrick+Hand&size=50&duration=3000&pause=2000&center=true&vCenter=true&width=435&lines=Eureka+Helper" alt="Eureka Helper" /></a>
   </h1>
   <div align="center">
     <h5>A FFXIV Dalamud plugin</h5>
@@ -26,9 +26,9 @@
   </summary>
   <ol>
     <li><a href="#description">Description</a></li>
-    <li><a href="#commands">Installation</a></li>
+    <li><a href="#installation">Installation</a></li>
     <li><a href="#commands">Commands</a></li>
-    <li><a href="#commands">Features</a></li>
+    <li><a href="#features">Features</a></li>
     <ol>
       <li><a href="#main-window">FFXIV Eureka Tracker GUI</a></li>
       <li><a href="#elementals-tab">Elementals Manager</a></li>
@@ -47,17 +47,23 @@ EurekaHelper is a plugin for [XIVLauncher](https://goatcorp.github.io/). It's a 
 
 EurekaHelper allows you to effortlessly join or create an [Eureka Tracker](https://ffxiv-eureka.com/) instance within the game. It also provides a user-friendly graphical user interface (GUI) that closely resembles the website's interface.
 
-To access the main window, simply type any of the following commands: /eurekahelper, /ehelper, or /eh. The commands are listed in the "About" tab.
+To access the main window, simply type any of the following commands: `/eurekahelper`, `/ehelper`, or `/eh`. All available commands are listed in the "About" tab.
+
+## Installation
+The plugin is available for download via the Dalamud Plugin Installer. Simply type `/xplugins` in-game and select EurekaHelper for installation.
+To opt in for testing versions (when available), right click EurekaHelper in the Plugin Installer and select `Receive plugin testing versions`.
 
 ## Commands
+Following is a list of all available commands for the plugin.
 | Command | Description |
 |:-------:|-------------|
 | `/ehelper` or `/eurekahelper` or `/eh` | Opens the main window |
 | `/etrackers` | Attempts to get a list of public trackers for the current instance in the same datacenter |
-| `/arisu` | Display next weather for Crab, Cassie & Skoll<br />![image](https://user-images.githubusercontent.com/34697265/223168197-4dc544ae-c467-4b17-a754-b2835ff4e7e0.png) |
-| `/erelic` | Opens the [Relic Window](#relic-window) |
-| `/ealarms` | Opens the [Alarms Window](#alarms-window) |
+| `/arisu` | Display next weather and time for Crab, Cassie & Skoll<br>![image](https://user-images.githubusercontent.com/34697265/223168197-4dc544ae-c467-4b17-a754-b2835ff4e7e0.png) |
+| `/erelic` | Opens the [Relic Window](#relic-window) which will allow you to track your Eureka relic progression |
+| `/ealarms` | Opens the [Alarms Window](#alarms-window). You will be able to set custom alarms for weather/time in here! |
 
+## Features
 ## Main Window
 | Default | Connected To Tracker |
 |:-------:|----------------------|
