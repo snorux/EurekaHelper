@@ -2,7 +2,7 @@
   <h1>
     <img href="https://https://github.com/snooooowy/EurekaHelper" src="/EurekaHelper/Resources/icon.png" width="150px" />
     <br>
-    Eureka Helper
+    <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Patrick+Hand&size=50&duration=3000&pause=1000&center=true&vCenter=true&width=435&lines=Eureka+Helper" alt="Eureka Helper" /></a>
   </h1>
   <div align="center">
     <h5>A FFXIV Dalamud plugin</h5>
