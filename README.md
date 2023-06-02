@@ -84,7 +84,7 @@ Want to know which Eureka instance you are in? Want to instance hop? You can use
 ![image](https://github.com/snooooowy/EurekaHelper/assets/34697265/0a321213-5bd0-47c2-8727-21ef97c98ca2)
 
 ### Relic Helper
-Keep track of your completed Eureka Relics using this feature. The window also shows the number of items required for each relic stage!
+Keep track of your completed Eureka Relics using this feature. The window also shows the number of items required for each relic stage!  
 ![image](https://github.com/snooooowy/EurekaHelper/assets/34697265/36b6f09c-596b-48fb-a978-ae912b94efe8)
 
 ### Alarms Manager
