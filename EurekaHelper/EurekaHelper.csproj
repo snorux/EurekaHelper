@@ -35,7 +35,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="DalamudPackager" Version="2.1.11" />
-		<PackageReference Include="XivCommon" Version="7.0.0-alpha.1" />
+		<PackageReference Include="XivCommon" Version="7.0.2" />
 		<Reference Include="FFXIVClientStructs">
 			<HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
 			<Private>false</Private>
