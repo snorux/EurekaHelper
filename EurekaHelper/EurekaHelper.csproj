@@ -17,6 +17,7 @@
 	<PropertyGroup>
 		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<PlatformTarget>x64</PlatformTarget>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'">
