@@ -6,15 +6,9 @@
   </h1>
   <div align="center">
     <h5>A FFXIV Dalamud plugin</h5>
-    <a href="https://github.com/snooooowy/EurekaHelper/tags">
-        <img src="https://img.shields.io/github/v/tag/snooooowy/EurekaHelper?label=version&style=for-the-badge" />
-    </a>
-    <a href="https://github.com/snooooowy/EurekaHelper">
-        <img src="https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fvz32sgcoal.execute-api.us-east-1.amazonaws.com%2FEurekaHelper" />
-    </a>
-    <a href="https://github.com/goatcorp/Dalamud">
-        <img src="https://img.shields.io/badge/ffxiv-dalamud-red.svg?&style=for-the-badge" />
-    </a>
+    <a href="https://github.com/snooooowy/EurekaHelper/tags"><img src="https://img.shields.io/github/v/tag/snooooowy/EurekaHelper?label=version&style=for-the-badge" /></a>
+    <a href="https://github.com/snooooowy/EurekaHelper"><img src="https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fvz32sgcoal.execute-api.us-east-1.amazonaws.com%2FEurekaHelper" /></a>
+    <a href="https://github.com/goatcorp/Dalamud"><img src="https://img.shields.io/badge/ffxiv-dalamud-red.svg?&style=for-the-badge" /></a>
   </div>
 </section>
 
