@@ -1070,7 +1070,7 @@ namespace EurekaHelper.Windows
 
             ImGui.TextColored(new Vector4(1.0f, 0.7f, 0.06f, 1.0f), "Contact:");
             ImGui.Indent();
-            ImGui.Text("Discord:"); ImGui.SameLine(); ImGui.Text("Snowy#9716");
+            ImGui.Text("Discord:"); ImGui.SameLine(); ImGui.Text("@snorux");
             ImGui.Text("Issues / Feedbacks:"); ImGui.SameLine(); Utils.TextURL("GitHub", "https://github.com/snooooowy/EurekaHelper/issues", ImGui.GetColorU32(ImGuiCol.Text));
             ImGui.Unindent();
             ImGui.Dummy(new Vector2(0.0f, 10.0f));

@@ -69,7 +69,7 @@ The main window of the plugin which displays the in-game FFXIV Eureka Tracker. Y
 
 ### Elementals Manager
 Manage all seen Elementals from this tab! All known Elementals position in game are listed [here](https://github.com/snooooowy/EurekaHelper/issues/13).  
-Feel free to add new Elemental positions in the link above or you can DM me on Discord (Snowy#9716)  
+Feel free to add new Elemental positions in the link above or you can DM me on Discord (@snorux)  
 ![image](https://github.com/snooooowy/EurekaHelper/assets/34697265/5655c0f7-7df5-44ba-846c-58f87d542429)
 
 ### Instance Tracker
