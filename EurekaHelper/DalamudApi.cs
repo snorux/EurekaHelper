@@ -3,28 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Dalamud.Data;
 using Dalamud.Game;
-using Dalamud.Game.ClientState;
-using Dalamud.Game.ClientState.Buddy;
-using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.Fates;
-using Dalamud.Game.ClientState.JobGauge;
-using Dalamud.Game.ClientState.Keys;
 using Dalamud.Game.ClientState.Objects;
-using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.Command;
-using Dalamud.Game.Gui;
-using Dalamud.Game.Gui.Dtr;
-using Dalamud.Game.Gui.FlyText;
-using Dalamud.Game.Gui.PartyFinder;
-using Dalamud.Game.Gui.Toast;
-using Dalamud.Game.Libc;
-using Dalamud.Game.Network;
-using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Logging;
 using Dalamud.Plugin;
+using Dalamud.Plugin.Services;
 using XivCommon;
 
 // From: https://github.com/UnknownX7
@@ -39,92 +24,91 @@ namespace Dalamud
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static BuddyList BuddyList { get; private set; }
+        public static IBuddyList BuddyList { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static ChatGui ChatGui { get; private set; }
+        public static IChatGui ChatGui { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static ChatHandlers ChatHandlers { get; private set; }
+        public static IClientState ClientState { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static ClientState ClientState { get; private set; }
+        public static ICommandManager CommandManager { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static CommandManager CommandManager { get; private set; }
+        public static ICondition Condition { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static Condition Condition { get; private set; }
+        public static IDataManager DataManager { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static DataManager DataManager { get; private set; }
+        public static IFateTable FateTable { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static FateTable FateTable { get; private set; }
+        public static IFlyTextGui FlyTextGui { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static FlyTextGui FlyTextGui { get; private set; }
+        public static IFramework Framework { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static Framework Framework { get; private set; }
+        public static IGameGui GameGui { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static GameGui GameGui { get; private set; }
+        public static IGameNetwork GameNetwork { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static GameNetwork GameNetwork { get; private set; }
+        public static IJobGauges JobGauges { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static JobGauges JobGauges { get; private set; }
+        public static IKeyState KeyState { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static KeyState KeyState { get; private set; }
+        public static ILibcFunction LibcFunction { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static LibcFunction LibcFunction { get; private set; }
+        public static IObjectTable ObjectTable { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static ObjectTable ObjectTable { get; private set; }
+        public static IPartyFinderGui PartyFinderGui { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static PartyFinderGui PartyFinderGui { get; private set; }
+        public static IPartyList PartyList { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static PartyList PartyList { get; private set; }
+        public static ISigScanner SigScanner { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static SigScanner SigScanner { get; private set; }
+        public static ITargetManager TargetManager { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static TargetManager TargetManager { get; private set; }
+        public static IToastGui ToastGui { get; private set; }
 
         [PluginService]
         //[RequiredVersion("1.0")]
-        public static ToastGui ToastGui { get; private set; }
+        public static IDtrBar DtrBar { get; private set; }
 
         [PluginService]
-        //[RequiredVersion("1.0")]
-        public static DtrBar DtrBar { get; private set; }
-
+        public static IGameInteropProvider GameInteropProvider { get; private set; }
+        
         public static XivCommonBase XivCommonBase { get; private set; }
 
         private static PluginCommandManager<IDalamudPlugin> pluginCommandManager;
@@ -142,7 +126,7 @@ namespace Dalamud
             }
 
             pluginCommandManager ??= new(plugin);
-            XivCommonBase = new XivCommonBase();
+            XivCommonBase = new XivCommonBase(pluginInterface);
         }
 
         public static DalamudApi operator +(DalamudApi container, object o)

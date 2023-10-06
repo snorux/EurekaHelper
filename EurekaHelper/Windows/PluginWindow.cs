@@ -1090,6 +1090,7 @@ namespace EurekaHelper.Windows
             ImGui.Text("FFXIV Dev community");
             ImGui.Text("electr0sheep for EurekaTrackerAutoPopper");
             ImGui.Text("Bedo9041 for EurekaPlugin");
+            ImGui.Text("KangasZ for EurekaHelper contributions");
         }
 
         public static EurekaConnectionManager GetConnection() => Connection;

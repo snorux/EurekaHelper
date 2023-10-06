@@ -114,7 +114,7 @@ namespace EurekaHelper
                 return;
             }
 
-            await connectionManager.Send(JArray.Parse(@$"[ '1', '1', 'datacenter:{datacenterId}', 'phx_join', {{}} ]").ToString());
+            await connectionManager.Send(JArray.Parse(@$"[ ""1"", ""1"", ""datacenter:{datacenterId}"", ""phx_join"", {{}} ]").ToString());
             Thread.Sleep(500);
 
             var trackerList = connectionManager.GetCurrentTrackers();
@@ -167,7 +167,7 @@ namespace EurekaHelper
                 .AddUiForegroundOff()
                 .Append(message);
 
-            DalamudApi.ChatGui.PrintChat(new XivChatEntry()
+            DalamudApi.ChatGui.Print(new XivChatEntry()
             {
                 Type = Config.ChatChannel,
                 Message = sb.BuiltString

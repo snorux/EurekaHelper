@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using Dalamud.Plugin.Services;
 
 namespace EurekaHelper.System
 {
@@ -25,10 +26,10 @@ namespace EurekaHelper.System
             DalamudApi.ClientState.Login += OnLogin;
         }
 
-        public void OnLogin(object sender, EventArgs e)
+        public void OnLogin()
             => GetActiveAlarms();
 
-        public void OnUpdate(Framework framework)
+        public void OnUpdate(IFramework framework)
         {
             if (ActiveAlarms.Count == 0)
                 return;
