@@ -1062,7 +1062,7 @@ namespace EurekaHelper.Windows
 
             ImGui.TextColored(new Vector4(0.0f, 1.0f, 1.0f, 1.0f), "Information:");
             ImGui.Indent();
-            ImGui.Text("GitHub:"); ImGui.SameLine(); Utils.TextURL("GitHub", "https://github.com/snooooowy/EurekaHelper", ImGui.GetColorU32(ImGuiCol.Text));
+            ImGui.Text("GitHub:"); ImGui.SameLine(); Utils.TextURL("GitHub", "https://github.com/snorux/EurekaHelper", ImGui.GetColorU32(ImGuiCol.Text));
             ImGui.Text("Last commit:"); ImGui.SameLine(); ImGui.Text(Utils.GetGitSha());
             ImGui.Text("Version:"); ImGui.SameLine(); ImGui.Text(Utils.GetVersion());
             ImGui.Unindent();
@@ -1071,7 +1071,7 @@ namespace EurekaHelper.Windows
             ImGui.TextColored(new Vector4(1.0f, 0.7f, 0.06f, 1.0f), "Contact:");
             ImGui.Indent();
             ImGui.Text("Discord:"); ImGui.SameLine(); ImGui.Text("@snorux");
-            ImGui.Text("Issues / Feedbacks:"); ImGui.SameLine(); Utils.TextURL("GitHub", "https://github.com/snooooowy/EurekaHelper/issues", ImGui.GetColorU32(ImGuiCol.Text));
+            ImGui.Text("Issues / Feedbacks:"); ImGui.SameLine(); Utils.TextURL("GitHub", "https://github.com/snorux/EurekaHelper/issues", ImGui.GetColorU32(ImGuiCol.Text));
             ImGui.Unindent();
             ImGui.Dummy(new Vector2(0.0f, 10.0f));
 
