@@ -6,6 +6,7 @@ using Dalamud.Game;
 using Dalamud.Game.ClientState.Fates;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using Dalamud.Plugin.Services;
 using EurekaHelper.Windows;
 using EurekaHelper.XIV;
 
@@ -29,7 +30,7 @@ namespace EurekaHelper.System
             }
         }
 
-        private void OnTerritoryChanged(object? sender, ushort territoryId)
+        private void OnTerritoryChanged(ushort territoryId)
         {
             if (Utils.IsPlayerInEurekaZone(territoryId))
             {
@@ -46,7 +47,7 @@ namespace EurekaHelper.System
             }
         }
 
-        private void OnUpdate(Framework framework)
+        private void OnUpdate(IFramework framework)
         {
             if (EurekaHelper.Config.DisplayFateProgress)
             {

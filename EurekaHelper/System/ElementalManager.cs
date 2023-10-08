@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using Dalamud.Plugin.Services;
 
 namespace EurekaHelper.System
 {
@@ -24,7 +25,7 @@ namespace EurekaHelper.System
                 DalamudApi.Framework.Update += OnUpdate;
         }
 
-        private void OnTerritoryChanged(object? sender, ushort territoryId)
+        private void OnTerritoryChanged(ushort territoryId)
         {
             if (Utils.IsPlayerInEurekaZone(territoryId))
             {
@@ -40,7 +41,7 @@ namespace EurekaHelper.System
             }
         }
 
-        private void OnUpdate(Framework framework)
+        private void OnUpdate(IFramework framework)
         {
             if (!EurekaHelper.Config.ElementalCrowdsource && !EurekaHelper.Config.DisplayElemental && !EurekaHelper.Config.DisplayElementalToast)
                 return;

@@ -94,3 +94,5 @@ A highly customizable configuration for the main [Eureka Tracker](#ffxiv-eureka-
 ## Known Issues
 As of current, if you have `Payload Options` set to `Click to shout` and have `Chat2` plugin installed, the game will freeze once you click on the payload.  
 An issue has been made and you can keep track of it [here](https://github.com/ascclemens/plugin-issues/issues/60).
+
+PluginLog is referenced via static interface. This should be updated to use a plugin service or otherwise non-static reference.

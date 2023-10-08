@@ -14,7 +14,7 @@ namespace EurekaHelper.System
 
         public ZoneManager() 
         {
-            SignatureHelper.Initialise(this);
+            DalamudApi.GameInteropProvider.InitializeFromAttributes(this);
             InitZoneHook?.Enable();
 
             var dtrBarTitle = "Eureka Helper";

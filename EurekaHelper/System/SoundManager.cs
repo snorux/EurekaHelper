@@ -31,7 +31,7 @@ namespace EurekaHelper.System
 
         public GameSound()
         {
-            SignatureHelper.Initialise(this);
+            DalamudApi.GameInteropProvider.InitializeFromAttributes(this);
         }
     }
 
