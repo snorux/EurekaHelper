@@ -328,10 +328,10 @@ namespace EurekaHelper
                 mapPosition.Z += territoryType.Map.Value.OffsetY;
 
                 if (!instance->AddMapMarker(mapPosition, iconId))
-                    PluginLog.Error("Unable to place map marker");
+                    DalamudApi.Log.Error("Unable to place map marker");
 
                 if (!instance->AddMiniMapMarker(position, iconId))
-                    PluginLog.Error("Unable to place mini map marker");
+                    DalamudApi.Log.Error("Unable to place mini map marker");
 
                 if (openMap)
                     instance->OpenMap(territoryType.Map.Value.RowId, territoryType.RowId);

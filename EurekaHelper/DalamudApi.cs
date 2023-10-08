@@ -108,7 +108,10 @@ namespace Dalamud
 
         [PluginService]
         public static IGameInteropProvider GameInteropProvider { get; private set; }
-        
+
+        [PluginService]
+        public static IPluginLog Log { get; private set; }
+
         public static XivCommonBase XivCommonBase { get; private set; }
 
         private static PluginCommandManager<IDalamudPlugin> pluginCommandManager;
@@ -121,7 +124,7 @@ namespace Dalamud
         {
             if (!pluginInterface.Inject(this))
             {
-                PluginLog.LogError("Failed loading DalamudApi!");
+                Log.Error("Failed loading DalamudApi!");
                 return;
             }
 

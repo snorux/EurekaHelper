@@ -80,7 +80,7 @@ namespace EurekaHelper
             var crabTime2 = crabWeatherTimes[1];
             var crabBuiltString = Utils.ArisuStringbuilder("Crab/KA", "Fog", crabTime1, crabTime2);
             PrintMessage(crabBuiltString.BuiltString);
-            PluginLog.Information(crabBuiltString.ToString());
+            DalamudApi.Log.Information(crabBuiltString.ToString());
             #endregion
 
             #region Cassie
@@ -88,7 +88,7 @@ namespace EurekaHelper
             var cassieTime2 = cassieWeatherTimes[1];
             var cassieBuiltString = Utils.ArisuStringbuilder("Cassie", "Blizzards", cassieTime1, cassieTime2);
             PrintMessage(cassieBuiltString.BuiltString);
-            PluginLog.Information(cassieBuiltString.ToString());
+            DalamudApi.Log.Information(cassieBuiltString.ToString());
             #endregion
 
             #region Skoll
@@ -96,7 +96,7 @@ namespace EurekaHelper
             var skollTime2 = skollWeatherTimes[1];
             var skollBuildString = Utils.ArisuStringbuilder("Skoll", "Blizzards", skollTime1, skollTime2);
             PrintMessage(skollBuildString.BuiltString);
-            PluginLog.Information(skollBuildString.ToString());
+            DalamudApi.Log.Information(skollBuildString.ToString());
             #endregion
         }
 

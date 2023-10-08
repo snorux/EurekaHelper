@@ -26,7 +26,7 @@ namespace EurekaHelper.System
             {
                 for (var i = 0; i < 5; i++)
                 {
-                    PluginLog.LogError(ex, $"Failed to acquire DtrBarEntry {dtrBarTitle}, trying {dtrBarTitle}{i}");
+                    DalamudApi.Log.Error(ex, $"Failed to acquire DtrBarEntry {dtrBarTitle}, trying {dtrBarTitle}{i}");
                     try
                     {
                         _dtrBarEntry = DalamudApi.DtrBar.Get($"{dtrBarTitle}{i}");
@@ -77,7 +77,7 @@ namespace EurekaHelper.System
             }
             catch (Exception ex)
             {
-                PluginLog.Error($"Something went wrong. Please contact the author.\n{ex.Message}");
+                DalamudApi.Log.Error($"Something went wrong. Please contact the author.\n{ex.Message}");
             }
 
             return InitZoneHook.Original(a1, a2, a3);

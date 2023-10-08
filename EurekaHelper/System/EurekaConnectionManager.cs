@@ -53,11 +53,11 @@ namespace EurekaHelper.System
             {
                 await connection.ClientWebSocket.ConnectAsync(new Uri(TrackerUrl), connection.CancellationTokenSource.Token);
                 _ = connection.Receive();
-                PluginLog.Information("Successfully connected to websocket");
+                DalamudApi.Log.Information("Successfully connected to websocket");
             }
             catch (Exception ex)
             {
-                PluginLog.Information($"Failed to connect to websocket: {ex.Message}");
+                DalamudApi.Log.Information($"Failed to connect to websocket: {ex.Message}");
                 connection.Connected = false;
             }
 
@@ -107,12 +107,12 @@ namespace EurekaHelper.System
                         if ((bool)message.Payload["success"])
                         {
                             TrackerPassword = (string)message.Payload["password"];
-                            PluginLog.Information("Successfully set password for tracker");
+                            DalamudApi.Log.Information("Successfully set password for tracker");
                         }
                         else
                         {
                             TrackerPassword = String.Empty;
-                            PluginLog.Information("Failed to set password for tracker");
+                            DalamudApi.Log.Information("Failed to set password for tracker");
                         }
                         break;
 
@@ -124,7 +124,7 @@ namespace EurekaHelper.System
                             {
                                 if (((string)message.Payload["response"]).Equals("Instance does not exist"))
                                 {
-                                    PluginLog.Information("Invalid instance. Closing connection");
+                                    DalamudApi.Log.Information("Invalid instance. Closing connection");
 
                                     Invalid = true;
                                     await Close();
@@ -132,7 +132,7 @@ namespace EurekaHelper.System
                                 }
                             }
 
-                            PluginLog.Information($"Received status: \"{message.Payload["status"]}\" and response: \"{message.Payload["response"]["reason"]}\". Closing connection");
+                            DalamudApi.Log.Information($"Received status: \"{message.Payload["status"]}\" and response: \"{message.Payload["response"]["reason"]}\". Closing connection");
                             await Close();
                             break;
                         }
@@ -162,9 +162,9 @@ namespace EurekaHelper.System
                         Public = message.Payload["data"]["attributes"]["data-center-id"].Type != JTokenType.Null;
 
                         if (!String.IsNullOrWhiteSpace(TrackerPassword))
-                            PluginLog.Information("Connected to tracker with password");
+                            DalamudApi.Log.Information("Connected to tracker with password");
                         else
-                            PluginLog.Information("Connected to tracker");
+                            DalamudApi.Log.Information("Connected to tracker");
 
                         {
                             var notoriousMonsters = JObject.Parse((string)message.Payload["data"]["attributes"]["notorious-monsters"]);
@@ -200,12 +200,12 @@ namespace EurekaHelper.System
                             if (message.Payload["data"]["attributes"]["data-center-id"].Type != JTokenType.Null)
                             {
                                 Public = true;
-                                PluginLog.Information("Set tracker visibility to public");
+                                DalamudApi.Log.Information("Set tracker visibility to public");
                             }
                             else
                             {
                                 Public = false;
-                                PluginLog.Information("Set tracker visibility to private");
+                                DalamudApi.Log.Information("Set tracker visibility to private");
                             }
                         }
 
@@ -234,7 +234,7 @@ namespace EurekaHelper.System
                 {
                     await Task.Delay(TimeSpan.FromSeconds(30), CancellationTokenSource.Token);
                     await SendHeartbeat();
-                    PluginLog.Information("Sending Heartbeat");
+                    DalamudApi.Log.Information("Sending Heartbeat");
                 }
             }, CancellationTokenSource.Token);
         }
@@ -250,7 +250,7 @@ namespace EurekaHelper.System
         {
             if (LastHeartbeatId != -1)
             {
-                PluginLog.Information("No response to heartbeat message received within 30seconds. Closing connection");
+                DalamudApi.Log.Information("No response to heartbeat message received within 30seconds. Closing connection");
                 await Close();
                 return;
             }
@@ -333,7 +333,7 @@ namespace EurekaHelper.System
 
             await ClientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "closing", CancellationToken.None);
             CancellationTokenSource.Cancel();
-            PluginLog.Information("Successfully closed the socket connection");
+            DalamudApi.Log.Information("Successfully closed the socket connection");
 
             Public = false;
             TrackerId = String.Empty;

@@ -316,7 +316,7 @@ namespace EurekaHelper.Windows
 
             if (string.IsNullOrWhiteSpace(trackerId) && string.IsNullOrWhiteSpace(password))
             {
-                PluginLog.Error("TrackerId and Password not returned from API for some reason.");
+                DalamudApi.Log.Error("TrackerId and Password not returned from API for some reason.");
                 return;
             }
 
@@ -336,7 +336,7 @@ namespace EurekaHelper.Windows
 
             if (string.IsNullOrWhiteSpace(trackerId) && string.IsNullOrWhiteSpace(password))
             {
-                PluginLog.Error("TrackerId and Password not returned from API for some reason.");
+                DalamudApi.Log.Error("TrackerId and Password not returned from API for some reason.");
                 return;
             }
 

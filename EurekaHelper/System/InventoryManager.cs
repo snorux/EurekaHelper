@@ -83,7 +83,7 @@ namespace EurekaHelper.System
             }
             catch (Exception ex)
             {
-                PluginLog.Error(ex, "Failed to scan for items.");
+                DalamudApi.Log.Error(ex, "Failed to scan for items.");
             }
             finally
             {
