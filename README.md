@@ -1,13 +1,13 @@
 <section id="header" align="center">
   <h1>
-    <img href="https://https://github.com/snooooowy/EurekaHelper" src="/EurekaHelper/Resources/icon.png" width="150px" />
+    <img href="https://https://github.com/snorux/EurekaHelper" src="/EurekaHelper/Resources/icon.png" width="150px" />
     <br>
     <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Patrick+Hand&size=50&duration=3000&pause=2000&center=true&vCenter=true&width=435&lines=Eureka+Helper" alt="Eureka Helper" /></a>
   </h1>
   <div align="center">
     <h5>A FFXIV Dalamud plugin</h5>
-    <a href="https://github.com/snooooowy/EurekaHelper/tags"><img src="https://img.shields.io/github/v/tag/snooooowy/EurekaHelper?label=version&style=for-the-badge" /></a>
-    <a href="https://github.com/snooooowy/EurekaHelper"><img src="https://img.shields.io/endpoint?style=for-the-badge&url=https%3A%2F%2Fvz32sgcoal.execute-api.us-east-1.amazonaws.com%2FEurekaHelper" /></a>
+    <a href="https://github.com/snorux/EurekaHelper/tags"><img src="https://img.shields.io/github/v/tag/snorux/EurekaHelper?label=version&style=for-the-badge" /></a>
+    <a href="https://github.com/snorux/EurekaHelper"><img src="https://img.shields.io/endpoint?style=for-the-badge&url=https://qzysathwfhebdai6xgauhz4q7m0mzmrf.lambda-url.us-east-1.on.aws/EurekaHelper" /></a>
     <a href="https://github.com/goatcorp/Dalamud"><img src="https://img.shields.io/badge/ffxiv-dalamud-red.svg?&style=for-the-badge" /></a>
   </div>
 </section>
