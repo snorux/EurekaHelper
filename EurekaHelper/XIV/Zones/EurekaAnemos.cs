@@ -67,7 +67,7 @@ namespace EurekaHelper.XIV.Zones
             List<EurekaFate> AnemosFates = new()
             {
                 new(1332, 1, 732, 414,  "Unsafety Dance", "Sabotender Corrido", "Sabo", new Vector2(14.0f, 22.0f), "Flowering Sabotender", new Vector2(14.0f, 22.0f), EurekaWeather.None, EurekaWeather.None, EurekaElement.Wind, EurekaElement.Wind, false, 1),
-                new(1348, 2, 732, 414,  "The Shadow over Anemos", "The Lord of Anemos", "Lord", new Vector2(30.0f, 27.0f), "Sea Bishop", new Vector2(14.0f, 22.0f), EurekaWeather.None, EurekaWeather.None, EurekaElement.Water, EurekaElement.Water, false, 2),
+                new(1348, 2, 732, 414,  "The Shadow over Anemos", "The Lord of Anemos", "Lord", new Vector2(30.0f, 27.0f), "Sea Bishop", new Vector2(30.0f, 27.0f), EurekaWeather.None, EurekaWeather.None, EurekaElement.Water, EurekaElement.Water, false, 2),
                 new(1333, 3, 732, 414,  "Teles House", "Teles", "Teles", new Vector2(25.9f, 27.0f), "Anemos Harpeia", new Vector2(25.9f, 27.0f), EurekaWeather.None, EurekaWeather.None, EurekaElement.Wind, EurekaElement.Wind, false, 3),
                 new(1328, 4, 732, 414,  "The Swarm Never Sets", "The Emperor of Anemos", "Emperor", new Vector2(17.1f, 22.2f), "Darner", new Vector2(17.1f, 22.2f), EurekaWeather.None, EurekaWeather.None, EurekaElement.Wind, EurekaElement.Wind, false, 4),
                 new(1344, 5, 732, 414,  "One Missed Callisto", "Callisto", "Callisto", new Vector2(26.0f, 22.0f), "Val Bear", new Vector2(26.0f, 22.0f), EurekaWeather.None, EurekaWeather.None, EurekaElement.Earth, EurekaElement.Earth, false, 5),
